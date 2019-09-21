@@ -17,7 +17,7 @@ pipeline {
                    ln -s /home/jenkins/node_modules ${WORKSPACE}/fe/shop/node_modules
                 """
 
-            dir ('./fe') {
+            dir ('./fe/shop') {
               sh "npm install"
             }
 
