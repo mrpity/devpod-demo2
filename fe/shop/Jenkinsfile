@@ -13,8 +13,8 @@ pipeline {
             
             // Enable cache
             sh  """
-                   rm -rf ${WORKSPACE}/fe/expressCart/node_modules || true && 
-                   ln -s /home/jenkins/node_modules ${WORKSPACE}/fe/expressCart/node_modules
+                   rm -rf ${WORKSPACE}/fe/shop/node_modules || true && 
+                   ln -s /home/jenkins/node_modules ${WORKSPACE}/fe/shop/node_modules
                 """
 
             dir ('./fe') {
