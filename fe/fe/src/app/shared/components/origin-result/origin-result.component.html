@@ -1,0 +1,49 @@
+<div id="c_itemCnt_{{result?.id}}" class="item-container">
+  <img id="item_logo_{{index}}" src="assets/img/types/{{result.type | lowercase}}.png" alt="">
+  <div id="item_content_{{index}}" class="content-container">
+    <div id="crawlingInfo" class="crawling-info-header">
+      <span id="item_crawlingDate_{index}}">{{"search.results.crawlingDate" | translate | uppercase}}: {{result.crawlingDate | date: 'HH:mm dd.MM.yyyy'}}</span>
+      <span id="resultLabel" class="label-tooltip" *ngIf="result.label">{{"search.results.label." + result.label | lowercase | translate}}</span>
+    </div>
+    <label id="title_{{index}}" class="title-medium m-b-16">
+      <a target="_blank" href="{{result.resourceLink}}" rel="nofollow noopener noreferrer"><span id="title_text_{{index}}" [innerHTML]="result.title"></span></a>
+      <span *ngIf="result.postDate "> {{"search.results.at" | translate}} {{showPostDate(result.postDate)}}</span>
+    </label>
+    <div id="keywords_{{index}}" class="p-b-8" *ngIf="result.keywords?.length">
+      <span *ngFor="let word of result.keywords">
+      #{{word | uppercase}}
+      </span>
+    </div>
+    <div id="lines_{{index}}" class="summary-lines">
+      <ng-container *ngFor="let line of result.summaryLines">
+        ...<span [innerHTML]="line" class="m-b-5"></span>...
+      </ng-container>
+    </div>
+    <span id="documentId_{{index}}" class="documentId">{{"search.results.documentId" | translate}}: {{result.documentId}}</span>
+    <div id="statistic_{{index}}" class="statistics" *ngIf="result.statistics">
+      <ng-container *ngFor="let statistic of result.statistics">
+        <span *ngIf="statistic.sentiment" class="m-t-16">Sentiment analysis: {{statistic.sentiment}}</span>
+      </ng-container>
+    </div>
+    <div class="reactions-container" *ngIf="filterBy.byPost(result.type)">
+      <div id="likesCount" class="counts">
+        <div class="count-label">{{"search.results.details.likesCount" | translate}}</div>
+        <div class="tooltip" [ngClass]="{'hide-tooltip': !result.reactions?.length}" id="d_tooltip">{{helpers.likesCount(result.reactions)}}
+          <div class="tooltip-text" id="t_tooltipText">
+            <ng-container *ngFor="let reaction of result.reactions; let i = index">
+              <div class="reaction" id="d_reaction">{{reaction.type}}: {{reaction.count}}</div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div id="repostsCount" class="counts">
+        <div class="count-label">{{"search.results.details.repostsCount" | translate}}</div>
+        <div class="tooltip">{{result.repostsCount}}</div>
+      </div>
+      <div id="commentsCount" class="counts">
+        <div class="count-label">{{"search.results.details.commentsCount" | translate}}</div>
+        <div class="tooltip">{{result.commentsCount}}</div>
+      </div>
+    </div>
+  </div>
+</div>

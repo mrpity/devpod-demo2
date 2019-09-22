@@ -1,0 +1,14 @@
+<div class="table-overlay" id="spinnerOrigin" *ngIf="isLoading">
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+<div id="message_cnt" class="friends-container">
+
+  <ul class="result" id="cnt_originCnt" *ngIf="friends">
+    <li *ngFor="let friend of friends">
+      <a target="_blank" [href]="friend.url" rel="nofollow noopener noreferrer" >{{friend.name}}</a>
+    </li>
+  </ul>
+</div>

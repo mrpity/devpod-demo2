@@ -1,0 +1,20 @@
+<div class="about-block-item">
+  <h5>
+    {{'avatar.labels.educations'| translate}}
+    <div class="btn-container"*ngIf="data.name">
+      <button type="button"  (click)="onEdit()" class="edit-btn" [id]="'b_edit-'+ qa_id"><mat-icon>edit</mat-icon></button>
+      <button type="button"  (click)="onRemove()" class="remove-btn" [id]="'b_remove-'+ qa_id"><mat-icon>delete</mat-icon></button>
+    </div>
+  </h5>
+  <div class="empty-description" *ngIf="!data.name">
+    <button type="button" class="add-about-block-btn" (click)="onEdit()" [id]="'b_add-'+ qa_id"></button>
+  </div>
+  <div  class="info" *ngIf="data?.name">
+    <p class="name">{{data?.name}}</p>
+    <p class="type" *ngIf="!!data.type">{{"avatar.addEducationModal." + data.type.toLowerCase() | translate}}</p>
+    <p class="city">{{data?.city}}</p>
+    <p *ngIf="data?.studiedFrom && data?.studiedTo" class="range">{{data?.studiedFrom | date:'shortDate'}} - {{data?.studiedTo | date:'shortDate'}}</p>
+    <p class="description">{{data?.specialization}}</p>
+    <p class="description">{{data?.description}}</p>
+  </div>
+</div>

@@ -1,0 +1,166 @@
+@import "components/grid";
+@import "components/buttons";
+
+:host{
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 10px;
+  width:100%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+:host::ng-deep {
+  .mat-form-field-infix {
+    width: auto;
+    margin: 8px 0 0;
+  }
+}
+
+.sn-link-container {
+  position: relative;
+  .sn-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.button-text{
+  border: 2px solid $red;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+.row-item{
+  padding: 0 20px;
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  text-align: left;
+}
+.button-container{
+  padding: 0 10px;
+  align-self: center;
+  .button{
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    align-items: center;
+  }
+}
+.sn-icon{
+  display: block;
+  padding: 0 10px;
+  align-self: center;
+  width: 40px;
+  height:40px;
+  &.facebook{
+    background: url('../../../../../assets/img/sn/fb-icon.png') center center no-repeat;
+    background-size: contain;
+  }
+  &.odnoklassniki{
+    background: url('../../../../../assets/img/sn/ok-icon.png') center center no-repeat;
+    background-size: contain;
+  }
+  &.google{
+    background: url('../../../../../assets/img/sn/google-icon.png') center center no-repeat;
+    background-size: contain;
+  }
+}
+.copy-icon{
+  cursor: pointer;
+  &:hover{
+    opacity: 0.8;
+  }
+}
+.sn-name{
+  font-size: 1.3em;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.viev-mode{
+  .sn-info{
+    .sn-heading{
+      margin: 0 0 5px;
+      align-items: center;
+      margin-top: 6px;
+    }
+    .sn-name {
+      font-size: 12px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .profile-info{
+      display: flex;
+      align-items: center;
+      height: 50px;
+      margin-left: 5px;
+      .profile-pic{
+        margin-right: 10px;
+        width: 40px;
+        max-height: 50px;
+      }
+    }
+  }
+  .field-label {
+    height: 15px;
+    padding: 15px 5px 10px 0;
+    text-transform: uppercase;
+    color: $warm-grey;
+    font-weight: 400;
+    font-size: 12px;
+  }
+  .field-value {
+    display: flex ;
+    align-items: center;
+    &_inline {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mat-icon{
+      margin-left: 5px;
+    }
+  }
+  .field-value_text {
+    max-width: calc(100% - 40px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+.country, .city {
+  .field-value{
+    height: 24px;
+  }
+}
+
+.edit-mode{
+  padding: 10px 0;
+}
+
+.spinner-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.spinner {
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  position: absolute;
+}
+
+.validation-hint{
+  color: #FF460D;
+  text-transform: uppercase;
+}
+
+.mat-option.clear-option::ng-deep .mat-option-text {
+  color: #555 !important;
+}

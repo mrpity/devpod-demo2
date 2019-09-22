@@ -1,0 +1,105 @@
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'helpers/mixins';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.profile-tabs-group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative;
+}
+
+::ng-deep .profile-tabs-group > .mat-tab-group {
+  flex-grow: 1;
+  background-color: rgba(219, 219, 219, 0.2);
+
+  & > .mat-tab-header {
+    @extend .container-padding;
+    background-color: $white;
+    border-bottom: none !important;
+    box-shadow: 0 4px 4px -4px $warm-grey;
+    z-index: 100;
+  }
+
+  &.mat-primary .mat-tab-label:focus,
+  &.mat-primary .mat-tab-label:active {
+    background: inherit !important;
+  }
+
+  &.mat-primary .mat-tab-label.mat-tab-disabled:active,
+  &.mat-primary .mat-tab-label.mat-tab-disabled:focus {
+    color: rgba(0,0,0,.38) !important;
+  }
+  &.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus .mat-tab-label-content {
+    color: $black !important;
+  }
+  & > .mat-tab-label .mat-tab-label-content {
+    display: block;
+    margin-bottom: 5px;
+    color: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+
+    i, span {
+      display: block;
+    }
+
+    &:hover {
+      color: inherit !important;
+    }
+  }
+
+  & > .mat-tab-body-wrapper {
+    @extend .container-margin;
+    margin-top: 24px;
+    margin-bottom: 30px;
+    flex-grow: 1 !important;
+    background-color: #fff;
+  }
+}
+
+.friendsCount {
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  color: #999;
+  padding: 3px 7px;
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+
+.profile-title {
+  @extend .title-medium;
+  padding-left: 32px;
+  position: absolute;
+  margin-top: 16px;
+  margin-left: 24px;
+  max-width: 700px;
+  @include text-ellipsis;
+}
+
+.profile-title::before {
+  content: " ";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+}
+
+.profile-title.fb_profile::before {
+  background-image: url( '../../../../assets/img/types/fb_profile.png');
+}
+
+.profile-title.ok_profile::before {
+  background-image: url( '../../../../assets/img/types/ok_profile.png');
+}

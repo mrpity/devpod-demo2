@@ -1,0 +1,26 @@
+@import '../globals';
+
+
+.label {
+  color: $warm-grey;
+  text-transform: uppercase;
+  height: 16px;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: 0.4px;
+  margin-bottom: 4px;
+}
+
+.default-font-settings {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: 0.4px;
+  color: $dark-grey;
+}

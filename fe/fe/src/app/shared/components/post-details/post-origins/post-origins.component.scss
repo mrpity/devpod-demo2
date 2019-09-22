@@ -1,0 +1,76 @@
+@import 'components/icomoon';
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'components/grid';
+@import 'components/label';
+
+:host {
+  display: flex;
+  height: 100%;
+  background-color: rgba(219, 219, 219, 0.2);
+  flex: 1;
+}
+
+
+.origins-container {
+  padding: 25px 50px 0 30px;
+  flex-grow: 1;
+  position: relative;
+  background-color: rgba(219, 219, 219, 0.2);
+}
+
+.result {
+  margin-bottom: 70px;
+}
+
+
+.table-overlay {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+
+  .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+.custom-paginator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+::ng-deep {
+  #noResults {
+    em {
+      background-color: $light-blue-grey;
+      font-style: normal;
+      border-radius: 2px;
+      border: 1px solid $light-blue-grey;
+      font-weight: 500;
+    }
+  }
+
+
+}
+
+
+.error {
+  color: $red;
+}
+
+.message {
+  font-size: 1.5rem;
+}
+
+#message_cnt {
+}

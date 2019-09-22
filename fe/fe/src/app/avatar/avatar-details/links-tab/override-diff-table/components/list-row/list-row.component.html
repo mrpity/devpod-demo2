@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="cell" [ngClass]="{'multilines': isMultiLines()}">{{label | translate}}</div>
+  <div class="cell" [ngClass]="{'multilines': isMultiLines()}">
+    <div *ngIf="field?.current">
+      <div class="row-list-item" *ngFor="let item of field.current">{{item}}</div>
+    </div>
+  </div>
+  <div class="cell" [ngClass]="{
+    'multilines': isMultiLines(),
+    'checked': isChecked
+  }">
+    <mat-checkbox
+      [checked]="isChecked"
+      [disabled]="field?.erroneous || !field?.imported"
+      (change)="change.emit()"
+    ></mat-checkbox>
+    <div class="value" *ngIf="field?.imported">
+      <div class="row-list-item" *ngFor="let item of field.imported">{{item}}</div>
+    </div>
+    <div class="value value-error" *ngIf="field?.erroneous">
+      <mat-icon class="highlight">report</mat-icon>
+      <div class="erroneous">{{field.erroneous}}</div>
+    </div>
+  </div>
+</div>

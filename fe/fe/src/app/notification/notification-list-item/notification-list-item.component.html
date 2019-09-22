@@ -1,0 +1,30 @@
+<div
+  class="notification-cnt"
+  [ngClass]="{
+    '_error': notification.error,
+    '_success': !notification.error,
+    '_unread': notification.unread
+  }"
+>
+  <div class="flex align-items-center" style="margin-bottom: 5px;">
+    <img src="assets/img/status/{{notification.error ? 'crawling_failed' : 'succeeded'}}.png" alt="">
+    <span class="notification-time">{{notification.time | date: 'HH:mm'}}</span>
+  </div>
+  <div class="notification-list-item">
+    <span class="notification-list-item_id">
+      {{ notification.id }}
+    </span>
+    <span class="notification-list-item_message" *ngIf="!notification.error">
+      {{ notification.message | translate }}
+    </span>
+    <span class="notification-list-item_message" *ngIf="notification.error">
+      {{ notification.message | translate:{value: translate.instant('avatar.importCrawlingErrors.' + (notification.error || 'UNSPECIFIED'))} }}
+    </span>
+    <button mat-button
+      class="button button-text button-review"
+      (click)="notification.goto()"
+    >
+      {{'general.goto' | translate}}
+    </button>
+  </div>
+</div>

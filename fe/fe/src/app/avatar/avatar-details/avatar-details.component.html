@@ -1,0 +1,75 @@
+<div class="avatar-details-container" *ngIf="avatar?.name">
+  <div class="avatar-details">
+    <app-breadcrumbs [items]="[{label:'navigation.avatars', route:'../../../list'}]" [id]="'avatar'"></app-breadcrumbs>
+    <div class="header-container">
+      <h3 class="title-large">
+        <span id="s_avatarName" [title]="avatarName">{{avatar.name}}</span>
+        <span id="s_avatar-type">
+          <span
+            class="type" *ngIf="avatar?.type === 'BABY'">
+          <img src="../assets/img/avatar-types/baby.png" alt="">
+          {{'avatar.baby' | translate}}</span>
+        <span
+          class="type " *ngIf="avatar?.type === 'ACTIVE'">
+          <img src="../assets/img/avatar-types/active.png" alt="">
+          {{'avatar.active' | translate}}</span>
+        <span class="type" *ngIf="avatar?.type === 'DATA_MINER'">
+          <img src="../assets/img/avatar-types/data-miner.png" alt="">
+          {{'avatar.data_miner' | translate}}</span>
+        </span>
+      </h3>
+      <div class="header-buttons">
+        <button id="b_close" class="close-btn" type="button" (click)="close()"></button>
+      </div>
+    </div>
+    <div class="avatar-details-tabs">
+      <mat-tab-group #tabGroup [selectedIndex]="currentTabIndex" (selectedTabChange)="tabChanged($event)">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="icon-person_outline" style="font-size: 22px" id="icon_general-tab"></i>
+            <span id="tab_general">{{'avatar.tabs.general' | translate}}</span>
+            <button
+              mat-button
+              *ngIf="selectedTab === 0"
+              id="b_editAvatar"
+              class="button button-primary button-actions edit-btn"
+              (click)="edit()" type="button"
+            >
+              {{"avatar.editBtn" | translate}}
+            </button>
+          </ng-template>
+          <ng-template matTabContent>
+            <app-general-tab></app-general-tab>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="icon-sync" style="font-size: 22px" id="icon_connections-tab"></i>
+            <span id="tab_connections">{{'avatar.tabs.links' | translate}}</span>
+          </ng-template>
+          <ng-template matTabContent>
+            <app-links-tab [avatarId]="id"></app-links-tab>
+          </ng-template>
+        </mat-tab>
+        <mat-tab disabled="true">
+          <ng-template mat-tab-label>
+            <i class="icon-perm_media" style="font-size: 22px" id="icon_fileManagement-tab"></i>
+            <span id="tab_fileManagement">{{'avatar.tabs.fileManagement' | translate}}</span>
+          </ng-template>
+        </mat-tab>
+        <mat-tab disabled="true">
+          <ng-template mat-tab-label>
+            <i class="icon-av_timer" style="font-size: 22px" id="icon_automation-tab"></i>
+            <span id="tab_automation">{{'avatar.tabs.automation' | translate}}</span>
+          </ng-template>
+        </mat-tab>
+        <mat-tab disabled="true">
+          <ng-template mat-tab-label>
+            <i class="icon-format_list_bulleted" style="font-size: 22px" id="icon_activityLog-tab"></i>
+            <span id="tab_activityLog">{{'avatar.tabs.activityLog' | translate}}</span>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

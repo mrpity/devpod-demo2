@@ -1,0 +1,35 @@
+$dark-blue-color: #0a3148;
+$dark-grey-color: #2D2D2D;
+
+
+.inner-snack-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .message {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.25;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .mat-icon {
+    color: $dark-blue-color;
+    font-size: 30px;
+    height: 12px;
+    min-width: 12px;
+    width: 12px;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 10px;
+    &:hover,
+    &:focus {
+      color: $dark-grey-color;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}

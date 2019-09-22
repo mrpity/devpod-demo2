@@ -1,0 +1,33 @@
+<div class="profile-tabs-group" id="cnt_profileTabs"
+  [ngClass]="{
+    'for-data-source': forModule === 'DATA_SOURCE',
+    'for-search': forModule === 'SEARCH'
+  }"
+>
+  <span class="profile-title"
+        id="profileTitle"
+        *ngIf="forModule === 'DATA_SOURCE'"
+        [ngClass]="profileData?.type | lowercase">{{profileData?.firstName}} {{profileData?.lastName}}</span>
+  <mat-tab-group id="grp_profileTabs" #tabGroup (selectedIndexChange)="onChangeTab($event)">
+    <mat-tab class="profile-general-tab" id="tb_generalTab">
+      <ng-template mat-tab-label>
+        <span id="tab_general_title">{{'search.results.details.profile.tabs.profile' | translate}}</span>
+      </ng-template>
+      <app-profile-general
+        [profile]="profileData"
+        [isLoading]="isLoading"
+        [isResultsLoadingFailure]="isResultsLoadingFailure"
+      ></app-profile-general>
+    </mat-tab>
+    <mat-tab class="profile-friends-tab" id="tb_friendsTab">
+      <ng-template mat-tab-label>
+        <span id="tab_friends_title">{{'search.results.details.profile.tabs.friends' | translate}}</span>
+        <span class="friendsCount">{{profileData?.friends?.length}}</span>
+      </ng-template>
+      <app-profile-friends
+        [friends]="profileData?.friends"
+        [isLoading]="isLoading"
+      ></app-profile-friends>
+    </mat-tab>
+  </mat-tab-group>
+</div>

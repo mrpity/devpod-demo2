@@ -1,0 +1,13 @@
+@import '../globals';
+
+
+.validation {
+  text-transform: uppercase;
+  &_error {
+    color: $red;
+  }
+  &_description {
+    color: $warm-grey;
+  }
+}
+

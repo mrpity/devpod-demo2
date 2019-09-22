@@ -1,0 +1,57 @@
+@import '../../../../assets/styles/helpers/varibles';
+.title{
+  margin-right: 10px;
+  font-size: 20px;
+  margin-top: 7px;
+}
+.filters{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: baseline;
+}
+.filter{
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  .mat-chip{
+    .separator{
+      display: inline-block;
+      margin: 0 5px;
+    }
+  }
+}
+.filters-btn{
+  display: flex;
+  height: 32px;
+  margin: 4px 4px 4px 10px;
+  border: 1px solid $red;
+  color: $red;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-radius: 15px;
+  outline: none;
+  cursor: pointer;
+  align-items: center;
+  img{
+    display: flex;
+    width:14px;
+  }
+  span{
+    display: flex;
+  }
+  &.remove-filters-btn{
+    margin-right: 10px;
+  }
+}
+.filter-label{
+  text-transform: uppercase;
+  color: $warm-grey;
+  font-size: 12px;
+}
+
+.chip-list::ng-deep{
+  .mat-chip-list-wrapper{
+    margin: 0;
+  }
+}

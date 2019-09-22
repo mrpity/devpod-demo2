@@ -1,0 +1,32 @@
+<div id="row_{{source.id}}" [ngClass]="{'expandable': source.resourceLogs?.length}" class="mat-row" (click)="source.expanded = !source.expanded; check(source)">
+  <ng-container *ngFor="let column of displayedColumns; let first = first;">
+    <div class="mat-cell {{column}}" [ngClass]="first ? 'level_' + source.level: ''" [ngSwitch]="column"
+         id="d_{{column}}CellRepeating_{{source.id}}">
+      <ng-container *ngSwitchCase="Columns.dropdown">
+        <span *ngIf="source.resourceLogs?.length">
+          <mat-icon class="arrow-icon" [ngClass]="source.expanded ? 'arrow-open' : 'arrow-close'">keyboard_arrow_right</mat-icon>
+        </span>
+      </ng-container>
+      <ng-container *ngSwitchCase="Columns.crawledAt">
+        <span>{{source.updatedAt | date:'hh:mm dd.MM.yyyy'}}</span>
+      </ng-container>
+      <ng-container *ngSwitchCase="Columns.status">
+        <img src="assets/img/status/{{source.status | lowercase}}.png" alt="">
+      </ng-container>
+      <ng-container *ngSwitchCase="Columns.message">
+            <span title="{{source.message}}" class="message-text">{{helpers.getStatisticsMessageKey(source.messageKey) | translate}}
+              <ng-container *ngIf="source.messageKey === messageKey.UNSPECIFIED">({{source.message}}) </ng-container><ng-container
+                *ngIf="source.resource"><a
+                *ngIf="helpers.isUrl(source.resource); else profileId" class="resource-url" target="_blank"
+                rel="nofollow noopener noreferrer"
+                href="{{source.resource}}">URL</a> <ng-template
+                #profileId>{{"dataSource.dataSourceDetail.statistics.recentLogs.titles.message.profileId" | translate}}
+                : {{source.resource}}</ng-template>
+      </ng-container>
+      </span></ng-container>
+      <ng-container *ngSwitchCase="Columns.avatarFullName">
+        <span>{{source.avatarFullName}}</span>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

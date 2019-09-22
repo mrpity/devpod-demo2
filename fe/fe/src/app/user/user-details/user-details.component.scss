@@ -1,0 +1,167 @@
+@import 'components/icomoon';
+@import "helpers/varibles";
+
+:host {
+  display: flex;
+  height: 100vh;
+}
+
+.user-details-cnt {
+  position: relative;
+}
+
+h3, h4, h5 {
+  color: #2d2d2d;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  line-height: 1.33;
+}
+
+h5 {
+  color: #9b9b9b;
+  text-transform: uppercase;
+  margin: 5px 0;
+}
+
+h4 {
+  font-size: 1.5em;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+h3 {
+  font-size: 0.9em;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-buttons {
+  align-items: flex-end;
+
+  .mat-icon-button {
+    margin-bottom: 20px;
+  }
+}
+
+.btn-user-edit {
+  position: relative;
+  top: 40px;
+  background-color: #ff460d;
+  color:#fff;
+}
+
+.title-large {
+  margin: 5px 0;
+  height: 48px;
+  font-family: Roboto;
+  font-size: 36px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+
+}
+
+.btn {
+  margin-right: 10px;
+  width:140px;
+  height:36px;
+  border: none;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-family: "Roboto Mono", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  cursor: pointer;
+}
+
+.mat-tab-group {
+  width: 100%;
+}
+
+::ng-deep .user-details-tabs {
+  .mat-tab-group.mat-primary .mat-tab-label:focus,
+  .mat-tab-group.mat-primary .mat-tab-label:active {
+    background: inherit !important;
+    color: inherit !important;
+  }
+
+  .mat-tab-group.mat-primary .mat-tab-label.mat-tab-disabled:active,
+  .mat-tab-group.mat-primary .mat-tab-label.mat-tab-disabled:focus {
+    color: rgba(0,0,0,.38) !important;
+  }
+  .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus .mat-tab-label-content {
+    color: #0a3148 !important;
+  }
+  .mat-tab-label .mat-tab-label-content {
+    display: block;
+    margin-bottom: 5px;
+    color: inherit;
+
+    i, span {
+      display: block;
+    }
+
+    &:hover {
+      color: inherit !important;
+    }
+  }
+}
+
+button.edit-btn {
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+@media screen and (max-width: 1240px) {
+  .header-container {
+    .header-buttons {
+      flex-direction: row-reverse;
+      .btn-user-edit{
+        top: 0;
+      }
+    }
+  }
+  .title-large {
+    font-size: 30px;
+    max-width: 600px;
+  }
+}
+
+.loading-spinner-cnt {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.loading-spinner {
+  position: absolute;
+  margin-top: 5%;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .gateway-api-errors {
+    color: $red;
+    max-width: 360px;
+    text-align: center;
+  }
+}

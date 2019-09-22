@@ -1,0 +1,76 @@
+<mat-table [dataSource]="automationRulesStream" class="width-100" id="t_tableBodyCnt" [ngClass]="isViewMode ? 'view-mode': 'edit-mode'">
+
+  <ng-container matColumnDef="frequency">
+    <mat-header-cell *matHeaderCellDef class="repeating" id="l_idHeaderCellIdLabel"><span
+      class="hide-long-id"><span>{{"dataSource.addDataSource.columnTitle.frequency" | translate | uppercase}}</span></span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let source; let i=index;" class="repeating" id="d_idCellRepeating_{{i}}">
+      <span>{{helpers.getFrequency(source.frequency) | translate | uppercase}}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="activeTimePeriod">
+    <mat-header-cell *matHeaderCellDef id="l_statusHeaderCellLabel" class="active-time-period">
+      <span>{{"dataSource.addDataSource.columnTitle.activeTimePeriod" | translate | uppercase}}</span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let source; let i=index;" class="id" id="d_idCellData_{{i}}">
+      <span>{{source.activeTimeFrom}} - {{source.activeTimeTo}}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="zoneOffset">
+    <mat-header-cell *matHeaderCellDef class="timezone" id="l_zoneOffsetHeaderCellLabel">
+      <span>{{"dataSource.addDataSource.columnTitle.zoneOffset" | translate | uppercase}}</span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let source; let i=index;" class="timezone" id="d_zoneOffsetCellData_{{i}}">
+      <span>UTC{{source.zoneOffset}}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="when">
+    <mat-header-cell *matHeaderCellDef class="url" id="l_urlHeaderCellLabel">
+      <span>{{"dataSource.addDataSource.columnTitle.when" | translate | uppercase}}</span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let source; let i=index;" class="url" id="d_whenCellData_{{i}}">
+      <span *ngIf="source.onceDate">{{source.onceDate | date:'dd.MM.yyyy'}}</span>
+      <span *ngIf="source.daysOfWeek" >
+              <span *ngFor="let day of source.daysOfWeek">{{"dataSource.addDataSource.createAutomationRule.when.daysOfWeek."+ (day | lowercase) | translate | uppercase}} </span>
+            </span>
+      <span *ngIf="source.dayOfMonth">{{source.dayOfMonth}}</span>
+    </mat-cell>
+
+  </ng-container>
+
+  <ng-container matColumnDef="endingDate">
+    <mat-header-cell *matHeaderCellDef class="created" id="l_createdHeaderCellLabel">
+      <span>{{"dataSource.addDataSource.columnTitle.endingDate" | translate | uppercase}}</span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let source; let i=index;" class="created" id="d_createdCellData_{{i}}">
+      <span>{{source.expirationDate | date:'dd.MM.yyyy'}}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="maxConnections">
+    <mat-header-cell *matHeaderCellDef class="created" id="l_numberOfConnectionsHeaderCellLabel">
+      <span>{{"dataSource.addDataSource.columnTitle.numberOfConnections" | translate | uppercase}}</span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let source; let i=index;" class="created" id="d_numberOfConnectionsCellData_{{i}}">
+      <span>{{source.maxConnections}}</span>
+    </mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef id="l_actionsHeaderCellLabel" class="actions"></mat-header-cell>
+    <mat-cell *matCellDef="let source; let i=index;" class="actions" id="d_actionsCellData_{{i}}">
+      <button class="delete-btn" type="button" mat-icon-button (click)="openDeleteRuleConfirmDialog(source)">
+        <img src="assets/img/icon-delete.png" alt="">
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row id="r_headerRowCnt" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+  <mat-row id="r_rowCnt_{{i}}"
+           *matRowDef="let row; let i = index; columns: displayedColumns;">
+  </mat-row>
+</mat-table>

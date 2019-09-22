@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{heading | translate}}</h2>
+<mat-dialog-content>
+  <mat-form-field class="description">
+    <textarea matTextareaAutosize id="i_description" matInput [placeholder]="'general.description' | translate" [(ngModel)]="description"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions class="btn-container">
+  <button mat-button mat-dialog-close class="btn btn-cancel" id="popup-cancel-btn">{{this.data.cancelBtn | translate}}</button>
+  <button mat-button (click)="closeDialog()" class="btn btn-confirm" id="popup-confirm-btn">{{this.data.confirmBtn | translate}}</button>
+</mat-dialog-actions>

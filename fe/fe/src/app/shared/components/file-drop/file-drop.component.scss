@@ -1,0 +1,61 @@
+.dnd-profile-pic-area{
+  min-height: 96px;
+  border: dotted 1px #9b9b9b;
+  padding: 5px;
+  text-align: center;
+  &.invalid{
+    border-color: #FF460D;
+  }
+  .dnd-label{
+    margin-top: 30px;
+    img{
+      position: relative;
+      width:24px;
+      top: 5px;
+      margin-right: 10px;
+    }
+    .dnd-open-link{
+      color: #FF460D;
+      cursor: pointer;
+    }
+  }
+}
+.dropped-file{
+  display: flex;
+  flex-direction: row;
+  .img-container{
+    position: relative;
+    img{
+      max-width: 125px;
+    }
+    .delete-btn{
+      position: absolute;
+      top:0;
+      right: 0;
+      img{
+        width: 24px;
+        height: 24px;
+      }
+      cursor: pointer;
+      border: none;
+      background: none;
+      outline: none;
+    }
+  }
+  .img-description{
+    margin-left: 20px;
+    color: #9b9b9b;
+    font-size: 12px;
+    text-align: left;
+    .file-name{
+      padding-bottom: 10px;
+    }
+  }
+}
+.validation{
+  min-height: 25px;
+  .validation-msg{
+    color:#FF460D;
+  }
+}
+

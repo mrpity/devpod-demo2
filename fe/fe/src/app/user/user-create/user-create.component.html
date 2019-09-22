@@ -1,0 +1,51 @@
+<div class="width-100 height-100" id="c_userCnt">
+  <div class="header" [ngClass]="{'header-on-error': (isLoading$ | async) || failedGateway}">
+    <app-breadcrumbs [items]="[{label:'список пользователей', route:'../../list'}]" [id]="'userCreate'"></app-breadcrumbs>
+    <h1 class="title-large" id="h_addUser">{{"user.createUser.title" | translate }}</h1>
+  </div>
+  <app-user-form
+    [user]="user"
+    [roles]="userRoles"
+    [formObject]="createUserForm"
+    [isLoading]="isLoading$"
+    [isFailed]="failedGateway"
+    [formMode]="formMode"
+    (submitForm)='create($event)'
+    (submitFailed)='createFailed($event)'
+    (setIsDirty)='setIsDirty($event)'
+    *ngIf="createUserForm"
+  >
+    <div form-content-actions class="footer">
+      <button
+        mat-button
+        type="button"
+        class="button button-text"
+        id="b_cancelBtn"
+        (click)="cancelUserEdit()"
+      >
+        {{"general.cancelBtn" | translate}}
+      </button>
+      <button
+        mat-button
+        type="submit"
+        class="button button-primary"
+        id="b_createBtn"
+        [disabled]="isLoading$ | async"
+      >
+        {{"general.createBtn" | translate}}
+      </button>
+    </div>
+  </app-user-form>
+
+  <div class="loading-spinner-cnt" *ngIf="(isLoading$ | async) || failedGateway">
+    <div class="loading-spinner" id="d_loadingSpinnerCnt">
+      <mat-spinner *ngIf="(isLoading$ | async)" id="s_spinnerCmp"></mat-spinner>
+      <div id="cnt_errorCnt" class="gateway-api-errors" *ngIf="!(isLoading$ | async) && failedGateway">
+        {{"dataSource.gatewayUnavailable" | translate}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

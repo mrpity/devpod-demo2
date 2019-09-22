@@ -1,0 +1,19 @@
+<div *ngIf="dates.length">
+  <div *ngFor="let date of dates">
+    <div class="notification-date">{{date}}</div>
+      <div *ngFor="let notification of notifications[date]">
+        <app-notification-list-item [notification]="notification"></app-notification-list-item>
+      </div>
+  </div>
+</div>
+<div class="no-data" *ngIf="!dates.length && !isLoading">
+  Нет данных
+</div>
+<div class="controls">
+  <button
+    class="button button-text load-more-btn"
+    (click)="loadMoreData()"
+    *ngIf="isLoadMore && !isLoading"
+  >Load more</button>
+</div>
+<app-spinner *ngIf="isLoading"></app-spinner>

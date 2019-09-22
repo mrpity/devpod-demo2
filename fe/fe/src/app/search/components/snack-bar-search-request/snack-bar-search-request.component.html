@@ -1,0 +1,11 @@
+<div class="inner-snack-bar-container">
+  <span class="message">{{ data.message | translate }}</span>
+  <a mat-button
+    *ngIf="data?.requestId"
+    class="button button-snack-bar-goto"
+    (click)="goto()"
+  >
+    {{'general.goto' | translate}}
+  </a>
+  <img class="mat-icon" src="assets/img/icon-close.png" (click)="closeMe()" alt="image">
+</div>

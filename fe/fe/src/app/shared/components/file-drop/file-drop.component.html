@@ -1,0 +1,23 @@
+<div class="dnd-profile-pic-area" [ngClass]="validationError.length ? 'invalid' : ''">
+  <div *ngIf="!base64data" class="dnd-label">
+    <img src="assets/img/upload-icon.png" alt="">
+    <span>{{"general.dropFile" | translate}} <a class="dnd-open-link" (click)="fileInput.click()">{{"general.pickFile" | translate}} </a></span>
+    <input #fileInput id="file-input" type="file" name="name" (change)="uploadFile($event.target.files[0])" style="display: none;" />
+  </div>
+  <div *ngIf="!!base64data" class="dropped-file">
+    <div class="img-container">
+      <img [src]="base64data | safe: 'url'" alt="">
+      <button class="delete-btn" (click)="delete()" id="b_deleteImage" type="button">
+        <img src="assets/img/userpic-delete-icon.png" alt="">
+      </button>
+    </div>
+    <div class="img-description">
+      <div class="file-name" id="d_fileName" *ngIf="name">{{name}}</div>
+      <div class="file-size" id="d_fileSize" *ngIf="size">{{size}} B</div>
+      <div class="file-dimensions" id="d_fileDimensions" *ngIf="width && height">{{width}}x{{height}}</div>
+    </div>
+  </div>
+</div>
+<div class="validation" >
+  <div *ngIf="validationError.length" class="validation-msg" id="d_validationFileUpload">{{"validation.image." + validationError | translate}}</div>
+</div>

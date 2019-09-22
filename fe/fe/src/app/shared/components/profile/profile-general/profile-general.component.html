@@ -1,0 +1,242 @@
+<div class="general-tab" *ngIf="profile">
+  <div class="row">
+    <div class="col col-4 profile-pic" id="avatar-profilePic" >
+      <img *ngIf="!!profile.profilePicBase64"
+           [src]="'data:image/jpeg;base64, ' + profile.profilePicBase64 | safe: 'url'" alt="">
+      <img *ngIf="!profile.profilePicBase64"
+           src="../assets/img/no-profile-pic.png" alt="">
+    </div>
+    <div class="col col-3-4">
+      <div class="row">
+        <div class="col col-3">
+          <div class="row">
+            <div class="col col-2">
+              <h5>{{'profile.labels.profileAlias' | translate}}</h5>
+              <a [href]="profile.profileUrl"
+                 target="_blank"
+                 id="d_profileAlias"
+                 class="detailsSimpleInfo text-ellipsis"
+                 rel="nofollow noopener noreferrer">
+                {{profile.profileAlias}}
+              </a>
+            </div>
+            <div class="col col-2">
+              <h5>{{'profile.labels.profileId' | translate}}</h5>
+              <a [href]="profile.profileUrl"
+                 target="_blank"
+                 id="d_profileId"
+                 class="detailsSimpleInfo text-ellipsis"
+                 rel="nofollow noopener noreferrer" >
+                {{profile.profileId}}
+              </a>
+            </div>
+          </div>
+          <h5>{{'profile.labels.gender' | translate}}</h5>
+          <div id="d_gender" class="detailsSimpleInfo">{{profile.gender}}</div>
+          <div class="row">
+            <div class="col col-2">
+              <h5>{{'profile.labels.birthDate' | translate}}</h5>
+              <div id="d_birthDate" class="detailsSimpleInfo text-ellipsis">{{profile.birthDate}}</div>
+            </div>
+            <div class="col col-2" *ngIf="profile.type === 'FB_PROFILE'">
+              <h5>{{'profile.labels.joinedFacebook' | translate}}</h5>
+              <div id="d_joinedFb" class="detailsSimpleInfo text-ellipsis">{{profile.joinedFacebook}}</div>
+            </div>
+            <div class="col col-2" *ngIf="profile.type === 'OK_PROFILE'">
+              <h5>{{'profile.labels.joinedOdnoklassniki' | translate}}</h5>
+              <div id="d_joinedOk" class="detailsSimpleInfo text-ellipsis">{{profile.joinedOdnoklassniki}}</div>
+            </div>
+          </div>
+          <h5>{{'profile.labels.language' | translate}}</h5>
+          <div id="d_langs" class="detailsSimpleInfo">{{languagesString}}</div>
+        </div>
+        <div class="col col-2-3">
+          <div class="row">
+            <div class="col col-2">
+              <h5>{{'profile.labels.crawlingDate' | translate}}</h5>
+              <div id="d_crawlingDate" class="detailsSimpleInfo">{{profile.crawlingDate | date:'dd.MM.yyyy'}}</div>
+            </div>
+            <div class="col col-2">
+              <h5>{{'profile.labels.publicationId' | translate}}</h5>
+              <div id="d_publicationId" class="detailsSimpleInfo">{{profile.documentId}}</div>
+            </div>
+          </div>
+          <h5>{{'profile.labels.bio' | translate}}</h5>
+          <div id="d_bio" class="detailsBio">{{profile.bio}}</div>
+        </div>
+      </div>
+      <h4>{{'profile.contactInfo' | translate}}</h4>
+      <div class="row">
+        <div class="col col-3" id="container_socialLink">
+          <h5>{{'profile.labels.socialLink' | translate}}</h5>
+          <div class="detailsInfoItem" *ngFor="let link of profile.socialLinks">
+            <a [title]="link" [href]="link" target="_blank" rel="nofollow noopener noreferrer" >{{link}}</a>
+          </div>
+        </div>
+        <div class="col col-2-3">
+          <div class="row">
+            <div class="col col-3" id="container_websites" style="padding-top: 0">
+              <h5>{{'profile.labels.website' | translate}}</h5>
+              <div class="detailsInfoItem" *ngFor="let website of profile.websites">
+                <a [title]="website" [href]="website" target="_blank" rel="nofollow noopener noreferrer" >{{website}}</a>
+              </div>
+            </div>
+            <div class="col col-3" id="container_phones" style="padding-top: 0">
+              <h5>{{'profile.labels.phoneNumber' | translate}}</h5>
+              <div class="detailsInfoItem" *ngFor="let phone of profile.phones">
+                <span>{{phone}}</span>
+              </div>
+            </div>
+            <div class="col col-3" id="container_emails" style="padding-top: 0">
+              <h5>{{'profile.labels.email' | translate}}</h5>
+              <div class="detailsInfoItem">{{profile.email}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h4>{{'profile.about' | translate}}</h4>
+  <div class="profile-general-tabs-group row">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_socialState">{{'profile.tabs.socialState' | translate}}</span>
+        </ng-template>
+        <div class="about-block-items">
+          <app-profile-about-block
+            [qa_id]="'religiousViews'"
+            [data]="{ heading: 'profile.aboutBlocks.religiousViews', description: profile.religiousViews }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            [qa_id]="'politicalViews'"
+            [data]="{ heading: 'profile.aboutBlocks.politicalViews', description: profile.politicalViews }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            [qa_id]="'maritalStatus'"
+            [data]="{ heading: 'profile.aboutBlocks.maritalStatus', description: profile.maritalStatus }"
+          ></app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let familyMember of profile.familyMembers;let i = index;"
+            [qa_id]="'familyMember-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.familyMember', description: familyMember}">
+          </app-profile-about-block>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_interests">{{'profile.tabs.interests' | translate}}</span>
+        </ng-template>
+        <div class="about-block-items">
+          <app-profile-about-block
+            *ngFor="let favoriteAnimal of profile.favoriteAnimals;let i = index;"
+            [qa_id]="'favoriteAnimal-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteAnimal', description: favoriteAnimal }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteCar of profile.favoriteCarsAndMotorcycles;let i = index;"
+            [qa_id]="'favoriteCar-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteCar', description: favoriteCar }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteBook of profile.favoriteBooks;let i = index;"
+            [qa_id]="'favoriteBook-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteBook', description: favoriteBook }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteFood of profile.favoriteFoods;let i = index;"
+            [qa_id]="'favoriteFood-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteFood', description: favoriteFood }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteGame of profile.favoriteGames;let i = index;"
+            [qa_id]="'favoriteGame-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteGame', description: favoriteGame }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteMovie of profile.favoriteMovies; let i = index;"
+            [qa_id]="'favoriteMovie-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteMovie', description: favoriteMovie }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let music of profile.favoriteMusic; let i = index;"
+            [qa_id]="'favoriteMusic-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteMusic', description: music }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteSport of profile.favoriteSports; let i = index;"
+            [qa_id]="'favoriteSport-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteSport', description: favoriteSport }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            [qa_id]="'favoriteTvShows'"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteTvShows', description: profile.favoriteTvShows }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteHealth of profile.favoriteHealthAndBeauty; let i = index;"
+            [qa_id]="'favoriteHealth-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteHealthAndBeauty', description: favoriteHealth }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let interest of profile.otherInterests; let i = index;"
+            [qa_id]="'otherInterests-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.otherInterests', description: interest }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteScience of profile.favoriteSciences; let i = index;"
+            [qa_id]="'favoriteScience-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteScience', description: favoriteScience }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let favoriteTravel of profile.favoriteTravelsAndTourism; let i = index;"
+            [qa_id]="'favoriteTravel-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.favoriteTravelsAndTourism', description: favoriteTravel }">
+          </app-profile-about-block>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_education">{{'profile.tabs.education' | translate}}</span>
+        </ng-template>
+        <div class="about-block-items">
+          <app-profile-about-block
+            *ngFor="let occupation of profile.occupations; let i = index;"
+            [qa_id]="'occupation-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.occupation', description: occupation }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let army of profile.armyList; let i = index;"
+            [qa_id]="'army-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.armyList', description: army }">
+          </app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let education of profile.educations;let i = index;"
+            [qa_id]="'education-'+i"
+            [data]="{ heading: 'profile.aboutBlocks.education', description: education }"
+          ></app-profile-about-block>
+          <app-profile-about-block
+            [qa_id]="'professionalSkills'"
+            [data]="{ heading: 'profile.aboutBlocks.professionalSkills', description: profile.professionalSkills }">
+          </app-profile-about-block>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_geoLocation">{{'profile.tabs.geoLocation' | translate}}</span>
+        </ng-template>
+        <div class="about-block-items">
+          <app-profile-about-block
+            *ngFor="let fromLocation of profile.fromLocations;let i = index;"
+            [qa_id]="'fromLocation'+i"
+            [data]="{ heading: 'profile.aboutBlocks.fromLocation', description: fromLocation }"
+          ></app-profile-about-block>
+          <app-profile-about-block
+            *ngFor="let livesInLocation of profile.livesInLocations;let i = index;"
+            [qa_id]="'livesInLocation'+i"
+            [data]="{ heading: 'profile.aboutBlocks.livesInLocation', description: livesInLocation }"
+          ></app-profile-about-block>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

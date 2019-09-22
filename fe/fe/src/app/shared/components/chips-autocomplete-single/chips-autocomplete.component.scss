@@ -1,0 +1,13 @@
+.mat-chip {
+  width: 100%;
+  span {
+    display: inline-block;
+    width: calc(100% - 20px);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+  .mat-chip-remove {
+    margin-left: auto;
+  }
+}

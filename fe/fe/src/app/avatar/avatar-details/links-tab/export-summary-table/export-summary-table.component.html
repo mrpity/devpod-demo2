@@ -1,0 +1,56 @@
+<mat-table [dataSource]="summaryData?.fields" id="t_tableBodyCnt" class="export-summary-table">
+
+  <ng-container matColumnDef="field">
+    <mat-header-cell *matHeaderCellDef class="field" id="l_idHeaderCellIdLabel">
+      <span>{{"avatar.exportSummary.columnTitle.field" | translate | uppercase}}</span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let field; let i=index;" class="field" id="d_field_cellData_{{i}}">
+      <span>{{"avatar.labels."+field | translate}}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="{{sn}}" *ngFor="let sn of summaryData?.ids">
+    <mat-header-cell *matHeaderCellDef class="social-network" id="l_snHeaderCellSnLabel">
+      <span class="sn-icon">
+        <img src="../assets/img/sn-export/{{sn.toLowerCase()}}.png" alt="">
+      </span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let field; let i=index;" class="social-network" id="d_{{sn}}_cellData_{{i}}">
+      <span
+        class="sn-field-status"
+        [ngClass]="'sn-field-status-'+summaryData?.summaryList[sn]?.fields[i]?.status"
+      >
+        <span *ngIf="!isErrorStatus(summaryData?.summaryList[sn]?.fields[i]?.status)">
+          {{"avatar.exportSummary.columnTitle.statuses."+summaryData?.summaryList[sn]?.fields[i]?.status | translate}}
+        </span>
+        <span *ngIf="isErrorStatus(summaryData?.summaryList[sn]?.fields[i]?.status)">
+          {{summaryData?.summaryList[sn]?.fields[i]?.error}}
+        </span>
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row id="r_headerRowCnt" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+  <mat-row id="r_rowCnt_{{i}}" *matRowDef="let row; let i = index; columns: displayedColumns;"></mat-row>
+
+</mat-table>
+
+<div class="button-container">
+  <div class="export-summary-table_fails">
+    <div class="export-summary-table_fails-item" *ngFor="let sn of summaryData?.ids">
+      <div class="export-summary-table_fails-item-cnt" *ngIf="summaryData?.summaryList[sn]?.error">
+        <img src="../assets/img/warning-icon.png" class="icon warning" alt="">
+        <span>{{'avatar.importExportFails.' + summaryData?.summaryList[sn]?.type | translate}}: </span>
+        <span>{{'avatar.importCrawlingErrors.' + summaryData?.summaryList[sn]?.error | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <button
+    mat-button
+    type="button"
+    class="button button-text"
+    id="b_reviewAvatarExport"
+    *ngIf="avatarStatus === 'EXPORT_REVIEW'"
+    (click)="exportReview()"
+  >{{"general.close" | translate}}</button>
+</div>

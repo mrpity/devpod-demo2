@@ -1,0 +1,52 @@
+<div class="sidebar-container">
+  <div>
+    <img src="/assets/img/logo.png" alt="" class="logo">
+    <ul class="navigation">
+      <li class="nav-button">
+        <a [routerLink]="['avatar']" routerLinkActive="active-link" id="a_avatarTab">
+          <img src="/assets/img/sidebar/avatars-icon.png" alt="">
+          <span>{{"navigation.avatars" | translate}}</span>
+        </a>
+      </li>
+      <li class="nav-button">
+        <a [routerLink]="['data-source']" routerLinkActive="active-link" id="a_dataSourceTab">
+          <img src="/assets/img/sidebar/datasource-icon.png" alt="">
+          <span>{{"navigation.dataSourceTitle" | translate}}</span>
+        </a>
+      </li>
+      <li class="nav-button">
+        <a [routerLink]="['search']" routerLinkActive="active-link" id="a_searchTab">
+          <img id="i_searchIcon" src="/assets/img/sidebar/search-icon.png" alt="">
+          <span>{{"navigation.search" | translate}}</span>
+        </a>
+      </li>
+      <li class="nav-button">
+        <a [routerLink]="['analytic']" routerLinkActive="active-link" id="a_analyticsTab">
+          <i class="material-icons">
+            equalizer
+          </i>
+          <span>{{"navigation.analytics" | translate}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <mat-menu #menu="matMenu" yPosition="above" xPosition="after" style="flex: 1 0;">
+    <button mat-menu-item [routerLink]="['user']" id="b_userManagement">
+      <span>{{'userManagement.title' | translate}}</span>
+    </button>
+    <button mat-menu-item [routerLink]="['proxy']" routerLinkActive="active-link" id="b_proxyLink">
+      <span>{{'proxy.title' | translate}}</span>
+    </button>
+    <button mat-menu-item (click)="logout()" id="logout-btn">
+      <span>{{'logout.logoutBtn'| translate}}</span>
+    </button>
+  </mat-menu>
+  <app-notification-open
+    (openNotifications)="openNotifications()"
+  ></app-notification-open>
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-btn" style="flex: 0 1;">
+    <img id="i_menuIcon" class="menu-icon" src="/assets/img/sidebar/menu-icon.png" alt="">
+  </button>
+</div>
+
+

@@ -1,0 +1,31 @@
+<div class="tabs-content-container" id="cnt_webPageTabs">
+  <mat-tab-group #tabGroup (selectedIndexChange)="onChangeTab($event)" id="grp_webPageTabs">
+    <mat-tab class="web-general-tab" id="tb_generalTab">
+      <ng-template mat-tab-label>
+        <span id="tab_general_title">{{'search.results.details.webpage.tabs.general' | translate}}</span>
+      </ng-template>
+      <app-web-general
+        *ngIf="webPageData"
+        [details]="webPageData"
+        [isLoading]="isLoading"
+      ></app-web-general>
+      <div id="loadingSpinner" class="table-overlay" *ngIf="!webPageData">
+        <div class="spinner">
+          <mat-spinner></mat-spinner>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab class="web-origins-tab" id="tb_originsTab">
+      <ng-template mat-tab-label>
+        <span id="tab_origins_title">{{'search.results.details.webpage.tabs.origins' | translate}}</span>
+      </ng-template>
+      <div>Тут будет информация</div>
+      <!-- <ng-template matTabContent> -->
+        <!--<app-web-origins-->
+          <!--[origins]="webPageData?.origins"-->
+          <!--[isLoading]="isLoading$ | async"-->
+        <!--&gt;</app-web-origins>-->
+      <!-- </ng-template> -->
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,23 @@
+@import 'components/grid';
+@import 'components/tuning';
+@import 'components/label';
+@import 'helpers/varibles';
+
+:host {
+  display: flex;
+  padding: 25px 40px 5px;
+  flex: auto;
+}
+
+.loading-spinner {
+  width: 100%;
+  margin-top:10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .gateway-api-errors {
+    width: 100%;
+    color: $dark-red;
+    text-align: center;
+  }
+}

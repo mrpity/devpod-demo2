@@ -1,0 +1,54 @@
+<div id="cnt_webpageGeneral" class="details-container">
+  <div id="c_itemCnt_{{details?.documentId}}" class="item-container">
+    <div id="item_content" class="content-container">
+      <div id="crawlingInfo" class="crawling-info-header">
+        <a id="sourceLink" class="source-link" href="{{details?.sourceLink}}" target="_blank"
+           rel="nofollow noopener noreferrer">{{sourceLink | uppercase}}</a>
+        <span *ngIf="details.crawlingDate"
+              id="item_crawlingDate"> {{"search.results.crawledAt" | translate | uppercase}} {{details.crawlingDate | date: 'HH:mm dd.MM.yyyy'}}</span>
+        <span *ngIf="details.publicationDate"
+              id="item_publishingDate">, {{"search.results.published" | translate | uppercase}} {{details.publicationDate}}</span>
+        <span id="documentId" class="documentId"> {{"search.results.publicationId" | translate | uppercase}}
+          : {{details.documentId}}</span>
+      </div>
+      <div id="title" class="main-title">
+        <a id="publicationLink" class="publication-link" target="_blank" rel="nofollow noopener noreferrer"
+           href="{{details.publicationLink}}">
+          <span id="title_text" [innerHTML]="details.title"></span>
+        </a>
+      </div>
+      <div id="keywords" class="p-b-8" *ngIf="details.keywords?.length">
+      <span *ngFor="let word of details.keywords">
+      #{{word | uppercase}}
+      </span>
+      </div>
+      <div id="result_summary" class="summary">
+        {{!showMore && summaryDescription ? summaryDescription : details.summary}}
+        <span class="show-more-button" *ngIf="summaryDescription" (click)="showMore = !showMore">{{showMore
+          ? ('search.results.collapse' | translate)
+          : ('search.results.expand' | translate) }}</span>
+      </div>
+      <div id="cnt_itemDetails" class="item-details">
+        <div id="item_row" class="row" *ngFor="let row of rows; let i = index;">
+          <span id='title_{{i}}' class="title">{{'search.results.details.webpage.' + row | translate}}:</span>
+          <mat-chip-list id="chip_list_{{row}}">
+            <mat-chip title="{{details[row]}}" id="chip_{{row}}" *ngIf="details[row] && isSingleValue(row); else others">
+              <span class="crop">{{details[row]}}</span>
+            </mat-chip>
+
+            <ng-template #others>
+              <ng-container *ngFor="let item of details[row]">
+                <mat-chip id="chip_{{row}}" title="{{item}}">
+                  <span class="crop">{{item}}</span>
+                </mat-chip>
+              </ng-container>
+            </ng-template>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+    </div>
+  <div class="go-up-btn" id="goUpBtn" [ngClass]="{'show-top-btn': isGoTop()}" (click)="scrollTop()">
+    <mat-icon>keyboard_arrow_up</mat-icon>
+  </div>
+</div>

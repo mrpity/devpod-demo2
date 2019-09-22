@@ -1,0 +1,232 @@
+<div class="header">
+  <h3 class="title" id="s_titleId">{{"proxy.title" | translate}}</h3>
+  <button
+    mat-button
+    class="button button-primary button-actions"
+    (click)="add()"
+    id="b_addBtn">{{"settings.proxy.addBtn" | translate}}</button>
+</div>
+
+<app-filters [listQueryFilter]="listQuery?.searchQuery"></app-filters>
+<div id="c_tableCnt" *ngIf="proxyList$ | async" class="proxy-list">
+  <table mat-table matSort [dataSource]="proxyList$ | async" class="proxy-list-table">
+
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef class="check" id="c_checkHeaderCellCnt">
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selectionOnCurrentPage.hasValue() && isAllSelected()"
+                      id="c_headerCheckbox"
+                      class="data-source-header-checkbox"
+                      [indeterminate]="selectionOnCurrentPage.hasValue() && !isAllSelected()"
+                      [disableRipple]="true">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row; let i=index;" class="check" id="c_cellCheckboxCnt_{{i}}">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="selection.toggle(row.id); selectionOnCurrentPage.toggle(row.id);"
+                      [checked]="selection.isSelected(row.id)"
+                      id="c_headerCheckbox_{{i}}"
+                      [disableRipple]="true">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell
+          *matHeaderCellDef
+          class="id"
+          (click)="sortData('id')"
+          [ngClass]="listQuery.sortBy.field === 'id' ? 'sort' : ''"
+          id="l_idHeaderCellIdLabel">
+        <span>{{"settings.proxy.list.id" | translate | uppercase}}</span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+          id="b_idSortButton"
+        >sort
+        </mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="id" id="d_idCellData_{{i}}">
+        <span [title]="proxy.id">{{proxy.id}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell
+          *matHeaderCellDef
+          class="country"
+          (click)="sortData('country')"
+          [ngClass]="listQuery.sortBy.field === 'country' ? 'sort' : ''"
+          id="l_countryHeaderCellIdLabel">
+        <span>{{"settings.proxy.list.country" | translate | uppercase}}</span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+          id="b_countrySortButton"
+        >sort
+        </mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="country" id="d_countryCellData_{{i}}">
+        <span [title]="proxy.country">{{proxy.country}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+      <th mat-header-cell
+          *matHeaderCellDef
+          class="city"
+          (click)="sortData('city')"
+          [ngClass]="listQuery.sortBy.field === 'city' ? 'sort' : ''"
+          id="l_cityHeaderCellIdLabel">
+        <span>{{"settings.proxy.list.city" | translate | uppercase}}</span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+          id="b_citySortButton"
+        >sort
+        </mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="country" id="d_cityCellData_{{i}}">
+        <span [title]="proxy.city">{{proxy.city}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell
+          *matHeaderCellDef
+          class="city"
+          (click)="sortData('type')"
+          [ngClass]="listQuery.sortBy.field === 'type' ? 'sort' : ''"
+          id="l_typeHeaderCellIdLabel">
+        <span>{{"settings.proxy.list.type" | translate | uppercase}}</span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+          id="b_typeSortButton"
+        >sort
+        </mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="country" id="d_typeCellData_{{i}}">
+        <span [title]="proxy.type">{{proxy.type}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="protocol">
+      <th mat-header-cell
+          *matHeaderCellDef
+          class="protocol"
+          (click)="sortData('protocol')"
+          [ngClass]="listQuery.sortBy.field === 'protocol' ? 'sort' : ''"
+          id="l_protocolHeaderCellIdLabel">
+        <span>{{"settings.proxy.list.protocol" | translate | uppercase}}</span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+          id="b_protocolSortButton"
+        >sort
+        </mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="protocol" id="d_protocolCellData_{{i}}">
+        <span [title]="proxy.protocol">{{proxy.protocol}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="host">
+      <th mat-header-cell
+          *matHeaderCellDef
+          class="host"
+          (click)="sortData('host')"
+          [ngClass]="listQuery.sortBy.field === 'host' ? 'sort' : ''"
+          id="l_hostHeaderCellIdLabel">
+        <span>{{"settings.proxy.list.host" | translate | uppercase}}</span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+          id="b_hostSortButton"
+        >sort
+        </mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="host" id="d_hostCellData_{{i}}">
+        <span [title]="proxy.host">{{proxy.host}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="port">
+      <th mat-header-cell
+          *matHeaderCellDef
+          class="port"
+          (click)="sortData('port')"
+          [ngClass]="listQuery.sortBy.field === 'port' ? 'sort' : ''"
+          id="l_portHeaderCellIdLabel">
+        <span>{{"settings.proxy.list.port" | translate | uppercase}}</span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+          id="b_portSortButton"
+        >sort
+        </mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="port" id="d_portCellData_{{i}}">
+        <span [title]="proxy.port">{{proxy.port}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell
+          *matHeaderCellDef
+          class="description"
+          (click)="sortData('description')"
+          [ngClass]="listQuery.sortBy.field === 'description' ? 'sort' : ''"
+          id="l_descriptionHeaderCellIdLabel">
+        <span>{{"settings.proxy.list.description" | translate | uppercase}}</span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+          id="b_descriptionSortButton"
+        >sort
+        </mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="description" id="d_descriptionCellData_{{i}}">
+        <span [title]="proxy.description">{{proxy.description}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef id="l_actionsHeaderCellLabel" class="actions"></th>
+      <td mat-cell *matCellDef="let proxy; let i=index;" class="actions" id="d_actionsCellData_{{i}}">
+        <button id="b_deleteBtn_{{i}}" name="delete" mat-icon-button (click)="deleteProxy([proxy.id])" class="delete-btn">
+          <img src="assets/img/icon-delete.png" name="delete" width="24px" height="24px" alt="">
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row id="r_headerRowCnt" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row id="r_rowCnt_{{i}}"
+             *matRowDef="let row; let i = index; columns: displayedColumns;"
+             (click)="openDetails($event, row.id)">
+    </tr>
+  </table>
+
+  <div class="table-overlay" *ngIf="isLoading$ | async">
+    <div class="spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+
+  <mat-paginator
+    class="custom-paginator"
+    [ngClass]="{'p-b-70': selection.hasValue()}"
+    [length]="proxyListLength$ | async"
+    [pageSize]="listQuery.pageSize"
+    [pageIndex]="listQuery.pageNumber"
+    [pageSizeOptions]="[20, 40, 60, 80, 100]"
+    (page)="paginationChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+<app-delete-snackbar
+  *ngIf="selection.hasValue()"
+  (action)="deleteProxy()"
+  [message]="helpers.getItemCountMessage(selection.selected.length)"
+></app-delete-snackbar>

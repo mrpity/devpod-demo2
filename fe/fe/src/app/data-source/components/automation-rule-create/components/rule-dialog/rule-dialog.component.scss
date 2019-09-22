@@ -1,0 +1,165 @@
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'components/popup';
+
+$input_left_margin: 32px;
+$width_100: 100%;
+$mat_button_group_width: calc(#{$width_100} * 2 / 3 - #{$input_left_margin});
+
+:host{
+  display: flex;
+  height: 100%;
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  .dialog-inner-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .repeating-type-cnt {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .repeating-type-toggle {
+        box-sizing: border-box;
+        box-shadow: none;
+        width: $mat_button_group_width;
+        .mat-button-toggle {
+          text-align: center;
+          width: calc(#{$mat_button_group_width} / 4);
+          border-left: 1px solid $deep-blue;
+          flex-grow: 1;
+          &:first-child {
+            border-left: none;
+          }
+          .repeating-type-item {
+            color: $dark-grey;
+            height: 14px;
+            font-family: RobotoMono, sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.33;
+            letter-spacing: 0.6px;
+            text-align: center;
+            border-right: none;
+          }
+
+          &-checked {
+            background-color: $deep-blue;
+            .repeating-type-item {
+              color: $white;
+            }
+          }
+        }
+      }
+      .once-cnt {
+        .row-from-to {
+          margin-bottom: 16px;
+          mat-form-field {
+            width: calc(#{$width_100} / 3 - #{$input_left_margin});
+            margin-left: $input_left_margin;
+            &:first-child {
+              margin-left: 0;
+              margin-right: 10px;
+            }
+            &:nth-of-type(2) {
+              margin-left: 10px;
+            }
+          }
+        }
+        .row-when {
+          mat-form-field {
+            width: calc(#{$width_100} / 3 - #{$input_left_margin});
+            margin-left: $input_left_margin;
+            &:first-child {
+              margin-left: 0;
+            }
+          }
+        }
+
+        .row-expiration-reason {
+          padding-top: 32px;
+          display:flex;
+          .reason_action {
+            display: flex;
+            flex-direction: column;
+            width: calc(#{$width_100} / 3 - #{$input_left_margin});
+            margin-right: $input_left_margin;
+            .reason_label {
+              margin-bottom: 7px;
+              text-transform: uppercase;
+              color: $warm-grey;
+              font-size: 12px;
+              line-height: 18px;
+              font-family: Roboto, sans-serif;
+              font-weight: 400;
+              &:after {
+                content: ' *';
+                color: $red;
+              }
+            }
+          }
+          mat-form-field {
+            width: calc(#{$width_100} / 3 - #{$input_left_margin});
+          }
+            mat-radio-group {
+              min-width: calc(#{$width_100} / 3 - #{$input_left_margin});
+              mat-radio-button {
+                margin-left: $input_left_margin;
+                &:first-child {
+                  margin-left: 0;
+                }
+              }
+          }
+        }
+      }
+    }
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0;
+      button:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.title-small{
+  height: 16px;
+  font-family: Roboto Mono, sans-serif;
+  -webkit-margin-after: 0.6em;
+  -webkit-margin-before: 1.67em;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: $warm-grey;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+}
+
+
+
+::ng-deep {
+  .mat-button-toggle-group-appearance-standard {
+    border: 1px solid $deep-blue !important;
+  }
+}
+
+
+

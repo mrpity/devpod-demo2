@@ -1,0 +1,58 @@
+@import "components/grid";
+
+.tooltip-log-icon {
+  margin: 0 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tooltip-log-wrapper {
+  position: relative;
+  background: #cfeeed;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px #888;
+  padding: 15px;
+  font-size: 14px;
+  text-transform: uppercase;
+  top: -5px;
+  margin-left: -50px;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 54px;
+    bottom: -7px;
+    width: 0px;
+    height: 0px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 7px solid rgba(0, 0, 0, 0.1);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 56px;
+    bottom: -6px;
+    width: 0px;
+    height: 0px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #cfeeed;
+  }
+}
+
+.tooltip-log-item {
+  margin-bottom: 3px;
+  &_error {
+    color: $red;
+  }
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.tooltip-toggle-title {
+  text-transform: uppercase;
+  font-size: 14px;
+}

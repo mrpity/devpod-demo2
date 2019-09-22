@@ -1,0 +1,51 @@
+@import 'helpers/varibles';
+
+.inner-snack-bar-container {
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
+  color:black;
+  margin: 0;
+  z-index: 1000;
+  padding: 15px 45px;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  width: calc(100% - #{$sidebar-width});
+
+  .delete-btn {
+    width: 176px;
+    height: 36px;
+    font-family: RobotoMono, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.25;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #ff460d;
+    border: 1px solid #ff460d;
+    &:hover {
+      border: solid 2px #ff6621;
+      color: #ff6621;
+      background-color: white;
+    }
+  }
+  .message {
+    height: 16px;
+    font-family: RobotoMono, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: 0.4px;
+    color: #2d2d2d;
+    text-transform: uppercase;
+  }
+}

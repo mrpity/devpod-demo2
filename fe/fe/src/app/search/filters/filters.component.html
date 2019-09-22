@@ -1,0 +1,94 @@
+<form #filtersForm id="f_searchForm" class="search-form" [formGroup]="form">
+  <div id="cnt_searchInput" class="search-input-container" >
+    <mat-form-field id="f_searchFormField" class="search-field">
+      <input
+        matInput
+        #searchInput
+        name="searchInput"
+        id="i_searchString"
+        type="text"
+        required
+        formControlName="query"
+        [value]="filter.query"
+        [placeholder]="'search.internal.search.placeholder' | translate ">
+      <mat-error id="e_shortSearch" *ngIf="f['query'].errors?.minlength">
+        {{"search.internal.validation.short" | translate}}
+      </mat-error>
+    </mat-form-field>
+    <div class="button-container m-b-16">
+      <button mat-button
+              class="button button-primary"
+              id="b_saveBtn"
+              *ngIf="buttonsData.isSearchBtn"
+              [disabled]="!isFiltersEnabled()"
+              (click)="save()"
+              #searchBtn>{{"search.searchBtn" | translate | uppercase}}
+      </button>
+
+      <button mat-button
+              class="button button-primary"
+              id="b_getNewBtn"
+              *ngIf="buttonsData.isGetNewBtn"
+              [disabled]="buttonsData.isGetNewBtnDisabled"
+              (click)="getNew.emit()"
+              #getNewBtn>{{"search.getNewBtn" | translate | uppercase}}
+      </button>
+
+      <button mat-button
+              class="button button-second"
+              id="b_cancelBtn"
+              *ngIf="buttonsData.isCancelBtn"
+              [disabled]="buttonsData.isCancelBtnDisabled"
+              (click)="cancel.emit()">{{"search.cancelBtn" | translate | uppercase}}
+      </button>
+    </div>
+  </div>
+  <div class="row-container" id="cnt_row">
+    <mat-form-field id="cnt_resourceType" class="input-field">
+      <mat-select
+        [placeholder]="'search.filters.resourceTypes' | translate"
+        id="s_resourceType"
+        multiple
+        required
+        formControlName="resourceTypes"
+        [value]="filter.resourceTypes"
+        #resourceType>
+        <mat-option *ngFor="let type of resourceTypes" [value]="type" [attr.value]="type">
+          {{'search.filters.resource.' + type | lowercase | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field id="cnt_resultType" class="input-field" [ngClass]="{'hidden': !filterBy.byResourceType(filter.resourceTypes || [])}" >
+      <mat-select
+        [placeholder]="'search.filters.resultTypes' | translate"
+        id="s_resultType"
+        multiple
+        required
+        formControlName="resultTypes"
+        [value]="filter.resultTypes">
+        <mat-option *ngFor="let type of resultTypes" [value]="type" [attr.value]="type">
+          {{'search.filters.result.' + type | lowercase | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div id="cnt_fromTo" [ngClass]="{'hidden': !((filter.resultTypes || [])?.includes('POST'))}" class="input-field flex">
+      <mat-form-field id="cnt_fromDate" class="flex-grow-1">
+        <input matInput
+               [matDatepicker]="pickerFrom"
+               id="i_fromDate"
+               [placeholder]="'search.filters.fromToDate' | translate"
+               formControlName="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field id="cnt_toDate" class="flex-grow-1">
+        <input matInput
+               [matDatepicker]="pickerTo"
+               id="i_toDate"
+               formControlName="toDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

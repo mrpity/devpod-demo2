@@ -1,0 +1,34 @@
+<mat-icon
+  [satPopoverAnchor]="logTooltip"
+  (click)="logTooltip.toggle(); isTooltipVisible = !isTooltipVisible"
+  [title]="(isTooltipVisible ? 'avatar.importExportLog.hint.close' : 'avatar.importExportLog.hint.open') | translate"
+  class="tooltip-log-icon"
+>
+  {{ isTooltipVisible ? 'close' : 'list' }}
+</mat-icon>
+<span class="tooltip-toggle-title">{{'avatar.importExportLog.toggleBtnTitle' | translate}}</span>
+<sat-popover
+  #logTooltip
+  verticalAlign="above"
+  horizontalAlign="start"
+>
+  <div class="tooltip-log-wrapper" *ngIf="avatarLog?.length">
+    <div class="tooltip-log-item"
+      *ngFor="let item of avatarLog; let i = index"
+      [ngClass]="{'tooltip-log-item_error' : item.error}"
+    >
+      <div>
+        <span class="tooltip-log-item_date">
+          {{item.createdAt | date:'HH:mm dd.MM.yyyy'}}
+        </span>
+        <span class="tooltip-log-item_message">
+          <span>{{'avatar.importExportLog.messages.' + item.messageType | translate}}</span>
+          <span *ngIf="item.error">: {{'avatar.importCrawlingErrors.' + item.error | translate}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="tooltip-log-wrapper" *ngIf="!avatarLog?.length">
+    {{'avatar.importExportLog.noData' | translate}}
+  </div>
+</sat-popover>

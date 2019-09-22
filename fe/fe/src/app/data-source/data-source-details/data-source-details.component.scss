@@ -1,0 +1,15 @@
+@import 'helpers/varibles';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.edit-button {
+  position: fixed;
+  right: 0;
+  bottom: 7px;
+}
+
+

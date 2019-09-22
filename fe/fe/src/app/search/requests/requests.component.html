@@ -1,0 +1,46 @@
+<div class="requests-container">
+  <div class="item-container button-container">
+    <button mat-button class="button button-second" (click)="this.newSearch.emit()" id="new_search">{{'search.newSearchBtn' | translate}}
+    </button>
+  </div>
+
+  <div *ngFor="let request of requestList; let i = index"
+       class="item-container item"
+       id="c_itemCnt_{{i}}"
+       (click)="clickDetailsStream$.next(request)"
+       [ngClass]="{'selected-item': isSelected(request.id), 'cursor-pointer': !isSelected(request.id)}">
+    <div class="data-container">
+      <span id="request_date_{{i}}" class="request-date">{{request.searchDate | date: 'HH:mm dd.MM.yyyy'}}</span>
+      <span id="request_query_{{i}}" title="{{request.query}}" class="request-query">{{request.query}}</span>
+      <div id="request_types_cnt_{{i}}" class="request-types">
+        <ng-container *ngFor="let type of request.resourceTypes">
+          <img id="request_types_icon_{{i}}" class="request-icon" src="assets/img/types/{{type | lowercase}}.png"
+               alt="">
+        </ng-container>
+      </div>
+    </div>
+    <div class="spinner_cnt">
+      <div *ngIf="request.externalSearch && externalStatusService.isLoading(request.externalSearch.status)" class='inner-spinner-cnt' id="inner_spinner_cnt">
+        <mat-spinner class="spinner" [diameter]="40"></mat-spinner>
+        <div class='external-count'>{{
+          request.externalSearch?.countToProcess > 0
+            ? request.externalSearch?.countToProcess
+            : ''
+          }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<mat-paginator
+  *ngIf="requestsTotal > pageSize"
+  class="requests-paginator"
+  [length]="requestsData.requestsTotal"
+  [pageSize]="pageSize"
+  [pageIndex]="routeQueryParams?.reqPage"
+  [pageSizeOptions]="[20, 40, 60, 80, 100]"
+  (page)="paginationChange.emit($event)"
+  showFirstLastButtons>
+</mat-paginator>
+

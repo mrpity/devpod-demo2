@@ -1,0 +1,12 @@
+<div class="header" id="details-header">
+  <app-breadcrumbs breadcrumbs-content [items]="breadcrumbs" [id]="breadcrumbsId"></app-breadcrumbs>
+  <div class="actions">
+    <h1 id="s_titleId" class="title-large">{{headerName}}</h1>
+    <button id="b_actionBtn"
+            mat-icon-button
+            class="close-btn"
+            type="button"
+            (click)="emitAction.emit($event)"></button>
+
+  </div>
+</div>

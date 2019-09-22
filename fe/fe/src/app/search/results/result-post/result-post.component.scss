@@ -1,0 +1,10 @@
+/*
+TODO: make .main class flex (add to all his child components flex: auto)
+ */
+
+:host {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%; //remove after  .main becomes flex
+}

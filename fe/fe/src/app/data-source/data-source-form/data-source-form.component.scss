@@ -1,0 +1,79 @@
+@import "components/tuning";
+@import "helpers/varibles";
+@import 'components/grid';
+@import 'components/label';
+
+
+$input_left_margin: 32px;
+$width_100: 100%;
+$max_field_count: 4;
+$header_height: 115px;
+$single: calc((#{$width_100} - 2 * #{$input_left_margin}) / #{$max_field_count});
+
+.data-source-form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - #{$header_height});
+  justify-content: space-between;
+}
+
+.data-source-form,
+.data-source-form-rules {
+  flex: 1;
+  padding: 0 40px;
+}
+
+.data-source-form-rules {
+  flex-basis: 50%;
+}
+
+h1, h4 {
+  margin: 0;
+}
+
+#cnt_proxyCountryCnt {
+  width: calc(25% - #{$input_left_margin}/2);
+}
+
+.rule-status {
+  display: flex;
+  width: 100%;
+  min-height: 45px;
+  align-items: center;
+  justify-content: space-between;
+  .toggle-section {
+    display: flex;
+    width: calc(#{$width_100} / 2 - #{$input_left_margin});
+    align-items: center;
+    mat-label {
+      margin-right: 24px;
+    }
+  }
+}
+
+.mat-form-field {
+  min-width: 150px;
+}
+
+.one_field {
+  width: $single;
+  margin-right: 2rem;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.crawl-images {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  flex-shrink: 0;
+  min-width: 150px;
+}
+
+::ng-deep {
+  .mat-slide-toggle-persistent-ripple {
+    opacity: 0 !important;
+  }
+}

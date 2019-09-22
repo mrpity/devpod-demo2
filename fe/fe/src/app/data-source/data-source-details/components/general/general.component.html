@@ -1,0 +1,95 @@
+<div class="loading-spinner" *ngIf="isLoadingResults || failedGateway" id="d_loadingSpinnerCnt">
+  <mat-spinner *ngIf="isLoadingResults" id="s_spinnerCmp"></mat-spinner>
+  <div id="cnt_errorCnt" class="gateway-api-errors" *ngIf="failedGateway">
+    {{"dataSource.gatewayUnavailable" | translate}}
+  </div>
+</div>
+<div id="c_generalCnt" class="flex flex-col width-100 word-break-all" *ngIf="!isLoadingResults && !failedGateway">
+  <div id="c_createdCnt" class="flex m-b-16">
+    <div class="flex flex-col">
+      <mat-label class="label" id="l_created">{{'dataSource.list.columnTitle.created' | translate}}
+      </mat-label>
+      <span id="d_created">{{data?.createdAt | date: 'HH:mm dd.MM.yyyy'}}</span>
+    </div>
+    <div class="flex flex-col m-l-64">
+      <mat-label class="label" id="l_owner">{{'dataSource.list.columnTitle.owner' | translate}}</mat-label>
+      <span id="d_owner">{{data?.createdBy}}</span>
+    </div>
+    <div class="flex flex-col flex-col-4 m-l-64">
+      <mat-label class="label">{{'dataSource.addDataSource.images' | translate}}</mat-label>
+      <mat-slide-toggle
+        class="enabled_toggle"
+        [disableRipple]="true"
+        id="t_crawlMedia"
+        color="warn"
+        id="t_crawlMedia"
+        [disabled]="true"
+        [checked]="data?.crawlMedia">
+        {{data?.crawlMedia
+        ? ("dataSource.addDataSource.crawlMediaExclude" | translate)
+        : ("dataSource.addDataSource.crawlMediaInclude" | translate)}}
+      </mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="flex m-b-16">
+    <div id="c_typeCnt" class="flex flex-col">
+      <mat-label class="label" id="l_type">{{'dataSource.list.columnTitle.type' | translate}}</mat-label>
+      <span id="d_type">{{helpers.getType(data?.type) | translate}}</span>
+    </div>
+    <div id="c_depthCnt" class="flex flex-col m-l-64">
+      <mat-label class="label" id="l_depth">{{'dataSource.addDataSource.depth' | translate}}</mat-label>
+      <span id="d_depth">{{data?.depth}}</span>
+    </div>
+  </div>
+
+  <div id="c_urlCnt" class="flex flex-col width-100 m-b-16" *ngIf="data?.url">
+    <mat-label id="l_url" class="label">{{'dataSource.list.columnTitle.url' | translate}}</mat-label>
+    <span id="d_url">{{data?.url}}</span>
+  </div>
+
+  <div id="c_profileIdCnt" class="flex flex-col width-100 m-b-16" *ngIf="data?.profileId">
+    <mat-label id="l_targetUser" class="label">{{'dataSource.addDataSource.targetUser' | translate}}</mat-label>
+    <span id="d_targetUser">{{data?.profileId}}</span>
+  </div>
+
+  <div id="c_avatarCredentialsCnt"
+       class="flex flex-col m-b-16"
+       *ngIf="crawling.byAvatarCredentials(data?.type)">
+    <mat-label class="label">{{"dataSource.addDataSource.avatarForConnections" | translate}}</mat-label>
+    <span>{{"dataSource.addDataSource.avatarForConnections.any" | translate}}</span>
+  </div>
+
+  <div class="flex m-b-16" *ngIf="webGeneral">
+    <div id="c_proxyCountryCnt" class="flex flex-col">
+      <mat-label class="label" id="proxyCountry">{{'dataSource.addDataSource.proxyCountry' | translate}}</mat-label>
+      <span id="d_proxyCountry">{{ data?.proxyCountry }}</span>
+    </div>
+
+    <div id="c_proxyCityCnt" class="flex flex-col m-l-64">
+      <mat-label class="label" id="proxyCity">{{'dataSource.addDataSource.proxyCity' | translate}}</mat-label>
+      <span id="d_proxyCity">{{data?.proxyCity || '-'}}</span>
+    </div>
+  </div>
+
+  <div id="c_automationRulesStatusCnt" class="flex align-items-center width-100 flex-wrap m-b-16" >
+    <mat-label class="title-medium" id="l_automationRules">{{"dataSource.addDataSource.automationRules" | translate}}</mat-label>
+    <mat-slide-toggle
+      id="t_automationRules"
+      class="enabled_toggle m-l-24"
+      [disableRipple]="true"
+      [disabled]="isStateChanging"
+      (change)="toggleAutomationRulesState(!data?.enabled)"
+      color="warn"
+      [checked]="data?.enabled">
+      {{data?.enabled
+      ? ("dataSource.addDataSource.automationRulesStatusActive" | translate)
+      : ("dataSource.addDataSource.automationRulesStatusInactive" | translate)}}
+    </mat-slide-toggle>
+  </div>
+  <app-automation-rule-list
+    [automationRulesStream]="automationRulesStream"
+    [isViewMode]="true"
+    (removeRule)="removeRule($event)">
+  </app-automation-rule-list>
+</div>

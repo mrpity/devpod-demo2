@@ -1,0 +1,13 @@
+<div class="about-block-item">
+  <h5>
+    {{data.heading | translate}}
+    <div class="btn-container" *ngIf="data.description?.length">
+      <button type="button"  (click)="onEdit()" class="edit-btn" [id]="'b_editBlock-' + qa_id"><mat-icon>edit</mat-icon></button>
+      <button type="button"  (click)="onRemove()" class="remove-btn" [id]="'b_removeBlock-' + qa_id"><mat-icon>delete</mat-icon></button>
+    </div>
+</h5>
+  <div class="empty-description" *ngIf="!data.description?.length">
+    <button type="button" class="add-about-block-btn" (click)="onEdit()" [id]="'b_addBlock-' + qa_id"></button>
+  </div>
+  <p class="description" [id]="'p_description-' + qa_id">{{data.description}}</p>
+</div>

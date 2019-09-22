@@ -1,0 +1,54 @@
+<div class="flex flex-row justify-content-space-between settings" *ngIf="!isExportPreview && !isExportSummary">
+  <div class="sn-select-container" >
+    <mat-form-field class="sn-select">
+      <mat-select
+        placeholder="{{'avatar.links.selectSNs' | translate}}"
+        [(value)]="selectedSN"
+        id="sn_select"
+        [disabled]="!socialNetworks?.length"
+        multiple
+      >
+        <mat-option *ngFor="let sn of socialNetworks" [value]="sn" [attr.value]="sn">
+          {{'avatar.links.' + sn | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="row-item button-container">
+    <button
+      mat-button
+      [disabled]="isActionDisabled()"
+      type="button"
+      class="button button-second"
+      (click)="next()"
+      id="b_next"
+    >{{'avatar.links.nextBtn' | translate}}</button>
+  </div>
+</div>
+<div class="export-msg" *ngIf="isExportPreview">
+  <span>{{'avatar.links.exportMsg' | translate}}</span>
+  <span *ngFor="let sn of selectedSN; let i = index">
+    <span *ngIf="i !== 0">, </span>
+  {{'avatar.links.' + sn | translate }}
+  </span>
+</div>
+
+<app-export-diff-table
+  (cancel)="exportCancel()"
+  (confirm)="exportStart($event)"
+  [selectedSN]="selectedSN"
+  [exportDisabled]="exportDisabled"
+  *ngIf="isExportPreview"
+></app-export-diff-table>
+
+<app-export-summary-table
+  (confirm)="exportReview()"
+  [summaryData]="exportSummaryData"
+  [avatarStatus]="avatarStatus"
+  *ngIf="isExportSummary && exportSummaryData"
+></app-export-summary-table>
+
+<div *ngIf="isAwaitingConfirmation && !exportSummaryData" class="settings progress-bar">
+  <div class="progress-label">{{'avatar.links.processing' | translate}}</div>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>

@@ -1,0 +1,36 @@
+@import 'helpers/mixins';
+@import 'helpers/varibles';
+
+.inner-snack-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .message {
+    color: $white;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.25;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    @include text-ellipsis
+  }
+  .mat-icon {
+    color: $marine;
+    font-size: 30px;
+    height: 12px;
+    min-width: 12px;
+    width: 12px;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 15px;
+    &:hover,
+    &:focus {
+      color: $dark-grey;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}

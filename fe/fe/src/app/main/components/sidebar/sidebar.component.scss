@@ -1,0 +1,80 @@
+@import 'helpers/varibles';
+
+.sidebar-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  width: $sidebar-width;
+  background-color: $marine;
+  position: fixed;
+}
+.logo{
+  display: block;
+  margin: 0 auto;
+  padding: 10px 0;
+  width: 76px;
+  height: 88px;
+}
+.navigation{
+  list-style: none;
+  padding: 0;
+  .nav-button{
+    width:124px;
+    display: flex;
+    a{
+      padding: 12px 0;
+      display: flex;
+      width:100%;
+      flex-direction: column;
+      text-align: center;
+      text-decoration: none;
+      border-left: 3px solid $marine;
+      text-transform: uppercase;
+      font-family: Roboto Mono, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: 0.4px;
+      font-size:12px;
+      opacity: 0.6;
+      &.active-link {
+        color: #0e64ac !important;
+        border-left: 4px solid $red !important;
+        background-color: $dark-blue;
+        opacity: 1;
+      }
+      img{
+        display: flex;
+        width: 24px;
+        margin:0  auto 5px;
+      }
+      span{
+        color: $white;
+
+      }
+    }
+  }
+}
+.menu-btn{
+  margin: 0 auto 30px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  &:hover{
+    opacity: 0.8;
+  }
+  .menu-icon{
+    width: 20px;
+    height: 20px;
+
+  }
+}
+
+i {
+  color: $white;
+}

@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>{{heading | translate}}</h2>
+<mat-dialog-content>
+  <mat-form-field style="width: 100%">
+    <mat-select
+      id="s_maritalStatus"
+      disableOptionCentering
+      [placeholder]="'avatar.labels.maritalStatus' | translate"
+      [formControl]="maritalStatusCtrl"
+    >
+      <mat-option *ngFor="let status of maritalStatusKeys" [value]="statuses[status]" [attr.value]="statuses[status]">
+        {{ 'avatar.labels.maritalStatuses.'+statuses[status] | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions class="btn-container">
+  <button mat-button mat-dialog-close class="btn btn-cancel" id="popup-cancel-btn">{{this.data.cancelBtn | translate}}</button>
+  <button
+    mat-button
+    (click)="closeDialog()"
+    class="btn btn-confirm"
+    id="popup-confirm-btn"
+  >
+    {{this.data.confirmBtn | translate}}
+  </button>
+</mat-dialog-actions>

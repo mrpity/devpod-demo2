@@ -1,0 +1,35 @@
+<ng-template #loading>
+  <app-spinner *ngIf="(isDocumentLoading$ | async)"></app-spinner>
+</ng-template>
+
+
+<div id="m_notCrawled"
+     class="error-message"
+     *ngIf="!(isDocumentCrawled$ | async)">
+  {{'dataSource.dataSourceDetail.details.notCrawled' | translate}}
+</div>
+
+
+<ng-container *ngIf="resultDetails$ | async; else loading">
+  <ng-container [ngSwitch]="documentType$ | async">
+    <app-post-general *ngSwitchCase="contentType.post"
+                      [details]="resultDetails$ | async"
+                      [isPostGeneralLoading]="isPostGeneralLoading$ | async"
+                      [isResultsLoadingFailure]="isOriginsLoadingFailure$ | async"
+    ></app-post-general>
+
+    <ng-container *ngSwitchCase="contentType.webpage">
+      <app-web-general
+        [details]="resultDetails$ | async"
+      ></app-web-general>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="contentType.profile">
+      <app-profile
+        [profileData]="resultDetails$ | async"
+        [forModule]="'DATA_SOURCE'"
+      ></app-profile>
+    </ng-container>
+
+  </ng-container>
+</ng-container>

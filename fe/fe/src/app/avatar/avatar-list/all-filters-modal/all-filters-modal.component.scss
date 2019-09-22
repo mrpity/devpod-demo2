@@ -1,0 +1,56 @@
+@import 'helpers/varibles';
+
+.title{
+  display: flex;
+  .close-btn{
+    margin-left: auto;
+    border: none;
+    width: 30px;
+    height: 30px;
+    outline: none;
+    cursor: pointer;
+    opacity: 0.7;
+    background-image: url('../../../../assets/img/icon-close.png');
+    background-size: contain;
+  }
+}
+.filters-container{
+  height: auto;
+  overflow: visible;
+  .separator{
+    font-size: 20px;
+    line-height: 60px;
+  }
+}
+.checkbox-block {
+  display: flex;
+  justify-content: space-between;
+}
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  margin-right: 95px;
+}
+.checkbox-list-title {
+  margin: 20px 0 10px;
+}
+.time-range{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.btn-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.validation-hint {
+  top: -15px;
+  color: $red;
+  text-transform: uppercase;
+  font-size: 75%;
+  position: relative;
+}
+
+

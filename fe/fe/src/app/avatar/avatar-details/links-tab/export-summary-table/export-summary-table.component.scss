@@ -1,0 +1,79 @@
+
+.export-summary-table {
+  margin-top: 20px;
+
+  .field {
+    flex: 0 0 15%;
+    padding-left: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+}
+
+.sn-icon {
+  img {
+    height: 30px;
+  }
+}
+
+.sn-field-status {
+  text-transform: uppercase;
+}
+
+.sn-field-status-SKIPPED,
+.sn-field-status-ABORTED {
+  color: #CCC;
+}
+
+.sn-field-status-DONE {
+  color: #7ED322;
+}
+
+.sn-field-status-FAILED {
+  color: #FF460D;
+}
+
+.sn-field-status-IN {
+  color: #7ED322;
+}
+
+.sn-field-status-IN_PROGRESS {
+  color: #F5A623;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+::ng-deep .mat-header-row {
+  border-bottom-width: 2px;
+}
+
+.export-summary-table_fails {
+  color: #FF460D;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.export-summary-table_fails-item {
+  margin-bottom: 10px;
+}
+
+.export-summary-table_fails-item-cnt {
+  display: flex;
+  align-items: center;
+}
+
+.export-summary-table_fails-item-cnt span {
+  margin-right: 5px;
+}
+
+.icon{
+  width: 20px;
+  height: 20px;
+  margin-top: -5px;
+  margin-right: 8px;
+}

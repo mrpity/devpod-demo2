@@ -1,0 +1,28 @@
+<div id="comment_{{i}}" class="comment" *ngFor="let comment of comments; let i = index"
+     [ngClass]="{'children-comment': comment.level === 2}">
+  <div id="header_{{i}}" class="comment-header">
+    <div class="text">
+      <div id="dateHeader" class="date-header">
+        <span id="publishedDate" *ngIf="comment.creationDateTime">{{"search.results.published" | translate}} {{comment.creationDateTime}}, </span>
+        <span id="updatedAt" *ngIf="comment.updateDateTime">{{"search.results.details.updatedDateTime" | translate}} {{comment.updateDateTime*1000 | date: 'HH:mm dd.MM.yyyy'}}</span>
+      </div>
+      <div class="title-container">
+        <a id="authorUrl_{{i}}" class="authorUrl" href="{{comment.url}}" target="_blank" rel="nofollow noopener noreferrer" >{{"search.results.details.comment" | translate}}</a>
+        {{"search.results.details.from" | translate}} <a id="authorUrl2_{{i}}" class="authorUrl" href="{{comment.authorUrl}}" target="_blank">{{comment.authorName || ' User'}}</a>
+      </div>
+      <span id="body_{{i}}" class="comment-body" [innerHTML]="comment.body"></span>
+    </div>
+  </div>
+  <div class="reactions-container">
+    <div id="likesCount_{{i}}" class="counts">
+      <div>{{"search.results.details.likesCount" | translate}}</div>
+      <div class="tooltip" [ngClass]="{'hide-tooltip': comment.reactions?.length === 0}">{{helpers.likesCount(comment.reactions)}}
+        <div class="tooltip-text">
+          <ng-container *ngFor="let reaction of comment.reactions; let i = index">
+            <div class="reaction">{{reaction.type}}: {{reaction.count}}</div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

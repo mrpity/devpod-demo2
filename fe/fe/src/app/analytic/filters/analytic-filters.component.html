@@ -1,0 +1,76 @@
+<form #filtersForm id="f_searchForm" class="analytic-form" [formGroup]="form">
+  <div id="cnt_searchInput" class="search-input-container" >
+    <mat-form-field id="f_analyticSearchFormField" class="search-field">
+      <input
+        matInput
+        #searchInput
+        name="searchInput"
+        id="i_searchString"
+        type="text"
+        required
+        formControlName="query"
+        [placeholder]="'analytic.search.placeholder' | translate ">
+      <mat-error id="e_shortSearch" *ngIf="f['query'].errors?.minlength">
+        {{"search.internal.validation.short" | translate}}
+      </mat-error>
+    </mat-form-field>
+    <div class="button-container m-b-16">
+      <button mat-button
+              class="button button-primary"
+              id="b_createBtn"
+              [disabled]="isCreateDisabled()"
+              (click)="create()"
+              #searchBtn>{{"analytic.searchBtn" | translate | uppercase}}
+      </button>
+    </div>
+  </div>
+  <div class="row-container" id="cnt_row">
+    <div id="cnt_fromTo" class="date-container">
+      <div class="date-period-container">
+        <div class="date-fields" formGroupName="datePeriod" [ngClass]="{'invalid-period': f['datePeriod'].errors?.notValid}">
+          <mat-form-field id="cnt_fromDate">
+            <input matInput
+                   [matDatepicker]="pickerFrom"
+                   id="i_fromDate"
+                   required
+                   [placeholder]="'analytic.filters.fromDate' | translate"
+                   [max]="currentDate"
+                   formControlName="fromDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field id="cnt_toDate">
+            <input matInput
+                   [matDatepicker]="pickerTo"
+                   id="i_toDate"
+                   required
+                   [placeholder]="'analytic.filters.toDate' | translate"
+                   [max]="currentDate"
+                   formControlName="toDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTo></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <mat-error id="e_toLessThanFrom" *ngIf="f['datePeriod'].errors?.notValid">
+          {{"analytic.validation.fromBiggerThanTo" | translate}}
+        </mat-error>
+        <mat-error id="e_fromInFuture" *ngIf="f['datePeriod']?.errors?.futureFromTo
+        && !f['datePeriod'].errors?.notValid">
+          {{"analytic.validation.fromInFuture" | translate}}
+        </mat-error>
+      </div>
+      <mat-form-field id="cnt_resultType" [ngClass]="{'date-selector': !filtersData?.isResultsFiltersDisabled}">
+        <mat-select
+          [placeholder]="'analytic.filters.scale' | translate"
+          [disabled]="f['datePeriod']?.invalid || filtersData.scale"
+          id="s_scale"
+          required
+          formControlName="scale">
+          <mat-option *ngFor="let type of scales" [value]="type" [attr.value]="type">
+            {{'analytic.filters.scale.' + type | lowercase | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

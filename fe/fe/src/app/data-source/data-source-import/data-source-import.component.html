@@ -1,0 +1,50 @@
+<div class="width-100 height-100" id="c_dataSourceCnt">
+  <div class="header" [ngClass]="{'header-on-error': isLoadingResults || failedGateway}">
+    <app-breadcrumbs [items]="[{label:'анализ данных', route:'../list'}]" [id]="'list'"></app-breadcrumbs>
+    <h1 class="title-large" id="h_addDataSource">{{"dataSource.importDataSource.title" | translate }}</h1>
+  </div>
+  <app-data-source-form
+    [dataSource]="{}"
+    [formObject]="importDataSourceForm"
+    [proxies]="proxyCountryList"
+    [isLoading]="isLoadingResults"
+    [isFailed]="failedGateway"
+    [formMode]="formMode"
+    (submitForm)='import($event)'
+    (submitFailed)='importFailed($event)'
+    (setIsDirty)='setIsDirty($event)'
+    (externalModifications)='makeFormModifications($event)'
+    *ngIf="importDataSourceForm && !isLoadingResults && !failedGateway"
+  >
+    <div form-content-actions class="footer">
+      <button
+        mat-button
+        type="button"
+        class="button button-text"
+        id="b_cancelBtn"
+        (click)="cancelDataSourceCreate()"
+      >
+        {{"general.cancelBtn" | translate}}
+      </button>
+      <button
+        mat-button
+        type="submit"
+        class="button button-primary"
+        id="b_saveBtn"
+        [disabled]="isLoadingResults || failedGateway"
+      >
+        {{"dataSource.importDataSource.importBtn" | translate}}
+      </button>
+    </div>
+  </app-data-source-form>
+
+  <div class="loading-spinner" *ngIf="isLoadingResults || failedGateway" id="d_loadingSpinnerCnt">
+    <mat-spinner *ngIf="isLoadingResults" id="s_spinnerCmp"></mat-spinner>
+    <div id="cnt_errorCnt" class="gateway-api-errors" *ngIf="!isLoadingResults && failedGateway">
+      {{"dataSource.gatewayUnavailable" | translate}}
+    </div>
+  </div>
+</div>
+
+
+

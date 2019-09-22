@@ -1,0 +1,112 @@
+<div id="cnt_postGeneral" class="details-container">
+  <div id="c_itemCnt_{{details?.documentId}}" class="item-container">
+    <div id="item_content" class="content-container">
+      <div id="crawlingInfo" class="crawling-info-header">
+        <span id="crawlingDate" *ngIf="details.crawlingDate">{{"search.results.crawledAt" | translate}} {{details.crawlingDate | date: 'HH:mm dd.MM.yyyy'}}</span>
+        <span id="crawledBy" *ngIf="details.crawledBy"> {{"search.results.crawledBy" | translate}} {{details.crawledBy | uppercase}},</span>
+        <span id="postDate" *ngIf="details.postDate">{{"search.results.published" | translate}} {{details.postDate}}</span>
+        <span id="documentId" class="documentId"> {{"search.results.publicationId" | translate}}: {{details.documentId}}</span>
+      </div>
+      <div id="title" class="main-title" [ngClass]="type">
+        <a id="resourceLink" *ngIf="details.resourceLink; else noResourceLink;" target="_blank" href="{{details.resourceLink}}"  rel="nofollow noopener noreferrer">{{"search.results.post" | translate}} </a>
+        <ng-template #noResourceLink>
+          <span>{{"search.results.post" | translate}} </span>
+        </ng-template>
+        <ng-container *ngIf="details.authorUrl; else: authorName">
+          <a id="authorUrl" target="_blank" href="{{details.authorUrl}}" rel="nofollow noopener noreferrer">
+            <ng-container [ngTemplateOutlet]="authorName"></ng-container>
+          </a>
+          <span id="authorFeeling" *ngIf="details.authorFeeling">{{details.authorFeeling}}</span>
+        </ng-container>
+
+        <ng-template #authorName>
+          <span id="authorName">{{"search.results.from" | translate}} {{details.authorName || "search.results.unknownAuthor" | translate}} </span>
+        </ng-template>
+      </div>
+      <div id="keywords" class="p-b-8" *ngIf="details.keywords?.length">
+        <span *ngFor="let word of details.keywords">
+        #{{word | uppercase}}
+        </span>
+      </div>
+      <div id="result_summary" class="summary" *ngIf="details.summary || summaryDescription">
+        {{!showMore && summaryDescription ? summaryDescription : details.summary}}
+        <span class="show-more-button" *ngIf="summaryDescription" (click)="showMore = !showMore">{{showMore
+          ? ('search.results.collapse' | translate)
+          : ('search.results.expand' | translate) }}</span>
+      </div>
+      <div id="statistic" class="statistics" *ngIf="details.statistics">
+        <ng-container *ngFor="let statistic of details.statistics">
+          <span *ngIf="statistic.sentiment" class="m-t-16">Sentiment analysis: {{statistic.sentiment}}</span>
+        </ng-container>
+      </div>
+      <div id="cnt_itemDetails" class="item-details">
+        <div id="item_row" class="row" *ngFor="let row of rows; let i = index; let first = first;">
+          <span id='title_{{i}}' class="title">{{'search.results.details.webpage.' + row | translate}}:</span>
+          <mat-chip-list #emailsInput id="chip_list_{{row}}"  [selectable]="false">
+
+            <div id="ner_{{row}}" class="chip_row_{{row}}">
+              <ng-container *ngIf="first && details[row]">
+                <mat-chip id="chip_sentimentLabel">
+                  <span class="crop">{{details[row]}}</span>
+                </mat-chip>
+              </ng-container>
+
+              <ng-container *ngIf="!descriptionData[row]?.showMore && descriptionData[row]?.length; else shortData">
+                <mat-chip id="chip_{{row}}" *ngFor="let item of descriptionData[row]" disableRipple title="{{item}}">
+                  <span class="crop">{{item}}</span>
+                </mat-chip>
+              </ng-container>
+
+              <ng-template #shortData>
+                <ng-container *ngIf="details[row]?.length && !first">
+                  <mat-chip id="chip_description_{{row}}" *ngFor="let item of details[row]"  [selectable]="false" disableRipple title="{{item}}">
+                    <span class="crop">{{item}}</span>
+                  </mat-chip>
+                </ng-container>
+              </ng-template>
+
+              <span *ngIf="descriptionData[row]" class="show-more-button" (click)="descriptionData[row].showMore = !descriptionData[row].showMore">{{descriptionData[row].showMore
+                ? ('search.results.collapse' | translate)
+                : ('search.results.expand' | translate) }}</span>
+            </div>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-tab-group [selectedIndex]="currentTabIndex" *ngIf="details">
+    <mat-tab [disabled]="!details.reactions.length">
+      <ng-template mat-tab-label>
+        <div id="likesCount" class="counts">
+          <div>{{"search.results.details.likesCount" | translate}}</div>
+          <div class="tooltip">{{reactionsCount(details.reactions)}}</div>
+        </div>
+      </ng-template>
+      <ng-template matTabContent>
+        <app-reactions  [reactions]="details.reactions" *ngIf="!!details.reactions.length"></app-reactions>
+      </ng-template>
+    </mat-tab>
+    <mat-tab [disabled]="!details.reposts.length">
+      <ng-template mat-tab-label>
+        <div id="repostsCount" class="counts">
+          <div>{{"search.results.details.repostsCount" | translate}}</div>
+          <div class="tooltip">{{details.reposts.length}}</div>
+        </div>
+      </ng-template>
+      <ng-template matTabContent>
+        <app-reposts [reposts]="details.reposts" *ngIf="!!details.reposts.length"></app-reposts>
+      </ng-template>
+    </mat-tab>
+    <mat-tab [disabled]="!details.comments.length">
+      <ng-template mat-tab-label>
+        <div id="commentsCount" class="counts">
+          <div>{{"search.results.details.commentsCount" | translate}}</div>
+          <div class="tooltip">{{details.comments.length}}</div>
+        </div>
+      </ng-template>
+      <ng-template matTabContent>
+        <app-comments  [comments]="details.comments" *ngIf="!!details.comments.length"></app-comments>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

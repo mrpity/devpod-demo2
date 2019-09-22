@@ -1,0 +1,20 @@
+<app-avatar-form
+  [avatarDetails]="avatarDetails"
+  (submitForm)='update($event)'
+  (submitFailed)='updateFailed($event)'
+  (setIsDirty)='setIsDirty($event)'
+  class="avatar-edit-form"
+  *ngIf="!(isLoading$ | async)"
+>
+  <app-breadcrumbs breadcrumbs-content [items]="[{label:'navigation.avatars', route:'../../list'}]" [id]="'avatar'"></app-breadcrumbs>
+
+  <h3 class="title-large" pageTitle-content id="p_avatarEditPage">{{"avatar.editAvatar" | translate }}</h3>
+
+  <div footer-content class="footer">
+    <button mat-button type="button" class="button button-text" id="b_cancelEditAvatar" (click)="cancelAvatarEdit()">{{"general.cancelBtn" | translate}}</button>
+    <button mat-button type="submit" class="button button-primary" id="b_saveAvatar" [disabled]="isCreateDisabled$ | async">{{"general.saveBtn" | translate}}</button>
+  </div>
+</app-avatar-form>
+
+
+

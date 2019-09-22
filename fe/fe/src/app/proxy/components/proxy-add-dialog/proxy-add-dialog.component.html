@@ -1,0 +1,198 @@
+<div id="cnt_headerCnt" class="flex justify-content-space-between flex-shrink-0 m-b-16">
+  <span class="title-large" id="t_title">{{this.data.title | translate}}</span>
+  <button id="b_close" mat-icon-button mat-dialog-close>
+    <img id="i_close" class="mat-icon" src="assets/img/icon-close.png" alt="image">
+  </button>
+</div>
+<form  id="f_addProxyForm" [formGroup]="addProxyForm" class="proxy-form">
+
+  <div class="proxy-info-container">
+    <!-- Host -->
+    <div class="flex info-row">
+      <mat-form-field formGroupName="url" id="cnt_hostCnt" [ngClass]="{'readonly': canSave}">
+        <input
+          matInput
+          id="i_host"
+          [required]="!canSave"
+          [placeholder]="'settings.proxy.add.host' | translate"
+          [readonly]="canSave"
+          formControlName="host">
+        <mat-error *ngIf="submitted && f.url.get('host').errors?.required" id="host_error_msg">
+          {{"settings.proxy.add.validation.host.required" | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Protocol, port  -->
+    <div class="flex info-row">
+      <mat-form-field formGroupName="url" id="cnt_protocolCnt" [ngClass]="{'readonly': canSave}">
+        <mat-select
+          id="s_protocol"
+          [required]="!canSave"
+          [placeholder]="'settings.proxy.add.protocol' | translate"
+          [disabled]="canSave"
+          formControlName="protocol">
+          <mat-option *ngFor="let protocol of protocols" [value]="protocol" [attr.value]="protocol">
+            {{protocol}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f.url.get('protocol').errors?.required" id="protocol_error_msg">
+          {{"settings.proxy.add.validation.protocol.required" | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field formGroupName="url" id="cnt_portCnt" [ngClass]="{'readonly': canSave}">
+        <input
+          matInput
+          id="i_port"
+          [required]="!canSave"
+          type="number"
+          [readonly]="canSave"
+          [placeholder]="'settings.proxy.add.port' | translate"
+          formControlName="port">
+        <mat-error *ngIf="submitted && f.url.get('port').errors?.required" id="port_error_msg">
+          {{"settings.proxy.add.validation.port.required" | translate}}
+        </mat-error>
+        <mat-error id="m_mminlength" *ngIf="submitted && (f.url.get('port').errors?.min || f.url.get('port').errors?.max)">
+          {{"settings.proxy.add.validation.port.minMax" | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Credentials -->
+    <div formGroupName="credentials" class="flex info-row">
+      <mat-form-field id="cnt_loginCnt" [ngClass]="{'readonly': canSave}">
+        <input
+          matInput
+          id="i_login"
+          [placeholder]="'settings.proxy.add.login' | translate"
+          formControlName="login"
+          [readonly]="canSave"
+          [required]="!!f.credentials.get('password').value && !canSave">
+        <mat-error *ngIf="submitted && f.credentials.get('login').errors?.required" id="login_required_msg">
+          {{"settings.proxy.add.validation.credentials.login.required" | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.credentials.get('login').errors?.pattern" id="login_invalid_msg">
+          {{"settings.proxy.add.validation.credentials.login.pattern" | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field id="cnt_passwordCnt" [ngClass]="{'readonly': canSave}">
+        <input
+          matInput
+          id="i_password"
+          [placeholder]="'settings.proxy.add.password' | translate"
+          formControlName="password"
+          [readonly]="canSave"
+          [required]="!!f.credentials.get('login').value && !canSave">
+        <mat-error *ngIf="submitted && f.credentials.get('password').errors?.required" id="password_required_msg">
+          {{"settings.proxy.add.validation.credentials.password.required" | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f.credentials.get('password').errors?.pattern" id="password_invalid_msg">
+          {{"settings.proxy.add.validation.credentials.password.pattern" | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Country, city -->
+    <div class="flex info-row country-container" id="countryCnt">
+      <mat-form-field id="cnt_countryCnt" class="country-form-field readonly">
+        <input
+          matInput
+          id="s_proxyCountry"
+          [readonly]="true"
+          [placeholder]="'settings.proxy.add.country' | translate"
+          formControlName="country"
+        />
+        <ng-container *ngIf="isCountryLoading" [ngTemplateOutlet]="fieldProgress"></ng-container>
+      </mat-form-field>
+
+      <mat-form-field id="cnt_cityCnt" class="city-form-field readonly">
+        <input
+          matInput
+          id="s_proxyCity"
+          [readonly]="true"
+          [placeholder]="'settings.proxy.add.city' | translate"
+          formControlName="city"
+        />
+        <ng-container *ngIf="isCountryLoading" [ngTemplateOutlet]="fieldProgress"></ng-container>
+      </mat-form-field>
+
+    </div>
+
+    <!-- Type -->
+    <div class="flex flex-col-2 info-row">
+      <mat-form-field id="cnt_typeCnt" [ngClass]="{'readonly': !canSave || isCountryLoading}">
+      <input
+        matInput
+        [placeholder]="'settings.proxy.add.type' | translate"
+        [matAutocomplete]="auto"
+        formControlName="type"
+        [readonly]="!canSave || isCountryLoading"
+        id="s_proxyType"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let type of typeListFiltered$ | async" [value]="type" [attr.value]="type">
+          <span>{{type}}</span>
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="submitted && f.type.errors?.required" id="type_error_msg">
+        {{"settings.proxy.add.validation.type.required" | translate}}
+      </mat-error>
+    </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <mat-form-field id="cnt_descriptionCnt" [ngClass]="{'readonly': !canSave || isCountryLoading}">
+    <textarea
+      matInput
+      id="t_description"
+      formControlName="description"
+      [readonly]="!canSave || isCountryLoading"
+      [placeholder]="'settings.proxy.add.description' | translate"
+    ></textarea>
+    <mat-error *ngIf="submitted && f['description'].errors?.maxlength" id="description_error_msg">
+      {{"settings.proxy.add.validation.description.maxLength" | translate}}
+    </mat-error>
+  </mat-form-field>
+</form>
+
+<div class="footer">
+  <button
+    mat-button
+    id="b_next"
+    (click)="next()"
+    type="button"
+    class="button button-primary"
+    *ngIf="!canSave"
+  >
+    {{this.data.nextBtn | translate}}
+  </button>
+  <button
+    mat-button
+    id="b_cancel"
+    (click)="back()"
+    type="button"
+    class="button button-text __back"
+    *ngIf="canSave"
+  >
+    {{this.data.backBtn | translate}}
+  </button>
+  <button
+    mat-button
+    id="b_add"
+    (click)="add()"
+    type="button"
+    class="button button-primary"
+    *ngIf="canSave"
+  >
+    {{this.data.addBtn | translate}}
+  </button>
+</div>
+
+<ng-template #fieldProgress>
+  <mat-progress-bar
+    class="progress-bar"
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-bar>
+</ng-template>

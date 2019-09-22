@@ -1,0 +1,39 @@
+@import "components/grid";
+@import "components/buttons";
+
+.progress-bar{
+  align-items: center;
+}
+.settings{
+  height: 110px;
+  &.progress-bar{
+    position: relative;
+    top: 40px;
+    align-items: center;
+    .progress-label{
+      color: $warm-grey;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+  }
+}
+.sn-select-container{
+  margin-top: 20px;
+  width: 30%;
+  .sn-select{
+    width: 100%;
+  }
+}
+.button-container{
+  padding: 5px 10px;
+  align-self: center;
+}
+::ng-deep {
+  mat-dialog-container {
+    white-space: pre-line;
+  }
+}
+.export-msg{
+  margin: 20px auto;
+}

@@ -1,0 +1,21 @@
+<div id="table_cnt" class="logsTable mat-table">
+  <div class="mat-header-row">
+    <div [ngClass]="[column, 'mat-header-cell']" *ngFor="let column of displayedColumns; let first = first;"
+         id="l_{{column}}HeaderCellLabel">
+      <span *ngIf="!first">{{"dataSource.dataSourceDetail.statistics.recentLogs.titles." + column | translate | uppercase}}</span>
+    </div>
+  </div>
+  <ng-container *ngFor="let source of dataSource">
+    <app-history-row [source]="source"></app-history-row>
+    <ng-container *ngIf="source.resourceLogs?.length && source.expanded">
+      <ng-container *ngFor="let source of source.resourceLogs">
+        <app-history-row [source]="source"></app-history-row>
+        <ng-container *ngIf="source.resourceLogs?.length && source.expanded">
+          <ng-container *ngFor="let source of source.resourceLogs">
+            <app-history-row [source]="source"></app-history-row>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

@@ -1,0 +1,125 @@
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'components/grid';
+@import 'components/label';
+
+
+:host {
+  width: 25%;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  min-width: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: transparent;
+}
+
+.item-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px 5px 20px;
+  border-left: 4px solid $dark-blue;
+  border-bottom: 1px solid rgba(207, 238, 237, 0.4);
+  height: 80px;
+  background-color: $dark-blue;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  margin-right: 5px;
+  user-select: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.requests-container {
+  flex-grow: 1;
+  border: 1px solid rgba(207, 238, 237, 0.4);
+  border-bottom: none;
+  background-color: $dark-blue;
+  position: relative;
+}
+
+.button-container {
+  flex-direction: row;
+  align-items: center;
+}
+
+.selected-item {
+  border-left: 4px solid $red;
+}
+
+.request-date {
+  color: $warm-grey;
+}
+
+.request-query {
+  color: $white;
+}
+
+.request-icon {
+  filter: brightness(0) invert(1);
+  width: 30px;
+  height: 30px;
+  margin-right: 7px;
+}
+
+::ng-deep {
+  .requests-paginator {
+    border: 1px solid rgba(207, 238, 237, 0.4);
+    background-color: $dark-blue;
+    color: $white-two;
+    .mat-icon-button {
+      color: $white;
+    }
+    .mat-icon-button[disabled][disabled] {
+      color: $warm-grey;
+    }
+    .mat-paginator-container {
+      padding: 0 10px 0 10px;
+    }
+    .mat-paginator-page-size {
+      display: none;
+    }
+    .mat-paginator-range-label {
+      margin: 0 10px 0 0;
+    }
+  }
+}
+::ng-deep {
+  .spinner_cnt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    circle {
+      stroke: $red;
+    }
+  }
+}
+
+.inner-spinner-cnt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.external-count {
+  color: $white;
+  position: absolute;
+}
+
+.request-types {
+  display: flex;
+}

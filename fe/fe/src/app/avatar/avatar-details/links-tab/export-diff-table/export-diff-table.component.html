@@ -1,0 +1,266 @@
+<div class="override-msg"></div>
+<div class="table">
+  <div class="header row">
+    <div class="cell">
+      <mat-checkbox
+      [checked]="isAllChecked()"
+      [indeterminate]="isIndeterminate()"
+      (change)="toggleAll()">
+      </mat-checkbox>
+      <div class="title">FIELD</div>
+    </div>
+    <div class="cell sn">SOCIAL NETWORKS</div>
+    <div class="cell">EXPORTING DATA</div>
+    <div class="cell">DESCRIPTION</div>
+  </div>
+  <div class="row"
+       *ngIf="avatarDetails.profilePicBase64"
+       [ngClass]="{'checked': isChecked('profilePicBase64')}">
+    <div class="cell">
+      <mat-checkbox
+        [checked]="isChecked('profilePicBase64')"
+        (change)="toggleField('profilePicBase64')">
+      </mat-checkbox>
+      <div class="title">{{'avatar.profilePic'| translate}}</div>
+    </div>
+    <div class="cell sn">
+      <span class="sn-icon" *ngIf="isPropertyExistInSN('facebook')">
+        <img  src="../assets/img/sn-export/facebook.png" alt="">
+      </span>
+        <span class="sn-icon" *ngIf="isPropertyExistInSN('odnoklassniki')">
+        <img  src="../assets/img/sn-export/odnoklassniki.png" alt="">
+      </span>
+    </div>
+    <div class="cell">
+      <div class="value">
+        <img [src]="'data:image/jpeg;base64, ' + avatarDetails.profilePicBase64 | safe: 'url'" alt="">
+      </div>
+    </div>
+    <div class="cell"></div>
+  </div>
+  <app-export-string-row
+    *ngIf="avatarDetails.firstName"
+    [name]="'firstName'"
+    [label]="'avatar.labels.firstName'"
+    [value]="avatarDetails.firstName"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('firstName')"
+    (change)="toggleField('firstName')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.lastName"
+    [name]="'lastName'"
+    [label]="'avatar.labels.lastName'"
+    [value]="avatarDetails.lastName"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('lastName')"
+    (change)="toggleField('lastName')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.middleName"
+    [name]="'middleName'"
+    [label]="'avatar.labels.middleName'"
+    [value]="avatarDetails.middleName"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('middleName')"
+    (change)="toggleField('middleName')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.gender"
+    [name]="'gender'"
+    [label]="'avatar.labels.gender'"
+    [value]="translate.instant('general.gender.' + avatarDetails.gender.toLowerCase())"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('gender')"
+    (change)="toggleField('gender')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.birthDate"
+    [name]="'birthDate'"
+    [label]="'avatar.labels.birthDate'"
+    [value]="datePipe.transform(avatarDetails.birthDate, 'dd.MM.yyyy')"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('birthDate')"
+    (change)="toggleField('birthDate')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.bio"
+    [name]="'bio'"
+    [label]="'avatar.labels.bio'"
+    [value]="avatarDetails.bio"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('bio')"
+    (change)="toggleField('bio')">
+  </app-export-string-row>
+  <app-export-list-row
+    *ngIf="avatarDetails.languages && !!avatarDetails.languages.length"
+    [name]="'languages'"
+    [label]="'avatar.labels.languages'"
+    [value]="avatarDetails.languages"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('languages')"
+    (change)="toggleField('languages')">
+  </app-export-list-row>
+  <app-export-list-row
+    *ngIf="avatarDetails.emails && !!avatarDetails.emails.length"
+    [name]="'emails'"
+    [label]="'avatar.labels.email'"
+    [value]="avatarDetails.emails"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('emails')"
+    (change)="toggleField('emails')">
+  </app-export-list-row>
+  <app-export-list-row
+    *ngIf="avatarDetails.phones && !!avatarDetails.phones.length"
+    [name]="'phones'"
+    [label]="'avatar.labels.phoneNumber'"
+    [value]="avatarDetails.phones"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('phones')"
+    (change)="toggleField('phones')">
+  </app-export-list-row>
+  <app-export-list-row
+    *ngIf="avatarDetails.socialLinks && !!avatarDetails.socialLinks.length"
+    [name]="'socialLinks'"
+    [label]="'avatar.labels.socialLink'"
+    [value]="avatarDetails.socialLinks"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('socialLinks')"
+    (change)="toggleField('socialLinks')">
+  </app-export-list-row>
+  <app-export-list-row
+    *ngIf="avatarDetails.websites && !!avatarDetails.websites.length"
+    [name]="'websites'"
+    [label]="'avatar.labels.website'"
+    [value]="avatarDetails.websites"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('websites')"
+    (change)="toggleField('websites')">
+  </app-export-list-row>
+  <app-export-list-row
+    *ngIf="avatarDetails.educations && !!avatarDetails.educations.length"
+    [name]="'educations'"
+    [label]="'avatar.labels.educations'"
+    [value]="convertEducations(avatarDetails.educations)"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('educations')"
+    (change)="toggleField('educations')">
+  </app-export-list-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.maritalStatus"
+    [name]="'maritalStatus'"
+    [label]="'avatar.labels.maritalStatus'"
+    [value]="translate.instant('avatar.labels.maritalStatuses.'+ avatarDetails.maritalStatus)"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('maritalStatus')"
+    (change)="toggleField('maritalStatus')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.fromLocation"
+    [name]="'fromLocation'"
+    [label]="'avatar.labels.fromLocation'"
+    [value]="'' + avatarDetails.fromLocation.city + ', ' + avatarDetails.fromLocation.country"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('fromLocation')"
+    (change)="toggleField('fromLocation')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.livesInLocation"
+    [name]="'livesInLocation'"
+    [label]="'avatar.labels.livesInLocation'"
+    [value]="'' + avatarDetails.livesInLocation.city + ', ' + avatarDetails.livesInLocation.country"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('livesInLocation')"
+    (change)="toggleField('livesInLocation')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.religiousViews"
+    [name]="'religiousViews'"
+    [label]="'avatar.labels.religiousViews'"
+    [value]="avatarDetails.religiousViews"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('religiousViews')"
+    (change)="toggleField('religiousViews')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.politicalViews"
+    [name]="'politicalViews'"
+    [label]="'avatar.labels.politicalViews'"
+    [value]="avatarDetails.politicalViews"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('politicalViews')"
+    (change)="toggleField('politicalViews')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.favoriteBooks"
+    [name]="'favoriteBooks'"
+    [label]="'avatar.labels.favoriteBooks'"
+    [value]="avatarDetails.favoriteBooks"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('favoriteBooks')"
+    (change)="toggleField('favoriteBooks')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.favoriteMovies"
+    [name]="'favoriteMovies'"
+    [label]="'avatar.labels.favoriteMovies'"
+    [value]="avatarDetails.favoriteMovies"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('favoriteMovies')"
+    (change)="toggleField('favoriteMovies')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.favoriteMusic"
+    [name]="'favoriteMusic'"
+    [label]="'avatar.labels.favoriteMusic'"
+    [value]="avatarDetails.favoriteMusic"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('favoriteMusic')"
+    (change)="toggleField('favoriteMusic')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.favoriteTvShows"
+    [name]="'favoriteTvShows'"
+    [label]="'avatar.labels.favoriteTvShows'"
+    [value]="avatarDetails.favoriteTvShows"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('favoriteTvShows')"
+    (change)="toggleField('favoriteTvShows')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.favoriteSports"
+    [name]="'favoriteSports'"
+    [label]="'avatar.labels.favoriteSports'"
+    [value]="avatarDetails.favoriteSports"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('favoriteSports')"
+    (change)="toggleField('favoriteSports')">
+  </app-export-string-row>
+  <app-export-string-row
+    *ngIf="avatarDetails.favoriteAppsAndGames"
+    [name]="'favoriteAppsAndGames'"
+    [label]="'avatar.labels.favoriteAppsAndGames'"
+    [value]="avatarDetails.favoriteAppsAndGames"
+    [selectedSN]="selectedSN"
+    [isChecked]="isChecked('favoriteAppsAndGames')"
+    (change)="toggleField('favoriteAppsAndGames')">
+  </app-export-string-row>
+</div>
+<div class=" button-container">
+  <button
+    mat-button
+    type="button"
+    [disabled]="isExportDisabled()"
+    class="button button-text"
+    id="b_cancelCreateAvatar"
+    (click)="exportCancel()"
+  >{{"general.cancelBtn" | translate}}</button>
+  <button
+    mat-button
+    type="button"
+    class="button button-primary"
+    [disabled]="isExportDisabled()"
+    (click)="exportConfirm()"
+    id="b_export"
+  >{{'avatar.links.export'| translate}}</button>
+</div>

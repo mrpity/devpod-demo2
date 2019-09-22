@@ -1,0 +1,83 @@
+<h2 class="title" mat-dialog-title>
+  <span *ngIf="data.type === 'all'">{{'avatar.addFilter' | translate}}</span>
+  <span *ngIf="data.type !== 'all'">{{'avatar.changeFilter' | translate}}</span>
+  <button class="close-btn" type="button" (click)="close()" id="b_closeFilterPopup"></button>
+</h2>
+<mat-dialog-content class="filters-container">
+  <form [formGroup]="filtersForm">
+    <div formGroupName="createdRangeForm"
+         class="time-range"
+         *ngIf="data.type  === 'all' || data.type  === 'created'">
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="startDate"
+          formControlName="startDate"
+          [placeholder]="'avatar.filter.createdFrom' | translate "
+          id="i_createdFrom">
+        <mat-datepicker-toggle matSuffix [for]="startDate" id="d_calendar-createdAtFrom"></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+      </mat-form-field>
+      <span class="separator">-</span>
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="endDate"
+          formControlName="endDate"
+          [placeholder]="'avatar.filter.createdTo' | translate "
+          id="i_createdTo">
+        <mat-datepicker-toggle matSuffix [for]="endDate" id="d_calendar-createdAtTo"></mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-hint class="validation-hint">
+      <span *ngIf="filtersForm.get('createdRangeForm').hasError('notValid')" id="calendar_validation-createdAtTo">{{'general.validation.invalidRange' | translate}}</span>
+    </mat-hint>
+    <div formGroupName="modifiedRangeForm"
+         class="time-range"
+         *ngIf="data.type  === 'all' || data.type  === 'modified'">
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="startDate"
+          formControlName="startDate"
+          [placeholder]="'avatar.filter.modifiedFrom' | translate "
+          id="i_modifiedFrom">
+        <mat-datepicker-toggle matSuffix [for]="startDate" id="d_calendar-modifiedAtFrom"></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+      </mat-form-field>
+      <span class="separator">-</span>
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="endDate"
+          formControlName="endDate"
+          [placeholder]="'avatar.filter.modifiedTo' | translate "
+          id="i_modifiedTo">
+        <mat-datepicker-toggle matSuffix [for]="endDate" id="d_calendar-modifiedAtTo"></mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-hint class="validation-hint">
+      <span *ngIf="filtersForm.get('modifiedRangeForm').hasError('notValid')" id="calendar_validation-modifiedAtTo">{{'general.validation.invalidRange' | translate}}</span>
+    </mat-hint>
+  </form>
+  <div class="checkbox-block">
+    <div class="checkbox-list" *ngIf="data.type  === 'all' || data.type  === 'types'">
+      <span class="checkbox-list-title">{{'avatar.labels.type' | translate}}</span>
+      <mat-checkbox *ngFor="let type of types" [(ngModel)]="type.isChecked">
+        <span [id]="'c_type-'+ type.value.toLowerCase()">{{type.name | translate}}</span>
+      </mat-checkbox>
+    </div>
+    <div class="checkbox-list" *ngIf="data.type  === 'all' || data.type  === 'snType'">
+      <span class="checkbox-list-title">{{'avatar.labels.linkedSn' | translate}}</span>
+      <mat-checkbox *ngFor="let sn of snType" [(ngModel)]="sn.isChecked">
+        <span [id]="'c_social-'+ sn.value">{{sn.name | translate}}</span>
+      </mat-checkbox>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="btn-container">
+  <button mat-button (click)="remove(data.type)" *ngIf="data.type !== 'all'" class="button button-second" id="popup-remove-btn">{{this.data.deleteBtn | translate}}</button>
+  <button mat-button (click)="apply()" class="button button-primary" id="popup-apply-btn">{{this.data.applyBtn | translate}}</button>
+</mat-dialog-actions>

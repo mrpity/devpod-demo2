@@ -1,0 +1,57 @@
+server {
+    listen       80;
+    server_name  localhost;
+    client_max_body_size 5M;
+
+    #charset koi8-r;
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    # serve static files
+    location / {
+      root    /usr/share/nginx/html;
+      include /etc/nginx/mime.types;
+      index  index.html index.htm;
+      try_files $uri $uri/ /index.html;
+      add_header Cache-Control  "public, must-revalidate, proxy-revalidate";
+      expires -1;
+    }
+
+    # pass requests for dynamic content to rails/turbogears/zope, et al
+    location /graphql {
+      proxy_pass      http://${API_HOST}:${API_PORT};
+      add_header Cache-Control  "public, must-revalidate, proxy-revalidate";
+      expires -1;
+      proxy_connect_timeout       600;
+      proxy_send_timeout          600;
+      proxy_read_timeout          600;
+      send_timeout                600;
+    }
+
+    location /api/notifications {
+      proxy_pass      http://${API_HOST}:${API_PORT};
+      add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+      proxy_http_version 1.1;
+      proxy_set_header Connection "";
+      chunked_transfer_encoding off;
+      proxy_buffering off;
+      proxy_cache off;
+      expires -1;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+}

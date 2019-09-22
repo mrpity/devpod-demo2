@@ -1,0 +1,17 @@
+@import '../../../../assets/styles/helpers/varibles';
+p{
+  margin: 5px 0;
+}
+.breadcrumb-item {
+  text-decoration: none;
+  color: $warm-grey;
+  text-transform: uppercase;
+  font-family: RobotoMono, Roboto, sans-serif;
+  font-weight: normal;
+  letter-spacing: 0.4px;
+  font-size: 12px;
+}
+.separator {
+  display: inline-block;
+  margin-right: 10px;
+}

@@ -1,0 +1,191 @@
+<form id="f_dataSourceForm" [formGroup]="formObject" (ngSubmit)="submit()" class="data-source-form-container">
+
+  <ng-content select="[header-content]"></ng-content>
+
+  <div class="data-source-form">
+
+    <div id="cnt_typeDepthRow" class="flex flex-col-2"
+         [ngClass]="{'m-b-24': formMode === 'EDIT', 'm-b-16': formMode !== 'EDIT'}">
+
+      <mat-form-field id="cnt_typeCnt" class="flex flex-col flex-col-2" *ngIf="formMode !== 'EDIT'">
+        <mat-select
+          required
+          [placeholder]="'dataSource.addDataSource.type' | translate"
+          id="s_type"
+          formControlName="type"
+        >
+          <mat-option *ngFor="let type of types" [value]="type" [attr.value]="type">
+            {{helpers.getType(type) | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-content select="[form-content-type]"></ng-content>
+
+      <mat-form-field id="cnt_depthCnt" class="flex flex-col flex-col-2 m-l-32" *ngIf="formMode !== 'EDIT'">
+        <mat-select
+          required
+          [placeholder]="'dataSource.addDataSource.depth' | translate"
+          id="s_depth"
+          formControlName="depth"
+        >
+          <mat-option *ngFor="let depth of depths" [value]="depth" [attr.value]="depth">
+            {{depth}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-content select="[form-content-depth]"></ng-content>
+
+      <div class="crawl-images" *ngIf="formMode !== 'IMPORT'">
+        <mat-label class="label">{{'dataSource.addDataSource.images' | translate}}</mat-label>
+        <mat-slide-toggle
+          class="enabled_toggle"
+          [disableRipple]="true"
+          formControlName="crawlMedia"
+          id="t_crawlMedia"
+          color="warn"
+          [checked]="f['crawlMedia'].value"
+          [disabled]="!!f['automationRules'].value?.length && formMode === 'EDIT'"
+        >
+          {{f['crawlMedia'].value
+          ? ("dataSource.addDataSource.crawlMediaExclude" | translate)
+          : ("dataSource.addDataSource.crawlMediaInclude" | translate)}}
+        </mat-slide-toggle>
+      </div>
+    </div>
+
+    <mat-form-field
+      id="cnt_urlCnt"
+      class="flex-col-2 m-b-16"
+      *ngIf="crawling.byUrl(currentType) && formMode === 'ADD'"
+    >
+      <input
+        matInput
+        id="i_url"
+        placeholder="URL"
+        required
+        formControlName="url"
+      >
+      <mat-error id="m_required" *ngIf="f['url'].errors?.required">
+        {{"dataSource.addDataSource.validation.url.required" | translate | uppercase}}
+      </mat-error>
+      <mat-error id="m_mminlength" *ngIf="f['url'].errors?.minlength">
+        {{"dataSource.addDataSource.validation.url.min" | translate | uppercase}}
+      </mat-error>
+      <mat-error id="m_maxlength" *ngIf="f['url'].errors?.maxlength">
+        {{"dataSource.addDataSource.validation.url.max" | translate | uppercase}}
+      </mat-error>
+      <mat-error
+        id="m_pattern"
+        *ngIf="f['url'].errors?.pattern && !f.url.errors?.minlength && !f.url.errors?.maxlength"
+      >
+        {{"dataSource.addDataSource.validation.url.invalid" | translate | uppercase}}
+      </mat-error>
+    </mat-form-field>
+    <ng-content select="[form-content-url]"></ng-content>
+
+    <mat-form-field
+      id="cnt_targetCnt" class="flex-col-2 m-b-16"
+      *ngIf="crawling.byProfile(currentType) && formMode === 'ADD'"
+    >
+      <input
+        matInput
+        id="i_targetUser"
+        [placeholder]="'dataSource.addDataSource.targetUser' | translate"
+        required
+        formControlName="profileId"
+      >
+      <mat-error id="m_requiredId" *ngIf="f['profileId'].errors?.required">
+        {{"dataSource.addDataSource.validation.profileId" | translate | uppercase}}
+      </mat-error>
+      <mat-error id="m_patternId" *ngIf="f['profileId'].errors?.pattern">
+        {{"dataSource.addDataSource.validation.profileId" | translate | uppercase}}
+      </mat-error>
+    </mat-form-field>
+    <ng-content select="[form-content-profileId]"></ng-content>
+
+    <div id="f_avatarCredentials"
+         class="flex flex-col flex-col-2 m-b-16"
+         *ngIf="crawling.byAvatarCredentials(currentType)">
+      <mat-label class="label">{{"dataSource.addDataSource.avatarForConnections" | translate}}</mat-label>
+      <span>{{"dataSource.addDataSource.avatarForConnections.any" | translate}}</span>
+    </div>
+
+    <h4 id="h_proxySettings" *ngIf="webGeneral"
+        class="title-medium m-b-16">{{"dataSource.addDataSource.proxySettings" | translate}}</h4>
+
+    <div class="flex" *ngIf="webGeneral">
+      <mat-form-field id="cnt_proxyCountryCnt" class="one_field">
+        <mat-select
+          required
+          [placeholder]="'dataSource.addDataSource.proxyCountry' | translate"
+          formControlName="proxyCountryCode"
+          (selectionChange)="setProxyCityList($event)"
+          id="s_proxyCountry"
+        >
+          <mat-option
+            *ngFor="let region of proxyCountryList; let i = index"
+            [value]="region.countryCode"
+            [attr.value]="region.countryCode"
+          >
+            {{region.country}}
+          </mat-option>
+        </mat-select>
+        <mat-error id="m_selectProxy" *ngIf="f['proxyCountryCode'].errors?.required">
+          {{"dataSource.addDataSource.validation.proxyCountry.required" | translate}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field id="cnt_proxyCityCnt" class="one_field">
+        <mat-select
+          [placeholder]="'dataSource.addDataSource.proxyCity' | translate"
+          [disabled]="!proxyCityList.length"
+          formControlName="proxyCity"
+          id="s_proxyCity"
+        >
+          <mat-option *ngFor="let city of proxyCityList" [value]="city" [attr.value]="city">
+            {{city}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div id="t_automationRulesStatus" class="rule-status" *ngIf="formMode !== 'IMPORT'">
+      <div class="toggle-section">
+        <mat-label class="title-medium">{{"dataSource.addDataSource.automationRules" | translate}}</mat-label>
+        <mat-slide-toggle
+          class="enabled_toggle"
+          [disableRipple]="true"
+          formControlName="enabled"
+          color="warn"
+          [checked]="f['enabled'].value">
+          {{f['enabled'].value
+          ? ("dataSource.addDataSource.automationRulesStatusActive" | translate)
+          : ("dataSource.addDataSource.automationRulesStatusInactive" | translate)}}
+        </mat-slide-toggle>
+      </div>
+      <app-automation-rule-create (addRule)="addRule($event)"></app-automation-rule-create>
+    </div>
+
+    <div *ngIf="formMode === 'IMPORT'">
+      <h4 class="title-medium m-b-16"
+          id="h_importSources">{{"dataSource.addDataSource.importSourcesLabel" | translate}}</h4>
+      <app-file-import
+        (dropped)="updateDataSources($event)"
+        [currentType]="currentType"
+        [submitted]="submitted"
+      ></app-file-import>
+    </div>
+  </div>
+
+  <div class="data-source-form-rules" *ngIf="formMode !== 'IMPORT'">
+    <app-automation-rule-list
+      [automationRulesStream]="automationRulesStream"
+      [isViewMode]="false"
+      (removeRule)="removeRule($event)">
+    </app-automation-rule-list>
+  </div>
+
+
+  <ng-content select="[form-content-actions]"></ng-content>
+
+</form>

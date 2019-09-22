@@ -1,0 +1,18 @@
+<app-requests [requestList]="searchRequestList$ | async"
+              [routeQueryParams]="routeQueryParams$ | async"
+              [requestsData]="requestData$ | async"
+              [routeParams]="routeParams$ | async"
+              (showDetails)="showRequestDetails($event)"
+              (newSearch)="newSearch()"
+              (paginationChange)="requestsPaginationChange($event)"></app-requests>
+<div class="search_results_container">
+  <app-filters [filtersData]="filtersData$ | async"
+               [buttonsData]="buttonsData$ | async"
+               (getNew)="getNew()"
+               (cancel)="cancelExternalSearch()"
+               (saveSearch)="saveSearch($event)"></app-filters>
+<div class="error message" id="resultsFailure" *ngIf="isResultsLoadingFailure$ | async">
+  {{'search.external.results.loadFailure' | translate}}
+</div>
+<router-outlet></router-outlet>
+</div>

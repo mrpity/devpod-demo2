@@ -1,0 +1,15 @@
+export enum NOTIFICATION_TYPES {
+  AVATAR = 'AVATAR',
+  DATA_SOURCE = 'DATA_SOURCE',
+  SEARCH = 'SEARCH',
+  ALL = 'ALL',
+}
+
+export enum NOTIFICATION_REQUEST_PREFIXES {
+  AVATAR = 'AVATAR',
+  DATA_SOURCE = 'DATASOURCE',
+  SEARCH = 'EXTERNAL',
+  ALL = '',
+}
+
+export const MAX_UNREAD = 99;

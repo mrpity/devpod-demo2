@@ -1,0 +1,95 @@
+@import "components/tuning";
+@import "helpers/varibles";
+@import 'components/grid';
+@import 'components/label';
+
+
+.dnd-area{
+  min-height: 70px;
+  border: dotted 1px $warm-grey;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.invalid{
+    border-color: $red;
+  }
+  .dnd-label{
+    img{
+      position: relative;
+      width:24px;
+      top: 5px;
+      margin-right: 10px;
+    }
+    .dnd-open-link{
+      color: $red;
+      cursor: pointer;
+    }
+  }
+}
+.dropped-file{
+  display: flex;
+  flex-direction: row;
+  margin-right: auto;
+  .img-container{
+    height: 64px;
+    position: relative;
+    img{
+      width: 48px;
+      height: 64px;
+    }
+    .delete-btn{
+      position: absolute;
+      top:7px;
+      right: 0;
+      img{
+        width: 24px;
+        height: 24px;
+      }
+      cursor: pointer;
+      border: none;
+      background: none;
+      outline: none;
+    }
+  }
+  .file-description{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15px;
+    color: $warm-grey;
+    font-size: 12px;
+    text-align: left;
+    .file-name{
+      padding-bottom: 10px;
+    }
+  }
+}
+.validation{
+  min-height: 25px;
+  .validation-msg{
+    color: $red;
+  }
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 0.5rem;
+    visibility: hidden;
+    width: 24px;
+    height: 24px;
+  }
+  &.error-source {
+    span {
+      color: $red;
+    }
+    img {
+      visibility: visible;
+    }
+  }
+}
+

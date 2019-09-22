@@ -1,0 +1,66 @@
+@import "../../../../assets/styles/components/tuning";
+@import "../../../../assets/styles/helpers/varibles";
+@import '../../../../assets/styles/components/grid';
+@import '../../../../assets/styles/components/label';
+
+$input_left_margin: 32px;
+$width_100: 100%;
+$max_field_count: 3;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  max-height: 100%;
+  padding: 0 10px 0 20px;
+}
+
+textarea {
+  max-height: 75px;
+}
+
+.proxy-info-container {
+  padding-right: 40px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-right: 2rem;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.table-overlay {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.7);
+  top: 0;
+  width: 100%;
+  flex-grow: 1;
+  z-index: 101;
+
+  .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+::ng-deep {
+  .mat-form-field-disabled, .readOnly {
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+
+  .m-b-16 {
+    margin-bottom: 10px;
+  }
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 5px;
+}

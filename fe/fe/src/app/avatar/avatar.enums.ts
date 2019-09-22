@@ -1,0 +1,37 @@
+export enum MaritalStatus {
+  inRelationship = 'IN_RELATIONSHIP',
+  married = 'MARRIED',
+  single = 'SINGLE'
+}
+
+export enum AvatarStatus {
+  AVAILABLE = 'AVAILABLE',
+  EXPORT = 'EXPORT',
+  EXPORT_REVIEW = 'EXPORT_REVIEW',
+  EXPORT_PREVIEW = 'EXPORT_PREVIEW', // FE enum
+  FACEBOOK_IMPORT = 'FB_IMPORT',
+  FB_IMPORT_CONFIRMATION = 'FB_IMPORT_CONFIRMATION',
+  ODNOKLASSNIKI_IMPORT = 'OK_IMPORT',
+  OK_IMPORT_CONFIRMATION = 'OK_IMPORT_CONFIRMATION',
+}
+
+export enum SocialNetworks {
+  FACEBOOK = 'FACEBOOK',
+  ODNOKLASSNIKI = 'ODNOKLASSNIKI',
+  GOOGLE = 'GOOGLE'
+}
+
+export enum AvatarLogEntryType {
+  EXPORT_FAILED = 'EXPORT_FAILED',
+  EXPORT_SUCCEEDED = 'EXPORT_SUCCEEDED',
+  IMPORT_FAILED = 'IMPORT_FAILED',
+  IMPORT_SUCCEEDED = 'IMPORT_SUCCEEDED'
+}
+
+export enum AvatarConnectionStatus {
+  NOT_LINKED = 'NOT_LINKED',
+  LINKED = 'LINKED',
+  IS_LOADING = 'LINKING'
+}
+
+export const GOOGLE_SN_LINK_DEFAULT_NAME = 'Data miner account';

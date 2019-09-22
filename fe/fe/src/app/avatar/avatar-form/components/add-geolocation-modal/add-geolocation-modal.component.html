@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{heading | translate}}</h2>
+<mat-dialog-content>
+  <mat-form-field
+    id="s_city"
+    style="width: 100%"
+  >
+    <mat-spinner class="searchCitiesSpinner" *ngIf="valueChanged" id="s_spinner" [diameter]="20"></mat-spinner>
+    <input #geoInput type="text" [placeholder]="'avatar.labels.enterCity' | translate" required matInput [formControl]="geoCtrl" [matAutocomplete]="auto" id="i_geolocationInput">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayGeolocation">
+      <mat-option *ngFor="let geo of geolocationList" [value]="geo" [attr.value]="geo">
+        {{ displayGeolocation(geo) }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-hint class="validation-hint" *ngIf="submitted && !geoCtrl.value.city">
+      <span id="msg_empty_geo">{{ 'avatar.validation.enterValueFromList' | translate }}</span>
+    </mat-hint>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions class="btn-container">
+  <button mat-button mat-dialog-close class="btn btn-cancel" id="popup-cancel-btn">{{this.data.cancelBtn | translate}}</button>
+  <button
+    mat-button
+    (click)="closeDialog()"
+    [disabled]="(!geoInput.value && !submitted) || (submitted && !geoCtrl.value.city)"
+    class="btn btn-confirm"
+    id="popup-confirm-btn"
+  >
+    {{this.data.confirmBtn | translate}}
+  </button>
+</mat-dialog-actions>

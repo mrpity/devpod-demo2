@@ -1,0 +1,108 @@
+
+
+<div class="flex justify-content-space-between">
+  <h2 mat-dialog-title>{{"avatar.addEducationModal.title" | translate}}</h2>
+  <button id="b_closeBtn" mat-icon-button mat-dialog-close>
+    <img class="close-icon mat-icon" src="assets/img/icon-close.png" alt="image" width="24px" height="24px">
+  </button>
+</div>
+
+<mat-dialog-content id="popup_logoutMessage">
+  <form [formGroup]="educationForm" class="education-form">
+
+    <mat-form-field>
+      <mat-chip-list #nameChip>
+        <mat-chip class="sole-chip" *ngIf="education.name" [removable]="true" (removed)="remove('name')">
+          <span>{{education.name}}</span>
+          <mat-icon matChipRemove >cancel</mat-icon>
+        </mat-chip>
+        <input [placeholder]="'avatar.addEducationModal.addSchool' | translate"
+               [disabled]="!!education.name"
+               [matChipInputFor]="nameChip"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="add($event, 'name')"
+               id="i_addSchool">
+      </mat-chip-list>
+      <mat-hint class="validation-hint" *ngIf="submitted && !education.name">
+        <span id="msg_school_name">Пожалуйста введите название учебного заведения</span>
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-chip-list #cityChip>
+        <mat-chip class="sole-chip" *ngIf="education.city" [removable]="true" (removed)="remove('city')">
+          <span>{{education.city}}</span>
+          <mat-icon matChipRemove >cancel</mat-icon>
+        </mat-chip>
+        <input [placeholder]="'avatar.addEducationModal.addCity' | translate"
+               [disabled]="!!education.city"
+               [matChipInputFor]="cityChip"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="add($event, 'city')"
+               id="i_addCity">
+      </mat-chip-list>
+    </mat-form-field>
+    <div class="education-range">
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="pickerFrom"
+          formControlName="studiedFrom"
+          [placeholder]="'avatar.labels.chooseDate' | translate"
+          id="i_educationFrom">
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom" id="d_calendar1"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="pickerTo"
+          formControlName="studiedTo"
+          [placeholder]="'avatar.labels.chooseDate' | translate "
+          id="i_educationTo">
+        <mat-datepicker-toggle matSuffix [for]="pickerTo" id="d_calendar2"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+
+    <mat-form-field>
+          <textarea
+            matInput
+            placeholder="Description"
+            formControlName="description"
+            matTextareaAutosize
+            [placeholder]="'general.description' | translate "
+            id="t_edu_description"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let spec of specializations" [selectable]="selectable"
+                  [removable]="true" (removed)="removeSpec(spec)">
+          {{spec}}
+          <mat-icon matChipRemove >cancel</mat-icon>
+        </mat-chip>
+        <input [placeholder]="'avatar.addEducationModal.addSpecialisation' | translate"
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="addSpec($event)"
+               id="i_addSpecialisation">
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+  <mat-radio-group   class="education-type"  [(ngModel)]="education.type">
+    <mat-radio-button value="UNIVERSITY" id="r_typeUniversity">
+      {{"avatar.addEducationModal.university" | translate}}
+    </mat-radio-button>
+    <mat-radio-button value="SCHOOL" id="r_typeSchool">
+      {{"avatar.addEducationModal.school" | translate}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+
+</mat-dialog-content>
+<mat-dialog-actions class="btn-container">
+  <button mat-button (click)="closeDialog()" class="btn btn-confirm" id="popup-confirm-btn">{{'general.saveBtn'| translate}}</button>
+</mat-dialog-actions>

@@ -1,0 +1,22 @@
+<app-header [headerName]="routerParams?.documentId"
+            [breadcrumbs]="[{label:'navigation.search', route:'../../../../'},
+                  {label: routerParams?.index, route:'./'},
+                  {label: routerParams?.documentId, route:'./'}
+                  ]"
+            [breadcrumbsId]="'search_details'"
+            (emitAction)="closeDetails()">
+</app-header>
+
+<app-post-details
+  [postData]="resultDetails$ | async"
+  [origins]="origins$ | async"
+  [forModule]="'SEARCH'"
+  [isPostGeneralLoading]="isPostGeneralLoading$ | async"
+  [isResultsLoadingFailure]="isResultsLoadingFailure$ | async"
+  [isOriginsLoading]="isOriginsLoading$ | async"
+  [isOriginsLoadingFailure]="isOriginsLoadingFailure$ | async"
+  [currentTabIndex]="currentTabIndex"
+  (changeTab)="changeTab($event)"
+  (openOrigin)="openOrigin($event)"
+></app-post-details>
+

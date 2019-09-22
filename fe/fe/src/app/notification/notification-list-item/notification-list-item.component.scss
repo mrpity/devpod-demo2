@@ -1,0 +1,40 @@
+@import 'helpers/varibles';
+
+.notification-list-item {
+  display: flex;
+}
+
+.notification-list-item_id {
+  margin-top: 10px;
+  margin-right: 10px;
+  // flex: 1 0;
+}
+
+.notification-list-item_message {
+  margin-top: 10px;
+  flex: 1 0;
+}
+
+.button.button-review {
+  min-width: auto;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #999;
+  margin-left: 10px
+}
+
+.notification-cnt {
+  padding: 15px 20px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+.notification-cnt._error._unread {
+  border-color: $red;
+}
+
+.notification-cnt._success._unread {
+  border-color: $apple-green;
+}

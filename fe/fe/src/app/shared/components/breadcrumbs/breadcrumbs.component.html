@@ -1,0 +1,3 @@
+<p>
+  <a class="breadcrumb-item" *ngFor="let item of items " [id]="'brd_' + id" [routerLink]="[item.route]">{{item.label | translate}} <span class="separator"> /</span></a>
+</p>

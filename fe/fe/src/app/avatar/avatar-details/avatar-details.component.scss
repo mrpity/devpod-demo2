@@ -1,0 +1,158 @@
+@import 'components/icomoon';
+
+:host{
+  display: flex;
+  height: 100vh;
+}
+.avatar-details-container{
+  display: flex;
+  width: 100%;
+}
+.avatar-details{
+  flex: 1;
+  overflow: auto;
+  padding: 10px 40px;
+}
+h3, h4, h5 {
+  color: #2d2d2d;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  line-height: 1.33;
+
+}
+h5{
+  color: #9b9b9b;
+  text-transform: uppercase;
+  margin: 5px 0;
+}
+h4{
+  font-size: 1.5em;
+  padding: 10px;
+  margin: 5px 0;
+}
+h3{
+  font-size: 0.9em;
+}
+.header-container{
+  display: flex;
+  justify-content: space-between;
+  .header-buttons{
+    display: flex;
+    flex-direction: column;
+    .close-btn{
+      margin-left: auto;
+      width:40px;
+      height: 40px;
+      background-image:  url("../../../assets/img/icon-close.png");
+      background-position: center center;
+      background-size: 40px;
+      background-repeat: no-repeat;
+      border: none;
+      background-color: inherit;
+      cursor: pointer;
+      outline: none;
+      &:hover{
+        opacity: 0.9;
+      }
+    }
+    .btn-avatar-edit{
+      position: relative;
+      top: 40px;
+      background-color: #ff460d;
+      color:#fff;
+    }
+  }
+
+  .type{
+    margin-left: 5px;
+    display: inline-block;
+    font-size: 0.4em;
+    text-transform: initial;
+    img{
+      position: relative;
+      top:5px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+.title-large{
+  margin: 5px 0;
+  height: 48px;
+  font-family: Roboto;
+  font-size: 36px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+
+}
+.btn{
+  margin-right: 10px;
+  width:140px;
+  height:36px;
+  border: none;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-family: "Roboto Mono", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  cursor: pointer;
+}
+.mat-tab-group{
+  width: 100%;
+}
+
+::ng-deep .avatar-details-tabs {
+  .mat-tab-group.mat-primary .mat-tab-label:focus,
+  .mat-tab-group.mat-primary .mat-tab-label:active {
+    background: inherit !important;
+    color: inherit !important;
+  }
+
+  .mat-tab-group.mat-primary .mat-tab-label.mat-tab-disabled:active,
+  .mat-tab-group.mat-primary .mat-tab-label.mat-tab-disabled:focus {
+    color: rgba(0,0,0,.38) !important;
+  }
+  .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus .mat-tab-label-content {
+    color: #0a3148 !important;
+  }
+  .mat-tab-label .mat-tab-label-content {
+    display: block;
+    margin-bottom: 5px;
+    color: inherit;
+
+    i, span {
+      display: block;
+    }
+
+    &:hover {
+      color: inherit !important;
+    }
+  }
+}
+
+button.edit-btn {
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+@media screen and (max-width: 1240px) {
+  .header-container{
+    .header-buttons{
+      flex-direction: row-reverse;
+      .btn-avatar-edit{
+        top: 0;
+      }
+    }
+  }
+  .title-large{
+    font-size: 30px;
+    max-width: 600px;
+  }
+}

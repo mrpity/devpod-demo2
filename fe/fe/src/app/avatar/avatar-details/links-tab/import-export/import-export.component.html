@@ -1,0 +1,60 @@
+<div class="flex flex-row">
+
+  <mat-button-toggle-group
+    class="action-toggle"
+    [ngClass]="{'in-progress': isProcessing || isAwaitingConfirmation || avatarStatus === 'EXPORT_PREVIEW'}"
+    #group="matButtonToggleGroup"
+    [(ngModel)]="snActionType"
+  >
+
+    <mat-button-toggle
+      value="import"
+      class="button action-toggle-item"
+      id="b_toggle-import"
+      [disabled]="isProcessing || isAwaitingConfirmation || avatarStatus === 'EXPORT_PREVIEW'"
+    >
+      <span class="action-toggle-label">{{'avatar.links.import' | translate}}</span>
+    </mat-button-toggle>
+
+    <mat-button-toggle
+      value="export"
+      class="button action-toggle-item"
+      id="b_toggle-export"
+      [disabled]="isProcessing || isAwaitingConfirmation || avatarStatus === 'EXPORT_PREVIEW'"
+    >
+      <span class="action-toggle-label">{{'avatar.links.export' | translate}}</span>
+    </mat-button-toggle>
+
+  </mat-button-toggle-group>
+
+  <app-import-export-logging
+    [avatarLog]="(avatarLog$ | async)"
+    class="flex flex-row"
+    style="align-items: center"
+  ></app-import-export-logging>
+
+</div>
+
+<app-sn-import
+  *ngIf="!isProcessing && snActionType === 'import'"
+  [avatarId]="avatarId"
+  [avatarData]="(avatarData$ | async)"
+  [socialNetworks]="socialNetworks"
+  [avatarStatus]="avatarStatus"
+  [isAwaitingConfirmation]="isAwaitingConfirmation"
+></app-sn-import>
+
+<app-sn-export
+  *ngIf="snActionType === 'export'"
+  [avatarId]="avatarId"
+  [avatarData]="(avatarData$ | async)"
+  [socialNetworks]="socialNetworks"
+  [avatarStatus]="avatarStatus"
+  [isAwaitingConfirmation]="isAwaitingConfirmation"
+></app-sn-export>
+
+<div *ngIf="isProcessing" class="settings progress-bar">
+  <div class="progress-label">{{'avatar.links.processing' | translate}}</div>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+

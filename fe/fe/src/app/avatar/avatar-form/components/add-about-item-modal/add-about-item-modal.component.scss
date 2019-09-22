@@ -1,0 +1,34 @@
+input{
+  width: 100%;
+}
+.mat-form-field{
+  width: 100%;
+}
+
+.btn-container{
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+.btn{
+  margin-right: 10px;
+  width:140px;
+  height:36px;
+  border: none;
+  border-radius: 2px;
+  background-color: inherit;
+  text-transform: uppercase;
+  font-family: "Roboto Mono", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+
+}
+.btn-cancel{
+  color: #ff460d;
+}
+.btn-confirm{
+  color:#fff;
+  background-color: #ff460d;
+}

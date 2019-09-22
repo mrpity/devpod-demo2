@@ -1,0 +1,12 @@
+<div class="reactions" id="cnt_reactions">
+  <ul class="reaction" *ngFor="let reaction of reactions">
+    <li class="reaction-type">{{reaction.type}}</li>
+    <li class="user" *ngFor="let user of reaction.users">
+      <a class="user-url"
+         [href]="user.url"
+         [title]="user.name"
+         rel="nofollow noopener noreferrer"
+         target="_blank">{{user.name}}</a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,37 @@
+:host {
+  position: fixed;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.notification-list {
+  width: 600px;
+  min-width: 45%;
+  background-color: #fff;
+  padding: 10px 20px;
+  height: 100vh;
+  transition: all 0.3s;
+  transform: translate(-100%, 0);
+}
+
+.notification-list.opened {
+  transform: translate(0);
+}
+
+.notification-unread-count {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 2px 5px;
+  margin-left: 10px;
+}
+
+::ng-deep .mat-tab-body-wrapper {
+  overflow-y: auto;
+  height: calc(100vh - 140px);
+}
+
+::ng-deep .mat-tab-body-content {
+  height: auto !important;
+}

@@ -1,0 +1,80 @@
+:host{
+
+}
+.mat-dialog-content{
+  max-height: 80vh;
+}
+.education-form{
+  display: flex;
+  flex-direction: column;
+
+}
+.education-type{
+  padding-bottom: 20px;
+}
+.mat-radio-button{
+  margin-right: 10px;
+}
+.education-range{
+  display: flex;
+  justify-content: space-between;
+  .mat-form-field{
+    width:45%;
+  }
+}
+
+.btn-container{
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.btn-cancel{
+  color: #ff460d;
+}
+.btn-confirm{
+  color:#fff;
+  background-color: #ff460d;
+}
+.btn-confirm, .btn-cancel{
+  text-transform: uppercase;
+}
+.sole-chip{
+  width: 100%;
+  span{
+    display: inline-block;
+    width:calc(100% - 20px);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+}
+input[disabled]{
+  height: 0;
+  margin: 0;
+}
+.validation-hint{
+  color: #FF460D;
+  text-transform: uppercase;
+}
+
+.selectInput {
+  width: 90%;
+  z-index: 10;
+  position: relative;
+}
+
+.selectClass {
+  position: relative;
+  top: -20px
+}
+
+.selectPanelClass {
+  margin-top: 25px !important;
+}
+
+// mat-select .mat-select-value-text {
+//   display: none !important;
+// }
+
+

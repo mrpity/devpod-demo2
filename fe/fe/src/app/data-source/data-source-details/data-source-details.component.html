@@ -1,0 +1,42 @@
+<app-header [headerName]="getTitle(dataSourceId)"
+            [breadcrumbs]="[{label:'анализ данных', route:'../../list'}]"
+            [breadcrumbsId]="'list'"
+            (emitAction)="navigateToList()">
+</app-header>
+
+
+<div id="c_tabCnt" class="tabs-content-container" *ngIf="dataSourceId">
+  <mat-tab-group
+    #tabGroup
+    [selectedIndex]="currentTabIndex"
+    (selectedIndexChange)="changeTab($event)"
+    [disableRipple]="true"
+    class="data-source-details"
+    id="t_tabGroup"
+  >
+    <mat-tab id="t_generalTab">
+      <ng-template mat-tab-label>
+        <img id="s_iconGeneral" class="tab-icon" src="assets/img/outline-pie_chart.svg" alt="">
+        <span id="tab_general">{{'dataSource.dataSourceDetail.tabs.general' | translate}}</span>
+      </ng-template>
+      <app-general *ngIf="currentTabIndex === tab.general"></app-general>
+    </mat-tab>
+    <mat-tab id="t_statisticsTab">
+      <ng-template mat-tab-label>
+        <img id="s_iconStatistic" class="tab-icon" src="assets/img/outline-equalizer.svg" alt="">
+        <span id="tab_connections">{{'dataSource.dataSourceDetail.tabs.statistics' | translate}}</span>
+      </ng-template>
+      <app-statistics *ngIf="currentTabIndex === tab.statistics"></app-statistics>
+    </mat-tab>
+    <mat-tab id="t_detailsTab">
+      <ng-template mat-tab-label>
+        <img id="s_iconDetails" class="tab-icon" src="assets/img/outline-insert_drive_file.svg" alt="">
+        <span id="tab_details">{{'dataSource.dataSourceDetail.tabs.details' | translate}}</span>
+        <button id="b_editBtn"  (click)="gotoEdit()" mat-button class="button edit-button button-primary">
+          {{"dataSource.dataSourceDetail.editBtn" | translate | uppercase}}
+        </button>
+      </ng-template>
+      <app-document-details *ngIf="currentTabIndex === tab.document"></app-document-details>
+    </mat-tab>
+  </mat-tab-group>
+</div>

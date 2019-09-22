@@ -1,0 +1,43 @@
+<div *ngIf="!isAwaitingConfirmation" class="flex flex-row justify-content-space-between settings">
+  <div class="sn-select-container">
+    <mat-form-field class="sn-select">
+      <mat-select
+        placeholder="{{'avatar.links.selectSN' | translate}}"
+        [(value)]="selectedSN"
+        id="sn_select"
+        [disabled]="!socialNetworks?.length"
+      >
+        <mat-option *ngFor="let sn of socialNetworks" [value]="sn" [attr.value]="sn">
+          {{'avatar.links.' + sn | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="row-item button-container">
+    <button
+      mat-button
+      [disabled]="isActionDisabled()"
+      type="button"
+      class="button button-second"
+      (click)="importStart()"
+      id="b_import"
+    >{{'avatar.links.import'| translate}}</button>
+  </div>
+</div>
+<div *ngIf="isAwaitingConfirmation && !diffData" class="settings progress-bar">
+  <div class="progress-label">{{'avatar.links.processing' | translate}}</div>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div *ngIf="isAwaitingConfirmation && diffData && !diffData.error">
+  <app-override-diff-table
+    [diffData]='diffData'
+    [avatarStatus]='avatarStatus'
+    (cancel)='importCancel()'
+    (confirm)='importConfirm($event)'
+  ></app-override-diff-table>
+</div>
+<div *ngIf="isAwaitingConfirmation && diffData && diffData.error">
+  <div class="diff-table-error">Avatar diff table loading error</div>
+</div>
+
+

@@ -1,0 +1,356 @@
+
+<form [formGroup]="avatarForm" (ngSubmit)="submit()" class="avatar-form-container">
+
+  <div class="avatar-form">
+
+    <ng-content select="[breadcrumbs-content]"></ng-content>
+
+    <ng-content select="[pageTitle-content]"></ng-content>
+
+    <h5 class="title-small">{{"avatar.avatarType" | translate }}</h5>
+
+    <mat-button-toggle-group name="avatarType" class="avatar-type-toggle" formControlName="type">
+      <mat-button-toggle value="BABY" id="b_babyType">
+        <span  class="avatar-type-item">{{"avatar.baby" | translate }}</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="ACTIVE" class="avatar-type-item" id="b_activeType">
+        <span class="avatar-type-item">{{"avatar.active" | translate }}</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="DATA_MINER" class="avatar-type-item" id="b_dataMinerType">
+        <span class="avatar-type-item">{{"avatar.data_miner" | translate }}</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="avatar-form-content">
+
+      <h4 class="title-medium">{{"avatar.generalInfo" | translate }}</h4>
+
+      <div class="row-three-columns">
+        <mat-form-field>
+          <input
+            matInput
+            id="i_lastName"
+            [placeholder]="'avatar.labels.lastName' | translate"
+            required
+            formControlName="lastName">
+          <mat-error class="validation-hint">
+            <span id="msg_empty_last_name" *ngIf="submitted && f.lastName.errors?.required">{{"avatar.validation.lastName" | translate }}</span>
+            <span id="msg_last_name_max_length" *ngIf="submitted && f.lastName.errors?.maxlength">{{"avatar.validation.maxLength" | translate }}</span>
+            <span id="msg_pattern" *ngIf="submitted && f.lastName.errors?.pattern">
+              {{"avatar.validation.pattern" | translate }}
+            </span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            id="i_firstName"
+            formControlName="firstName"
+            [placeholder]="'avatar.labels.firstName' | translate"
+            required>
+          <mat-error class="validation-hint">
+            <span id="msg_empty_first_name" *ngIf="submitted && f.firstName.errors?.required">{{"avatar.validation.firstName" | translate }}</span>
+            <span id="msg_first_name_max_length" *ngIf="submitted && f.firstName.errors?.maxlength">{{"avatar.validation.maxLength" | translate }}</span>
+            <span id="msg_pattern" *ngIf="submitted && f.firstName.errors?.pattern">
+              {{"avatar.validation.pattern" | translate }}
+            </span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            id="i_middleName"
+            [placeholder]="'avatar.labels.middleName' | translate"
+            formControlName="middleName">
+          <mat-error class="validation-hint">
+            <span id="msg_middle_name_max_length" *ngIf="submitted && f.middleName.errors?.maxlength">{{"avatar.validation.maxLength" | translate }}</span>
+            <span id="msg_pattern" *ngIf="submitted && f.middleName.errors?.pattern">
+              {{"avatar.validation.pattern" | translate }}
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row-three-columns">
+        <mat-form-field>
+          <mat-select
+            [placeholder]="'avatar.labels.gender' | translate "
+            formControlName="gender"
+            id="s_gender">
+            <mat-option value="MALE">{{"general.gender.male" | translate}}</mat-option>
+            <mat-option value="FEMALE">{{"general.gender.female" | translate}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            [max]="currentDate"
+            [matDatepicker]="picker"
+            formControlName="birthDate"
+            [placeholder]="'avatar.labels.birthDate' | translate "
+            id="i_dateInput">
+          <mat-error class="validation-hint">
+            <span id="msg_invalid_birth_date" *ngIf="submitted && f.birthDate.errors">{{"avatar.validation.birthDate" | translate }}</span>
+          </mat-error>
+          <mat-datepicker-toggle matSuffix [for]="picker" id="d_calendar"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="row-two-columns">
+        <mat-form-field>
+        <textarea
+          matInput
+          formControlName="bio"
+          mat-autosize
+          [placeholder]="'avatar.labels.bio' | translate "
+          class="textarea"
+          id="t_shortBio"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="row-two-columns">
+        <app-chips-autocomplete
+          [source]="languages"
+          [data]="f.languages.value"
+          [placeholder]="'avatar.labels.languages' | translate "
+          (add)="createFormArrayValue('languages', $event)"
+          (remove)="deleteFormArrayValue('languages', $event)"
+          qa_id="i_language"
+        ></app-chips-autocomplete>
+      </div>
+
+      <h4 class="title-medium">{{'avatar.profilePic' | translate}}</h4>
+
+      <app-file-drop
+        (dropped)="updateProfilePic($event)"
+        [fileBase64]="f.profilePicBase64.value"
+        [name]="f.profilePicName.value"
+      ></app-file-drop>
+
+      <h4 class="title-medium">{{'avatar.contactInfo' | translate}}</h4>
+      <div class="row-four-columns">
+        <div class="column">
+          <mat-form-field>
+            <mat-chip-list #socialLinkChips>
+              <mat-chip *ngFor="let socialLink of f.socialLinks.value; let i = index">
+                <span [title]="socialLink">{{socialLink}}</span>
+                <mat-icon matChipRemove (click)="removeContact('socialLinks', i)">cancel</mat-icon>
+              </mat-chip>
+              <input matInput
+                [placeholder]="'avatar.labels.socialLink' | translate "
+                [matChipInputFor]="socialLinkChips"
+                [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="addContact('socialLinks', $event)"
+                [formControl]="chipsInputs.socialLinks"
+                id="i_social-link"
+              >
+            </mat-chip-list>
+            <mat-hint class="validation-hint" *ngIf="chipsInputs.socialLinks.errors">
+              <span id="msg_invalid_social_link" *ngIf="chipsInputs.socialLinks.errors.pattern">
+                {{"avatar.validation.socialLink" | translate }}
+              </span>
+              <span id="msg_invalid_social_link" *ngIf="!chipsInputs.socialLinks.errors.pattern && chipsInputs.socialLinks.errors.maxlength">
+                {{ "avatar.validation.urlMaxLength" | translate }}
+              </span>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field>
+            <mat-chip-list #websitesChips>
+              <mat-chip *ngFor="let website of f.websites.value; let i = index">
+                <span [title]="website">{{website}}</span>
+                <mat-icon matChipRemove (click)="removeContact('websites', i)">cancel</mat-icon>
+              </mat-chip>
+              <input
+                matInput
+                [placeholder]="'avatar.labels.website' | translate "
+                [matChipInputFor]="websitesChips"
+                [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="addContact('websites', $event)"
+                [formControl]="chipsInputs.websites"
+                id="i_website"
+              >
+            </mat-chip-list>
+            <mat-hint class="validation-hint" *ngIf="chipsInputs.websites.errors">
+              <span id="msg_invalid_website" *ngIf="chipsInputs.websites.errors.pattern">
+                {{"avatar.validation.website" | translate }}
+              </span>
+              <span id="msg_invalid_website" *ngIf="!chipsInputs.websites.errors.pattern && chipsInputs.websites.errors.maxlength">
+                {{ "avatar.validation.urlMaxLength" | translate }}
+              </span>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field>
+            <mat-chip-list #phonesChips>
+              <mat-chip *ngFor="let phoneNumber of f.phones.value; let i = index">
+                <span [title]="phoneNumber">{{phoneNumber}}</span>
+                <mat-icon matChipRemove (click)="removeContact('phones', i)">cancel</mat-icon>
+              </mat-chip>
+              <input matInput
+                [placeholder]="'avatar.labels.phoneNumber' | translate "
+                [matChipInputFor]="phonesChips"
+                [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="addContact('phones', $event)"
+                [formControl]="chipsInputs.phones"
+                id="i_phone-number"
+              >
+            </mat-chip-list>
+            <mat-hint class="validation-hint" *ngIf="chipsInputs.phones.errors">
+              <span id="msg_invalid_phone" *ngIf="chipsInputs.phones.errors.pattern">
+                {{ "avatar.validation.phone" | translate }}
+              </span>
+              <span id="msg_invalid_phone" *ngIf="!chipsInputs.phones.errors.pattern && chipsInputs.phones.errors.minlength">
+                {{ "avatar.validation.phoneMinLength" | translate }}
+              </span>
+              <span id="msg_invalid_phone" *ngIf="!chipsInputs.phones.errors.pattern && chipsInputs.phones.errors.maxlength">
+                {{ "avatar.validation.phoneMaxLength" | translate }}
+              </span>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field>
+            <mat-chip-list #emailsChips>
+              <mat-chip *ngFor="let emailAddress of f.emails.value; let i = index">
+                <span [title]="emailAddress">{{emailAddress}}</span>
+                <mat-icon matChipRemove (click)="removeContact('emails', i)">cancel</mat-icon>
+              </mat-chip>
+              <input matInput
+                [placeholder]="'avatar.labels.email' | translate "
+                [matChipInputFor]="emailsChips"
+                [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="addContact('emails', $event)"
+                [formControl]="chipsInputs.emails"
+                id="i_email-address"
+              >
+            </mat-chip-list>
+            <mat-hint class="validation-hint" *ngIf="chipsInputs.emails.errors">
+              <span id="msg_invalid_email-address" *ngIf="chipsInputs.emails.errors.pattern">
+                {{"avatar.validation.email" | translate }}
+              </span>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- ABOUT SECTION -->
+      <h4 class="title-medium">{{'avatar.about' | translate}}</h4>
+      <mat-tab-group class="about-block">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span id="tab_socialState">{{'avatar.tabs.socialState' | translate}}</span>
+          </ng-template>
+          <div class="about-block-items">
+            <app-about-block-item
+              [qa_id]="'religiousViews'"
+              (edit)="updateFormControlValue('religiousViews', $event)"
+              [data]="{ heading: 'avatar.labels.religiousViews', description: f.religiousViews.value}">
+            </app-about-block-item>
+            <app-about-block-item
+              [qa_id]="'politicalViews'"
+              (edit)="updateFormControlValue('politicalViews', $event)"
+              [data]="{ heading: 'avatar.labels.politicalViews', description: f.politicalViews.value}">
+            </app-about-block-item>
+            <app-marital-status
+              [qa_id]="'maritalStatus'"
+              (edit)="updateFormControlValue('maritalStatus', $event)"
+              (remove)="deleteFormControlValue('maritalStatus')"
+              [heading]="'avatar.labels.maritalStatus'"
+              [data]="f.maritalStatus.value || null">
+            </app-marital-status>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span id="tab_interests">{{'avatar.tabs.interests' | translate}}</span>
+          </ng-template>
+          <div class="about-block-items">
+            <app-about-block-item
+              [qa_id]="'favoriteMusic'"
+              (edit)="updateFormControlValue('favoriteMusic', $event)"
+              [data]="{ heading: 'avatar.labels.favoriteMusic', description: f.favoriteMusic.value}">
+            </app-about-block-item>
+            <app-about-block-item
+              [qa_id]="'favoriteMovies'"
+              (edit)="updateFormControlValue('favoriteMovies', $event)"
+              [data]="{ heading: 'avatar.labels.favoriteMovies', description: f.favoriteMovies.value}">
+            </app-about-block-item>
+            <app-about-block-item
+              [qa_id]="'favoriteBooks'"
+              (edit)="updateFormControlValue('favoriteBooks', $event)"
+              [data]="{ heading: 'avatar.labels.favoriteBooks', description: f.favoriteBooks.value}">
+            </app-about-block-item>
+            <app-about-block-item
+              [qa_id]="'favoriteTvShows'"
+              (edit)="updateFormControlValue('favoriteTvShows', $event)"
+              [data]="{ heading: 'avatar.labels.favoriteTvShows', description: f.favoriteTvShows.value}">
+            </app-about-block-item>
+            <app-about-block-item
+              [qa_id]="'favoriteSports'"
+              (edit)="updateFormControlValue('favoriteSports', $event)"
+              [data]="{ heading: 'avatar.labels.favoriteSports', description: f.favoriteSports.value}">
+            </app-about-block-item>
+            <app-about-block-item
+              [qa_id]="'favoriteAppsAndGames'"
+              (edit)="updateFormControlValue('favoriteAppsAndGames', $event)"
+              [data]="{ heading: 'avatar.labels.favoriteAppsAndGames', description: f.favoriteAppsAndGames.value}">
+            </app-about-block-item>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span id="tab_education">{{'avatar.tabs.education' | translate}}</span>
+          </ng-template>
+          <div class="about-block-items">
+            <app-education
+              *ngFor="let education of f.educations.value; let i = index"
+              [qa_id]="'education-' + i"
+              [data]="education"
+              (edit)="updateFormArrayValue('educations', $event, i)"
+              (remove)="deleteFormArrayValue('educations', i)"></app-education>
+            <app-education
+              [qa_id]="'education-empty'"
+              [data]="{name:'', description: '', city: '', studiedFrom: null, studiedTo: null, type: 'SCHOOL', specialization: ''}"
+              (edit)="createFormArrayValue('educations', $event)"></app-education>
+            <app-about-block-item
+              [qa_id]="'professionalSkills'"
+              (edit)="updateFormControlValue('professionalSkills', $event)"
+              [data]="{ heading: 'avatar.labels.professionalSkills', description: f.professionalSkills.value}">
+            </app-about-block-item>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span id="tab_geoLocation">{{'avatar.tabs.geoLocation' | translate}}</span>
+          </ng-template>
+          <div class="about-block-items">
+            <app-geolocation
+              [qa_id]="'fromLocation'"
+              (edit)="updateFormControlValue('fromLocation', $event)"
+              (remove)="deleteFormControlValue('fromLocation')"
+              [data]="f.fromLocation.value || {}"
+              [heading]="'avatar.labels.fromLocation'">
+            </app-geolocation>
+            <app-geolocation
+              [qa_id]="'livesInLocation'"
+              (edit)="updateFormControlValue('livesInLocation', $event)"
+              (remove)="deleteFormControlValue('livesInLocation')"
+              [data]="f.livesInLocation.value || {}"
+              [heading]="'avatar.labels.livesInLocation'">
+            </app-geolocation>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+    </div>
+
+  </div>
+
+  <ng-content select="[footer-content]"></ng-content>
+
+</form>

@@ -1,0 +1,21 @@
+@import '../globals';
+
+.sort-icon{
+  margin-left: 5px;
+  font-size: 15px;
+  height: 12px;
+  width: 15px;
+  position: relative;
+  color: $dark-grey;
+  &.sort-asc{
+    line-height: 10px;
+    transform: scaleX(-1) rotate(180deg);
+  }
+}
+
+.arrow-icon {
+  color: $warm-grey;
+  &.arrow-open {
+    transform: rotate(90deg);
+  }
+}

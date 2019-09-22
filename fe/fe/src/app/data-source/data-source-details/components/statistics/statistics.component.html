@@ -1,0 +1,33 @@
+<ng-template #loading>
+  <div id="d_loadingSpinnerCnt" class="loading-spinner overflow-hidden">
+    <mat-spinner id="s_spinnerCmp"></mat-spinner>
+    <div id="cnt_errorCnt" class="gateway-api-errors" *ngIf="failedGateway">
+      {{"dataSource.gatewayUnavailable" | translate}}
+    </div>
+  </div>
+</ng-template>
+
+<div class="flex flex-col width-100" *ngIf="statisticStream; else loading">
+  <div id="c_totalCnt" class="flex flex-row m-b-16">
+    <h1 id="l_total" class="title-medium m-t-5 m-b-5 m-l-0 m-r-0">{{'dataSource.dataSourceDetail.statistics.total' | translate}}: {{data?.total}}</h1>
+  </div>
+
+  <div id="c_successError" class="flex flex-row m-b-16">
+    <div id="c_successErrorInner" class="flex flex-col-4">
+      <div id="c_success" class="flex flex-col flex-col-2">
+        <mat-label class="label" id="l_success">{{'dataSource.dataSourceDetail.statistics.success' | translate}}</mat-label>
+        <span id="d_success">{{data?.succeeded}}</span>
+      </div>
+      <div id="c_error" class="flex flex-col flex-col-2 m-l-32">
+        <mat-label class="label" id="l_error">{{'dataSource.dataSourceDetail.statistics.error' | translate}}</mat-label>
+        <span id="d_error">{{data?.failed}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="c_recentLogs" class="flex flex-row m-b-16">
+    <h1 id="l_recentLogs" class="title-medium m-t-5 m-b-5 m-l-0 m-r-0">{{'dataSource.dataSourceDetail.statistics.recentLogs.label' | translate}}</h1>
+  </div>
+
+  <app-history-log [dataSource]="statisticStream"></app-history-log>
+</div>

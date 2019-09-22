@@ -1,0 +1,14 @@
+{
+  "/graphql": {
+    "target": "http://wsec-gateway.jx-staging.k8s.whirl.sg",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/api/*": {
+    "target": "http://wsec-gateway.jx-staging.k8s.whirl.sg",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

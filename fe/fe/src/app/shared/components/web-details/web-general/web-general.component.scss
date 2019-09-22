@@ -1,0 +1,161 @@
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'components/grid';
+@import 'components/label';
+
+:host {
+  display: flex;
+  flex: auto;
+  height: 100%;
+}
+
+.details-container {
+  @extend .container-padding;
+  padding-top: 24px;
+  padding-bottom: 30px;
+  flex: auto;
+  background-color: rgba(219, 219, 219, 0.2);
+}
+
+a {
+  text-decoration: none;
+  color: $deep-blue;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.item-container {
+  border-radius: 2px;
+  padding: 16px 24px 32px 72px;
+  display: flex;
+  background-color: $white;
+}
+
+.type-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  margin-top: 27px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 24px;
+  flex-grow: 1;
+  a {
+    text-decoration: none;
+    color: $deep-blue;
+  }
+}
+
+
+.crawling-info-header {
+  margin-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.33;
+  .documentId {
+    margin-left: 10rem;
+    @media screen and (max-width: 800px) {
+      margin-left: 0;
+    }
+  }
+  span {
+    text-transform: uppercase;
+    margin-right: 5px;
+  }
+}
+
+
+.summary {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+
+  .show-more-button {
+    color: $red;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-weight: 500;
+    height: 24px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.item-details {
+  font-size: 12px;
+  line-height: 2;
+  letter-spacing: 0.4px;
+  color: $warm-grey;
+
+  .row {
+    display: flex;
+    margin-bottom: 8px;
+
+    .title {
+      min-width: 130px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  }
+
+  & mat-chip {
+    text-transform: uppercase;
+    max-width: 300px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-height: 24px !important;
+    height: 24px;
+    font-size: 12px;
+  }
+}
+
+
+
+
+.go-up-btn {
+  color: $warm-grey;
+  background-color: $white;
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+  opacity: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $warm-grey;
+}
+
+.show-top-btn {
+  opacity: 1;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+.main-title {
+  @extend .title-medium;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+
+.main-title::before {
+  content: " ";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  left: -60px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+  background-image: url( '../../../../../assets/img/types/web_general.png');
+}

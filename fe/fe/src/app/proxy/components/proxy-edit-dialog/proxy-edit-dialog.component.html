@@ -1,0 +1,159 @@
+<ng-template #loading>
+<div class="table-overlay">
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+</ng-template>
+
+<div id="cnt_headerCnt" class="flex justify-content-space-between flex-shrink-0 m-b-16">
+  <span class="title-large" id="t_title">{{'settings.proxy.edit.title' | translate}}</span>
+  <button id="b_close" mat-icon-button mat-dialog-close>
+    <img id="i_close" class="mat-icon" src="assets/img/icon-close.png" alt="image">
+  </button>
+</div>
+
+<form
+  id="f_editProxyForm"
+  *ngIf="data$ | async; else loading"
+  [formGroup]="editProxyForm"
+  class="flex flex-col flex-shrink-0 flex-grow-1"
+>
+  <div class="proxy-info-container">
+    <div class="flex info-row">
+      <mat-form-field id="cnt_idCnt" class="readOnly">
+        <input
+          matInput
+          id="i_id"
+          [readonly]="true"
+          [placeholder]="'settings.proxy.add.id' | translate"
+          formControlName="id"
+        />
+      </mat-form-field>
+      <mat-form-field formGroupName="url" id="cnt_hostCnt" class="readOnly">
+        <input
+          matInput
+          id="i_host"
+          [readonly]="true"
+          [placeholder]="'settings.proxy.add.host' | translate"
+          formControlName="host"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="flex info-row">
+      <mat-form-field formGroupName="url" id="cnt_protocolCnt" class="readOnly">
+        <input
+          matInput
+          [placeholder]="'settings.proxy.add.protocol' | translate"
+          id="s_protocol"
+          [readonly]="true"
+          formControlName="protocol"
+        />
+      </mat-form-field>
+      <mat-form-field formGroupName="url" id="cnt_portCnt">
+        <input
+          matInput
+          id="i_port"
+          [placeholder]="'settings.proxy.add.port' | translate"
+          required
+          type="number"
+          formControlName="port"
+        />
+        <mat-error *ngIf="submitted && f['url'].controls['port'].errors?.required" id="port_error_msg">
+          {{"settings.proxy.add.validation.port.required" | translate}}
+        </mat-error>
+        <mat-error id="m_mminlength" *ngIf="submitted && (f['url'].controls['port'].errors?.min || f['url'].controls['port'].errors?.max)">
+          {{"settings.proxy.add.validation.port.minMax" | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex info-row" formGroupName="credentials">
+      <mat-form-field id="cnt_loginCnt">
+        <input
+          matInput
+          id="i_login"
+          [placeholder]="'settings.proxy.add.login' | translate"
+          formControlName="login"
+          [required]="!!f.credentials.controls.password.value"
+        />
+        <mat-error *ngIf="submitted && f['credentials'].controls.login.errors?.required" id="login_required_msg">
+          {{"settings.proxy.add.validation.credentials.login.required" | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f['credentials'].controls.login.errors?.pattern" id="login_invalid_msg">
+          {{"settings.proxy.add.validation.credentials.login.pattern" | translate}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field id="cnt_passwordCnt">
+        <input
+          matInput
+          id="i_password"
+          [placeholder]="'settings.proxy.add.password' | translate"
+          formControlName="password"
+          [required]="!!f.credentials.controls.login.value">
+        <mat-error *ngIf="submitted && f['credentials'].controls.password.errors?.required" id="password_required_msg">
+          {{"settings.proxy.add.validation.credentials.password.required" | translate}}
+        </mat-error>
+        <mat-error *ngIf="submitted && f['credentials'].controls.password.errors?.pattern" id="password_invalid_msg">
+          {{"settings.proxy.add.validation.credentials.password.pattern" | translate}}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex info-row">
+      <mat-form-field id="cnt_countryCnt" class="readOnly">
+        <input
+          matInput
+          [placeholder]="'settings.proxy.add.country' | translate"
+          formControlName="country"
+          id="s_proxyCountry"
+          [readonly]="true"
+          [value]="f['country'].value || '-'"
+        />
+      </mat-form-field>
+      <mat-form-field id="cnt_cityCnt" class="readOnly">
+        <input
+          matInput
+          id="s_proxyCity"
+          [readonly]="true"
+          [placeholder]="'settings.proxy.add.city' | translate"
+          formControlName="city"
+          [value]="f['city'].value || '-'"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col-2 info-row">
+      <mat-form-field id="cnt_typeCnt" class="readOnly">
+        <input
+          matInput
+          id="s_proxyType"
+          [readonly]="true"
+          [placeholder]="'settings.proxy.add.type' | translate"
+          formControlName="type"
+          [value]="f['type'].value || '-'"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-form-field id="cnt_descriptionCnt" class="width-100">
+    <textarea matInput
+              id="t_description"
+              formControlName="description"
+              [placeholder]="'settings.proxy.add.description' | translate"
+              style="max-height: 55px"></textarea>
+    <mat-error *ngIf="submitted && f['description'].errors?.maxlength" id="description_error_msg">
+      {{"settings.proxy.add.validation.description.maxLength" | translate}}
+    </mat-error>
+  </mat-form-field>
+</form>
+
+<button mat-button (click)="save()"
+        type="button"
+        [disabled]="submitted && editProxyForm.invalid"
+        class="button button-primary m-l-auto"
+        id="b_confirm">
+  {{'settings.proxy.edit.saveBtn' | translate}}
+</button>

@@ -1,0 +1,210 @@
+<div class="dialog-container">
+
+  <div class="dialog-inner-container">
+    <div>
+      <div class="header">
+        <span class="title" id="h_addDataSource">{{data.title | translate}}</span>
+        <button mat-icon-button mat-dialog-close>
+          <img class="mat-icon close-icon" src="assets/img/icon-close.png" alt="image">
+        </button>
+      </div>
+      <h5 class="title-small">{{"dataSource.addDataSource.createAutomationRule.frequency.title" | translate | uppercase }}</h5>
+      <div class="repeating-type-cnt">
+
+        <mat-button-toggle-group
+          (change)="toggleChange($event.value)"
+          [value]="repeatingType"
+          class="repeating-type-toggle">
+          <mat-button-toggle *ngFor="let item of frequencyList" [value]="item" [id]="'b_'+item">
+            <span class="repeating-type-item">{{"dataSource.addDataSource.createAutomationRule.frequency."+item | translate | uppercase }}</span>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <form [formGroup]="addRuleForm"
+              class="add-data-source-form"
+              id="f_addDataSource">
+
+          <div id="f_when" class="once-cnt">
+
+            <h5 class="title-small">{{"dataSource.addDataSource.createAutomationRule.activeTimePeriod.label" | translate |
+              uppercase}}</h5>
+            <div class="row-from-to">
+              <mat-form-field
+                floatLabel="auto">
+                <mat-label>{{"dataSource.addDataSource.createAutomationRule.activeTimePeriod.from" | translate}}</mat-label>
+                <input
+                  matInput
+                  id="i_fromTime"
+                  required
+                  type="time"
+                  formControlName="activeTimeFrom">
+                <mat-error *ngIf="f.activeTimeFrom?.hasError('required')" id="e_fromTimeRequired">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.timeEmpty" | translate | uppercase}}
+                </mat-error>
+                <mat-error id="e_fromTimeIncorrect" *ngIf="f.activeTimeFrom?.hasError('invalidActiveTime')
+                && !f.activeTimeFrom?.hasError('required')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.timeIncorrect" | translate | uppercase}}
+                </mat-error>
+              </mat-form-field>
+              <span>&mdash;</span>
+              <mat-form-field
+                floatLabel="auto">
+                <mat-label>{{"dataSource.addDataSource.createAutomationRule.activeTimePeriod.to" | translate}}</mat-label>
+                <input
+                  matInput
+                  id="i_toTime"
+                  required
+                  type="time"
+                  formControlName="activeTimeTo">
+                <mat-error id="e_toTimeRequired" *ngIf="f.activeTimeTo?.hasError('required')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.timeEmpty" | translate | uppercase}}
+                </mat-error>
+                <mat-error id="e_toTimeLessThanFrom" *ngIf="f.activeTimeTo?.hasError('fromBiggerThanTo')
+                && !f.activeTimeTo?.hasError('required')
+                && !f.activeTimeTo?.hasError('invalidActiveTime')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.toLessThanFrom" | translate | uppercase}}
+                </mat-error>
+                <mat-error id="e_toTimeLessThanHour" *ngIf="f.activeTimeTo?.hasError('lessThanHourPeriod')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.lessThanHourPeriod" | translate | uppercase}}
+                </mat-error>
+                <mat-error id="e_toTimeIncorrect"  *ngIf="f.activeTimeTo?.hasError('invalidActiveTime')
+                && !f.activeTimeTo?.hasError('required')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.timeIncorrect" | translate | uppercase}}
+                </mat-error>
+                <mat-hint id="h_toTimeNextDay" *ngIf="toTimeNextDayHint" class="validation validation_description">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.toTimeNextDay" | translate | uppercase}}
+                </mat-hint>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select
+                  id="i_timezoneOnce"
+                  required
+                  [placeholder]="'dataSource.addDataSource.createAutomationRule.activeTimePeriod.timezone' | translate | uppercase"
+                  formControlName="zoneOffset">
+                  <mat-option *ngFor="let zone of timezones" [value]="zone" [attr.value]="zone">
+                    {{'UTC' + zone}}
+                  </mat-option>
+                </mat-select>
+                <mat-error  id="e_timezoneRequired"  *ngIf="submitted && f.zoneOffset.errors?.required">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.required" | translate | uppercase}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div *ngIf="repeatingType==='once'" class="row-when">
+              <mat-form-field>
+                <input matInput
+                       required
+                       [matDatepicker]="picker"
+                       id="i_onceDate"
+                       [placeholder]="'dataSource.addDataSource.createAutomationRule.activeTimePeriod.when' | translate"
+                       formControlName="onceDate"
+                       [min]="minDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error id="e_dateMin" *ngIf="f.onceDate.errors?.matDatepickerMin">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.date.min" | translate | uppercase}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div *ngIf="repeatingType==='weekly'" class="row-when">
+              <mat-form-field>
+                <mat-select
+                  [placeholder]="'dataSource.addDataSource.createAutomationRule.when.daysOfWeek.title' | translate"
+                  formControlName="daysOfWeek"
+                  required
+                  multiple>
+                  <mat-option *ngFor="let day of daysOfWeek" [value]="day | uppercase" [attr.value]="day | uppercase">
+                    {{"dataSource.addDataSource.createAutomationRule.when.daysOfWeek."+day | translate | uppercase}}
+                  </mat-option>
+                </mat-select>
+                <mat-error id="e_daysRequired" *ngIf="f.daysOfWeek?.hasError('required')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.daysEmpty" | translate | uppercase}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div *ngIf="repeatingType==='monthly' " class="row-when">
+              <mat-form-field id="f_dayOfMonth">
+                <mat-select
+                  required
+                  [placeholder]="'dataSource.addDataSource.createAutomationRule.when.daysOfMonth.title' | translate"
+                  formControlName="dayOfMonth">
+                  <mat-option *ngFor="let day of daysOfMonth" [value]="day">{{day}}</mat-option>
+                </mat-select>
+                <mat-error id="e_dayOfMonthRequired" *ngIf="f.dayOfMonth?.hasError('required')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.dayOfMonthEmpty" | translate | uppercase}}
+                </mat-error>
+                <mat-hint id="e_dayOfMonthLastDate" *ngIf="f.dayOfMonth.value === 31" class="validation validation_description">
+                 {{"dataSource.addDataSource.createAutomationRule.validation.monthLastDate" | translate | uppercase}}
+                </mat-hint>
+                <mat-hint id="e_dayOfMonthMissFebruary" *ngIf="(f.dayOfMonth.value === 29 || f.dayOfMonth.value === 30)" class="validation validation_description">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.missFebruary" | translate | uppercase}}
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div *ngIf="repeatingType!=='once'" class="row-expiration-reason">
+
+              <div class="reason_action">
+                <label class="reason_label">{{"dataSource.addDataSource.createAutomationRule.expirationReason.title" | translate}}
+                </label>
+                <mat-radio-group id="r_radioGroup" (change)="radioChangeEventStream.next($event)" [value]="expirationReason">
+                  <mat-radio-button [disableRipple]="true" value="date">
+                    {{"dataSource.addDataSource.createAutomationRule.expirationReason.date" | translate | uppercase}}
+                  </mat-radio-button>
+                  <mat-radio-button [disableRipple]="true" value="requests">
+                    {{"dataSource.addDataSource.createAutomationRule.expirationReason.requests" | translate | uppercase}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+              <mat-form-field *ngIf="expirationReason === 'date'">
+                <input matInput
+                       required
+                       [matDatepicker]="picker"
+                       id="i_expirationDate"
+                       [placeholder]="'dataSource.addDataSource.createAutomationRule.expirationReason.endingDate' | translate"
+                       formControlName="expirationDate"
+                       [min]="minDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error id="e_expirationDateMin" *ngIf="f.expirationDate.errors?.matDatepickerMin" class="validation validation_error">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.date.min" | translate | uppercase}}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="expirationReason === 'requests'">
+                <input
+                  matInput
+                  id="i_connections"
+                  [placeholder]="'dataSource.addDataSource.createAutomationRule.expirationReason.numberOfConnections' | translate"
+                  formControlName="maxConnections"
+                  type="number">
+                <mat-error id="e_connectionsRequired" *ngIf="f.maxConnections?.hasError('required')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.required" | translate | uppercase}}
+                </mat-error>
+                <mat-error id="e_connectionsMax" *ngIf="f.maxConnections?.hasError('min')
+                || f.maxConnections?.hasError('max') || f.maxConnections?.hasError('pattern')">
+                  {{"dataSource.addDataSource.createAutomationRule.validation.connections" | translate | uppercase}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+    <div>
+      <mat-dialog-actions class="btn-container">
+        <button mat-button mat-dialog-close class="button button-text" id="popup-cancel-btn">{{data.cancelBtn | translate}}
+        </button>
+        <button mat-button (click)="submit()" type="button" [disabled]="submitted && addRuleForm.invalid" class="button button-primary"
+                id="popup-confirm-btn">{{data.confirmBtn | translate}}
+        </button>
+      </mat-dialog-actions>
+    </div>
+  </div>
+
+</div>

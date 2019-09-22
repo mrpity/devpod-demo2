@@ -1,0 +1,170 @@
+@import '../../../../assets/styles/helpers/varibles';
+@import '../../../../assets/styles/components/tuning';
+@import '../../../../assets/styles/components/grid';
+@import '../../../../assets/styles/components/label';
+
+:host {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.item-container {
+  border-radius: 2px;
+  padding: 24px;
+  display: flex;
+  margin-bottom: 16px;
+  background-color: $white;
+  min-width: 400px;
+  img {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+    word-break: break-all;
+    a {
+      text-decoration: none;
+      color: $deep-blue;
+    }
+  }
+}
+
+.crawling-info-header {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+  align-items: flex-end;
+}
+
+::ng-deep {
+  em {
+    background-color: $light-blue-grey;
+    font-style: normal;
+    border-radius: 2px;
+    border: 1px solid $light-blue-grey;
+  }
+}
+
+
+.reactions-container {
+  display: flex;
+}
+
+.tooltip, .label-tooltip {
+  border: 1px solid #aaa;
+  border-radius: 30px;
+  color: #aaa;
+  padding: 3px 7px;
+  font-size: 12px;
+  margin-left: 10px;
+  min-width: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: $light-blue-grey;
+  color: $black;
+  text-align: center;
+  border-radius: 2px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -30px;
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 20%;
+  margin-left: -5px;
+  border: 5px solid transparent;
+  border-top-color: $light-blue-grey;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
+.label-tooltip {
+  border: 1px solid $red;
+  color: $red;
+  text-transform: uppercase;
+}
+
+.counts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 2rem;
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.count-label {
+  word-break: normal;
+}
+
+.statistics, .documentId {
+  margin-bottom: 0.5rem;
+}
+
+
+.reaction {
+  text-align: left;
+}
+
+.comment {
+  margin-left: 50px;
+  padding: 20px 20px 16px;
+  margin-bottom: 0.5rem;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.children-comment {
+  margin-left: 100px;
+}
+
+
+.comment-header {
+  display: flex;
+  margin-bottom: 0.5rem;
+  .text {
+    color: $warm-grey;
+  }
+  a {
+    text-decoration: none;
+    color: $deep-blue;
+  }
+}
+
+.hide-tooltip {
+  &:hover {
+    .tooltip-text {
+      visibility: hidden;
+    }
+  }
+}
+
+::ng-deep {
+  .summary-lines {
+    margin-bottom: 1rem;
+    img {
+      width: 100%;
+    }
+  }
+}

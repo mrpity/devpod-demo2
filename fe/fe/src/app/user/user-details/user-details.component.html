@@ -1,0 +1,69 @@
+<div class="flex flex-col width-100" id="c_userDetailsCnt">
+  <div class="flex flex-col container-padding">
+    <app-breadcrumbs [items]="[{label:'список пользователей', route:'../../list'}]" [id]="'userList'"></app-breadcrumbs>
+    <div class="flex flex-row justify-content-space-between flex-shrink-0 m-b-32">
+      <h1 id="s_titleId" class="title-large m-t-5 m-b-5 m-l-0 m-r-0">{{getTitle(userId)}}</h1>
+      <div class="flex flex-col header-buttons">
+        <button id="b_closeBtn" mat-icon-button (click)="navigateToList()">
+          <img id="img_closeBtnImg" class="mat-icon" src="assets/img/icon-close.png" alt="image">
+        </button>
+        <button id="b_editBtn" mat-button (click)="gotoEdit()" class="button button-primary">
+          {{"user.details.editBtn" | translate | uppercase}}
+        </button>
+      </div>
+    </div>
+
+    <div id="c_userDetailsData" class="user-details-cnt">
+
+      <div id="c_generalCnt" class="flex flex-col width-100 word-break-all" *ngIf="data">
+
+        <div id="c_userName" class="flex m-b-32">
+          <div class="flex flex-col flex-col-4">
+            <mat-label class="label" id="l_userLastName">{{'user.placeholders.lastName' | translate}}</mat-label>
+            <span id="d_userLastName">{{data?.lastName}}</span>
+          </div>
+          <div class="flex flex-col flex-col-4 m-l-64">
+            <mat-label class="label" id="l_userFirstName">{{'user.placeholders.firstName' | translate}}</mat-label>
+            <span id="d_userFirstName">{{data?.firstName}}</span>
+          </div>
+          <div class="flex flex-col flex-col-4 m-l-64">
+            <mat-label class="label" id="l_userMiddleName">{{'user.placeholders.middleName' | translate}}</mat-label>
+            <span id="d_userMiddleName">{{data?.middleName}}</span>
+          </div>
+        </div>
+
+        <div id="c_userEmail" class="flex flex-col m-b-32">
+          <mat-label id="l_userEmail" class="label">{{'user.placeholders.email' | translate}}</mat-label>
+          <span id="d_userEmail">{{data?.email}}</span>
+        </div>
+
+        <div id="c_userRole" class="flex flex-col m-b-32">
+          <mat-label id="l_userRole" class="label">{{'user.placeholders.role' | translate}}</mat-label>
+          <span id="d_userRole">{{'user.roles.'+data?.role | translate}}</span>
+        </div>
+
+        <div id="c_createdAt" class="flex m-b-32">
+          <div class="flex flex-col flex-col-4">
+            <mat-label class="label" id="l_created">{{'user.labels.createdAt' | translate}}</mat-label>
+            <span id="d_createdAt">{{data?.createdAt | date: 'HH:mm dd.MM.yyyy'}}</span>
+          </div>
+          <div class="flex flex-col flex-col-4 m-l-64">
+            <mat-label class="label" id="l_owner">{{'user.labels.lastModified' | translate}}</mat-label>
+            <span id="d_lastModified">{{data?.modifiedAt | date: 'HH:mm dd.MM.yyyy'}}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="loading-spinner-cnt" *ngIf="(isLoading$ | async) || failedGateway">
+        <div class="loading-spinner" id="d_loadingSpinnerCnt">
+          <mat-spinner *ngIf="(isLoading$ | async)" id="s_spinnerCmp"></mat-spinner>
+          <div id="cnt_errorCnt" class="gateway-api-errors" *ngIf="!(isLoading$ | async) && failedGateway">
+            {{"dataSource.gatewayUnavailable" | translate}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

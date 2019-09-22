@@ -1,0 +1,49 @@
+@import 'components/grid';
+@import 'components/tuning';
+@import 'components/label';
+@import 'helpers/varibles';
+
+:host {
+  display: flex;
+  flex: auto;
+  height: 100%;
+  justify-content: center;
+}
+
+
+.error-message {
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 50px;
+}
+
+
+::ng-deep .for-data-source.profile-tabs-group {
+  @extend .container-padding;
+  padding-top: 24px;
+  padding-bottom: 30px;
+  background-color: rgba(219, 219, 219, 0.2);
+  & > .mat-tab-group {
+    padding: 40px 24px 24px 24px;
+    background-color: $white !important;
+    & > .mat-tab-header {
+      margin-bottom: 24px !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+    }
+    & > .mat-tab-body-wrapper {
+      margin: 0 !important;
+      .friends-container {
+        padding: 0 !important;
+      }
+      .general-tab {
+        padding: 0 !important;
+      }
+    }
+    & .mat-tab-label .mat-tab-label-content {
+      display: inline-flex !important;
+    }
+
+  }
+}

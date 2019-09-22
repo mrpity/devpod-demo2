@@ -1,0 +1,8 @@
+<button
+  (click)="showNotifications()"
+  class="notification-btn"
+  style="color: #fff; flex: 0 1;"
+>
+  <span *ngIf="(unreadCount$ | async) > 0" class="notification-count">{{ getUnreadNotifications(unreadCount$ | async) }}</span>
+  <mat-icon class="tooltip-log-icon">notifications</mat-icon>
+</button>

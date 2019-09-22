@@ -1,0 +1,119 @@
+<mat-grid-list cols="2" gutterSize="0" rowHeight="fit" class="login-page-container">
+  <mat-grid-tile class="left-side">
+    <img class="logo" src="assets/img/logo.png" alt="image">
+  </mat-grid-tile>
+  <mat-grid-tile>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="form-container" *ngIf="!isRecoverView">
+          <div class="title-container">
+            <h3 id="t_loginSectiontTitle" class="form-title">{{'login.authorization' | translate}}</h3>
+            <div *ngIf="(loginAttemptInterval$ | async) > 0">
+              <img src="assets/img/warning-icon.png" alt="" class="warning-icon">
+              <span class="timeout-warning">
+                {{'login.waitMsg' | translate }} - {{loginAttemptInterval$ | async}} {{'login.seconds' | translate }}
+              </span>
+            </div>
+            <div *ngIf="recoverSuccessMsg">
+              <img src="assets/img/warning-green-icon.png" alt="" class="warning-icon">
+              <span class="recover-msg" id="recover-success-msg" >
+                {{'login.recoverSentMsg' | translate }}
+              </span>
+            </div>
+          </div>
+
+          <form class='login'
+                id="f_loginForm"
+                [formGroup]="loginForm">
+            <mat-form-field class="username">
+              <input
+                matInput
+                id="i_email"
+                [placeholder]="'login.username'| translate "
+                required
+                formControlName="username"
+                class="user-input">
+              <mat-hint class="validation-hint">
+                <span id="msg_empty_email" *ngIf="submitted && f.username.errors?.required">{{'login.validation.email.required' | translate}}</span>
+                <span id="msg_invalid_email" *ngIf="submitted && f.username.errors?.pattern">{{'login.validation.email.invalid' | translate}}</span>
+                <span id="msg_account_missing" *ngIf="serverErrors.username && !f.username.errors?.required && !f.username.errors?.pattern">{{"serverErrors.invalid_user"| translate}}</span>
+              </mat-hint>
+            </mat-form-field>
+
+            <mat-form-field class="password">
+              <input matInput
+                     id="i_password"
+                     type="password"
+                     [placeholder]="'login.password' | translate "
+                     required
+                     formControlName="password"
+                     class="user-input">
+              <mat-hint class="validation-hint">
+                <span id="msg_empty_password" *ngIf="submitted && f.password.errors?.required">{{'login.validation.password.required' | translate}}</span>
+                <span id="msg_invalid_password" *ngIf="serverErrors.password && !f.password.errors?.required">{{"serverErrors.invalid_password"| translate}}</span>
+              </mat-hint>
+            </mat-form-field>
+
+            <button mat-button
+                    id="b_login"
+                    [disabled]="loginDisabled || (loginForm.invalid && submitted)"
+                    class='login-btn'
+                    (click)="onSubmit()">
+              {{"login.signIn"| translate | uppercase}}
+            </button>
+          </form>
+          <div class="forgot-password">
+            <a class="recover-link"
+               id="l_recoverLink"
+               (click)="isRecoverView = true"
+               > {{"login.forgotPassword" | translate }} </a>
+          </div>
+        </div>
+        <div class="form-container" *ngIf="isRecoverView">
+          <div class="title-container">
+            <h3 id="t_recoverSectiontTitle" class="form-title">{{"login.forgotPassword"  | translate}}</h3>
+            <div>
+              <span>
+                {{"login.recoverMsg"| translate }}
+              </span>
+            </div>
+          </div>
+
+          <form class='login'
+                id="f_recoverForm"
+                [formGroup]="recoverForm">
+            <mat-form-field class="username">
+              <input
+                matInput
+                id="i_email_recover"
+                [placeholder]="'login.username'| translate "
+                required
+                formControlName="email"
+                class="user-input">
+              <mat-hint class="validation-hint">
+                <span id="msg_empty_email_recover" *ngIf="recoverSubmitted && recoverForm.get('email').errors?.required">{{'login.validation.email.required' | translate}}</span>
+                <span id="msg_invalid_user" *ngIf="!recoverForm.invalid && invalidUserMsg">{{"serverErrors.invalid_user"| translate}}</span>
+                <span id="msg_recover_invalid_email" *ngIf="recoverSubmitted && recoverForm.get('email').errors?.pattern">{{'login.validation.email.invalid' | translate}}</span>
+
+              </mat-hint>
+            </mat-form-field>
+            <button mat-button
+                    id="b_recover"
+                    class='login-btn'
+                    [disabled]="recoverSubmitted && recoverForm.invalid"
+                    (click)="recover()">
+              {{"login.sendBtn"| translate | uppercase}}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+

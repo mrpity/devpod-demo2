@@ -1,0 +1,39 @@
+<div class="dnd-area" [ngClass]="validationError ? 'invalid' : ''">
+  <div *ngIf="!base64data" class="dnd-label">
+    <img src="assets/img/upload-icon.png" alt="">
+    <span>{{"general.dropFile" | translate}} <a class="dnd-open-link" (click)="fileInput.click()">{{"general.pickFile" | translate}} </a></span>
+    <input #fileInput id="file-input" (change)="uploadFile($event.target.files[0])" type="file" accept=".csv" name="name" style="display: none;"/>
+  </div>
+  <div *ngIf="!!base64data" class="dropped-file">
+    <div class="img-container">
+      <img src="/assets/img/csv-icon.png" alt="">
+      <button class="delete-btn" (click)="delete()" id="b_deleteImage" type="button">
+        <img src="assets/img/userpic-delete-icon.png" alt="">
+      </button>
+    </div>
+    <div class="file-description">
+      <div class="file-name" id="d_fileName" *ngIf="name">{{name}}</div>
+      <div>
+        <div id="d_fileSize" *ngIf="size">{{size}} B</div>
+        <div  id="d_fileDimensions" *ngIf="base64data?.length">{{base64data?.length}}
+          {{helpers.getFileLinesMessage(base64data?.length)}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="description" *ngIf="!fileImportDirty && !validationError" class="flex flex-col">
+  <mat-label class="label">{{"dataSource.importDataSource.import.description.format" | translate}}</mat-label>
+  <mat-label class="label">{{"dataSource.importDataSource.import.description.type" | translate}}</mat-label>
+</div>
+<div class="validation" *ngIf="validationError">
+  <div class="validation-msg" id="d_validationFileUpload">{{"dataSource.importDataSource.import.validation." +
+    validationError | translate}}
+  </div>
+</div>
+<div id="file_results" *ngIf="base64data?.length">
+  <div id="line_{{i}}" [ngClass]="{'error-source': !isValid(line)}"  class="line" *ngFor="let line of base64data; let i = index">
+    <img src="assets/img/status/unavailable.png" alt="">
+    <span>{{line}}</span>
+  </div>
+</div>

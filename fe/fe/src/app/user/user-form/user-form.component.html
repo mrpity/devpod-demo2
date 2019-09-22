@@ -1,0 +1,92 @@
+<form id="f_userForm" [formGroup]="formObject" (ngSubmit)="submit()" class="user-form-container">
+
+  <ng-content select="[header-content]"></ng-content>
+
+  <div class="user-form">
+
+      <div id="c_userName" class="flex-grid flex-grid-align-sb m-b-32">
+        <mat-form-field class="flex-grid flex-grid-col flex-grid-col-3">
+          <input
+            matInput
+            id="i_userLastName"
+            [placeholder]="'user.placeholders.lastName' | translate"
+            required
+            formControlName="lastName"
+          >
+          <mat-error id="e_userLastName_required" *ngIf="f['lastName'].errors?.required">
+            {{"user.validation.required" | translate | uppercase}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-grid flex-grid-col flex-grid-col-3">
+          <input
+            matInput
+            id="i_userFirstName"
+            [placeholder]="'user.placeholders.firstName' | translate"
+            required
+            formControlName="firstName"
+          >
+          <mat-error id="e_userFirstName_required" *ngIf="f['firstName'].errors?.required">
+            {{"user.validation.required" | translate | uppercase}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-grid flex-grid-col flex-grid-col-3">
+          <input
+            matInput
+            id="i_userMiddleName"
+            [placeholder]="'user.placeholders.middleName' | translate"
+            formControlName="middleName"
+          >
+        </mat-form-field>
+      </div>
+
+      <div id="c_userEmail" class="flex-grid m-b-32">
+        <mat-form-field id="c_userEmail" class="flex-grid flex-grid-col flex-grid-col-3" *ngIf="formMode !== 'EDIT'">
+          <input
+            matInput
+            id="i_userEmail"
+            [placeholder]="'user.placeholders.email' | translate"
+            required
+            formControlName="email"
+          >
+          <mat-error id="e_userEmail_required" *ngIf="f['email'].errors?.required">
+            {{"user.validation.required" | translate | uppercase}}
+          </mat-error>
+          <mat-error
+            id="e_userEmail_pattern"
+            *ngIf="f['email'].errors?.pattern && !f.email.errors?.minlength && !f.email.errors?.maxlength"
+          >
+            {{"user.validation.pattern" | translate | uppercase}}
+          </mat-error>
+          <mat-error id="e_userEmail_minlength" *ngIf="f['email'].errors?.minlength">
+            {{"user.validation.email.min" | translate | uppercase}}
+          </mat-error>
+          <mat-error id="e_userEmail_maxlength" *ngIf="f['email'].errors?.maxlength">
+            {{"user.validation.email.max" | translate | uppercase}}
+          </mat-error>
+        </mat-form-field>
+        <ng-content select="[form-content-email]"></ng-content>
+      </div>
+
+      <div id="c_userRoles" class="flex-grid m-b-32">
+        <mat-form-field id="c_userRole" class="flex-grid flex-grid-col flex-grid-col-3">
+          <mat-select
+            required
+            [placeholder]="'user.placeholders.role' | translate"
+            formControlName="role"
+            id="s_userRole"
+          >
+            <mat-option *ngFor="let role of roles; let i = index" [value]="role" [attr.value]="role">
+              {{'user.roles.'+role | translate}}
+            </mat-option>
+          </mat-select>
+          <mat-error id="e_userRole_required" *ngIf="f['role'].errors?.required">
+            {{"user.validation.required" | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+  </div>
+
+  <ng-content select="[form-content-actions]"></ng-content>
+
+</form>

@@ -1,0 +1,14 @@
+<div class="app-container" (mouseover)="mouseover()">
+  <app-sidebar
+    class="sidebar"
+    (toggleNotifications)="toggleNotifications(0)"
+  ></app-sidebar>
+  <app-notification-list
+    class="notifications"
+    *ngIf="isNotifications"
+    (closeNotifications)="toggleNotifications(500)"
+  ></app-notification-list>
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

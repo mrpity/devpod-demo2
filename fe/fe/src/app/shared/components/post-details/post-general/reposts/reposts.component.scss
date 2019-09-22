@@ -1,0 +1,14 @@
+@import '../../assets/styles/helpers/varibles';
+
+.reposts{
+  margin: 10px 0 0 50px;
+  background: #fff;
+  padding: 20px;
+  .repost{
+    margin-bottom: 5px;
+    .url{
+      text-decoration: none;
+      color:$deep-blue;
+    }
+  }
+}

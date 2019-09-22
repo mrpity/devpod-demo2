@@ -1,0 +1,164 @@
+<div class="general-tab">
+  <div class="row">
+    <div class="col col-4 profile-pic" id="avatar-profilePic" >
+      <img *ngIf="!!avatarDetails.profilePicBase64"
+           [src]="'data:image/jpeg;base64, ' + avatarDetails.profilePicBase64 | safe: 'url'" alt="">
+      <img *ngIf="!avatarDetails.profilePicBase64"
+           src="../assets/img/no-profile-pic.png" alt="">
+    </div>
+    <div class="col col-3-4">
+      <div class="row">
+        <div class="col col-3">
+          <h5>{{'avatar.labels.gender' | translate}}</h5>
+          <div id="d_gender" class="detailsSimpleInfo">
+            <span *ngIf="avatarDetails.gender">
+              {{'general.gender.' + avatarDetails.gender.toLowerCase() | translate}}
+            </span>
+          </div>
+          <h5>{{'avatar.labels.birthDate' | translate}}</h5>
+          <div id="d_birthDate" class="detailsSimpleInfo">
+            {{avatarDetails.birthDate | date:'dd.MM.yyyy'}}
+            <span *ngIf="avatarDetails.birthDate">
+              ({{calculateAge(avatarDetails.birthDate)}} {{ 'general.yearsOld' | translate }})
+            </span>
+          </div>
+          <h5>{{'avatar.labels.languages' | translate}}</h5>
+          <div id="d_langs" class="detailsSimpleInfo">{{languagesString}}</div>
+        </div>
+        <div class="col col-2-3">
+          <h5>{{'avatar.labels.bio' | translate}}</h5>
+          <div id="d_bio" class="detailsBio">{{avatarDetails.bio}}</div>
+        </div>
+      </div>
+      <h4>{{'avatar.contactInfo' | translate}}</h4>
+      <div class="row">
+        <div class="col col-3" id="container_socialLink">
+          <h5>{{'avatar.labels.socialLink' | translate}}</h5>
+          <div class="detailsInfoItem" *ngFor="let link of avatarDetails.socialLinks">
+            <a [title]="link" [href]="link" target="_blank" rel="nofollow noopener noreferrer">{{link}}</a>
+          </div>
+        </div>
+        <div class="col col-2-3">
+          <div class="row">
+            <div class="col col-3" id="container_websites" style="padding-top: 0">
+              <h5>{{'avatar.labels.website' | translate}}</h5>
+              <div class="detailsInfoItem" *ngFor="let website of avatarDetails.websites">
+                <a [title]="website" [href]="website" target="_blank" rel="nofollow noopener noreferrer" >{{website}}</a>
+              </div>
+            </div>
+            <div class="col col-3" id="container_phones" style="padding-top: 0">
+              <h5>{{'avatar.labels.phoneNumber' | translate}}</h5>
+              <div class="detailsInfoItem" *ngFor="let phone of avatarDetails.phones">
+                <span>{{phone}}</span>
+              </div>
+            </div>
+            <div class="col col-3" id="container_emails" style="padding-top: 0">
+              <h5>{{'avatar.labels.email' | translate}}</h5>
+              <div class="detailsInfoItem" *ngFor="let email of avatarDetails.emails">
+                <a [title]="email" href="mailto:{{email}}">{{email}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <h4>{{'avatar.about' | translate}}</h4>
+  <div class="row">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_socialState">{{'avatar.tabs.socialState' | translate}}</span>
+        </ng-template>
+        <div class="about-block-items">
+          <app-about-block
+            [qa_id]="'religiousViews'"
+            [data]="{ heading: 'avatar.labels.religiousViews', description: avatarDetails.religiousViews}">
+          </app-about-block>
+          <app-about-block
+            [qa_id]="'politicalViews'"
+            [data]="{ heading: 'avatar.labels.politicalViews', description: avatarDetails.politicalViews}">
+          </app-about-block>
+          <app-about-block
+            [qa_id]="'maritalStatus'"
+            [data]="{
+              heading: 'avatar.labels.maritalStatus',
+              description: avatarDetails.maritalStatus
+                ? ('avatar.labels.maritalStatuses.'+avatarDetails.maritalStatus | translate)
+                : ''
+            }"></app-about-block>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_interests">{{'avatar.tabs.interests' | translate}}</span>
+        </ng-template>
+        <div class="about-block-items">
+          <app-about-block
+            [qa_id]="'favoriteMusic'"
+            [data]="{ heading: 'avatar.labels.favoriteMusic', description: avatarDetails.favoriteMusic}">
+          </app-about-block>
+          <app-about-block
+            [qa_id]="'favoriteMovies'"
+            [data]="{ heading: 'avatar.labels.favoriteMovies', description: avatarDetails.favoriteMovies}">
+          </app-about-block>
+          <app-about-block
+            [qa_id]="'favoriteBooks'"
+            [data]="{ heading: 'avatar.labels.favoriteBooks', description: avatarDetails.favoriteBooks}">
+          </app-about-block>
+          <app-about-block
+            [qa_id]="'favoriteTvShows'"
+            [data]="{ heading: 'avatar.labels.favoriteTvShows', description: avatarDetails.favoriteTvShows}">
+          </app-about-block>
+          <app-about-block
+            [qa_id]="'favoriteSports'"
+            [data]="{ heading: 'avatar.labels.favoriteSports', description: avatarDetails.favoriteSports}">
+          </app-about-block>
+          <app-about-block
+            [qa_id]="'favoriteAppsAndGames'"
+            [data]="{ heading: 'avatar.labels.favoriteAppsAndGames', description: avatarDetails.favoriteAppsAndGames}">
+          </app-about-block>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_education">{{'avatar.tabs.education' | translate}}</span>
+        </ng-template>
+        <div class="about-block-items">
+          <app-about-block
+            *ngFor="let education of avatarDetails.educations;let i = index;"
+            [qa_id]="'education-' + i"
+            [data]="{ heading: 'avatar.labels.educations', description: education}" [isEducation]="true"></app-about-block>
+          <app-about-block
+            [qa_id]="'education-empty'"
+            *ngIf="avatarDetails.educations?.length == 0"
+            [data]="{ heading: 'avatar.labels.educations', description: ''}">
+          </app-about-block>
+          <app-about-block
+            [qa_id]="'professionalSkills'"
+            [data]="{ heading: 'avatar.labels.professionalSkills', description: avatarDetails.professionalSkills}">
+          </app-about-block>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_geoLocation">{{'avatar.tabs.geoLocation' | translate}}</span>
+        </ng-template>
+        <div class="about-block-items">
+          <app-about-block
+            [qa_id]="'fromLocation'"
+            [isGeolocation]="true"
+            [data]="{ heading: 'avatar.labels.fromLocation', description: avatarDetails.fromLocation }"
+          ></app-about-block>
+          <app-about-block
+            [qa_id]="'livesInLocation'"
+            [isGeolocation]="true"
+            [data]="{ heading: 'avatar.labels.livesInLocation', description: avatarDetails.livesInLocation }"
+          ></app-about-block>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

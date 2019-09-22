@@ -1,0 +1,43 @@
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'components/grid';
+@import 'components/label';
+
+:host {
+  display: flex;
+  height: 100%;
+}
+
+.search_results_container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: rgba(219, 219, 219, 0.2);
+  position: relative;
+  overflow: auto;
+}
+
+
+::ng-deep {
+  em {
+    background-color: $light-blue-grey;
+    font-style: normal;
+    border-radius: 2px;
+    border: 1px solid $light-blue-grey;
+  }
+  mat-paginator {
+    .mat-paginator-container {
+      padding: 0 50px 0 30px;
+    }
+  }
+}
+
+.error {
+  color: $red;
+}
+
+.message {
+  font-size: 1.5rem;
+  padding: 25px 50px 0 30px;
+}

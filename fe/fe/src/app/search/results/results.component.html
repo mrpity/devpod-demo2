@@ -1,0 +1,38 @@
+<div class="table-overlay" *ngIf="isSpinner$ | async">
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+
+<div *ngIf="!(isResultsLoadingFailure$ | async)" id="message_cnt">
+  <div id="noResults" *ngIf="(resultListLength$ | async) === 0 && !(isResultsLoading$ | async)" class="message"
+       [innerHTML]="'search.results.errors.noResults' | translate:{value: (filtersState$ | async)?.query}">
+  </div>
+
+  <ng-container *ngIf="resultListLength$ | async;">
+    <div class="m-b-16">{{'search.internal.results.searchDate' | translate}}: {{searchDate}}. {{'search.internal.results.number.title' |
+      translate}}:
+      {{resultListLength$ | async}}
+    </div>
+
+    <div class="result">
+      <app-origin-result *ngFor="let result of resultList$ | async; let i = index"
+                  [result]="result"
+                  [index]="i"
+                  (click)="openUrl(result)"></app-origin-result>
+    </div>
+  </ng-container>
+
+  <mat-paginator
+    *ngIf="(resultListLength$ | async) > (searchListQuery$ | async).pageSize"
+    class="custom-paginator"
+    [length]="resultListLength$ | async"
+    [pageSize]="(searchListQuery$ | async).pageSize"
+    [pageIndex]="(searchListQuery$ | async).pageNumber"
+    [pageSizeOptions]="[20, 40, 60, 80, 100]"
+    (page)="resultsPaginationChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+
+</div>

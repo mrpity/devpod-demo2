@@ -1,0 +1,43 @@
+:host {
+  display: flex;
+  height: 100vh;
+}
+
+.avatar-create-form {
+  width: 100%;
+}
+
+h3, h4, h5 {
+  color: #2d2d2d;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  line-height: 1.33;
+}
+
+.title-large {
+  margin-top: 10px;
+  height: 48px;
+  font-family: Roboto;
+  font-size: 36px;
+}
+
+.footer {
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
+  color:black;
+  margin: 0;
+  z-index: 1000;
+  padding: 15px 55px;
+  width: 100%;
+
+  button:first-child {
+    margin-right: 24px;
+  }
+}

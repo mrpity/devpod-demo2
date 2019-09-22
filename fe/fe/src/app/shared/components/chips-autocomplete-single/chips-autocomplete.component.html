@@ -1,0 +1,26 @@
+<mat-form-field>
+  <mat-chip-list #chipList>
+    <mat-chip *ngIf="_innerValue && _innerValue.id">
+      {{_innerValue.text ? (_innerValue.text ) : _innerValue.id}}
+      <mat-icon matChipRemove (click)="removeChip()">cancel</mat-icon>
+    </mat-chip>
+    <input
+      #chipInput
+      *ngIf="!_innerValue || !_innerValue.id"
+      [matChipInputFor]="chipList"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="addChip($event)"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matAutocomplete]="auto"
+      [placeholder]="placeholder | translate"
+      [formControl]="autocompleteCtrl"
+      required="required"
+      [id]="qa_id"
+    />
+    <mat-autocomplete #auto (optionSelected)="addChip($event)" class="autocomplete">
+      <mat-option *ngFor="let item of sourceFiltered | async" [value]="item" [attr.value]="item">
+        <span>{{ item.text }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-chip-list>
+</mat-form-field>

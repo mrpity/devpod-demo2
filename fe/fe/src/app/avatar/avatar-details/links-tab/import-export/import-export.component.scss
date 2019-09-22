@@ -1,0 +1,99 @@
+@import "components/grid";
+@import "components/buttons";
+
+:host{
+  display: block;
+  margin: 20px auto 0;
+  padding: 25px;
+  width:100%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.container {
+  display: flex;
+  height: 160px;
+  .progress-bar{
+    align-items: center;
+  }
+}
+.settings{
+  height: 110px;
+  &.progress-bar{
+    position: relative;
+    top: 20px;
+    align-items: center;
+    height: 80px;
+    .progress-label{
+      color: $warm-grey;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+  }
+}
+.sn-select-container{
+  margin-top: 20px;
+  width: 30%;
+  .sn-select{
+    width: 100%;
+  }
+}
+.button-container{
+  padding: 5px 10px;
+  align-self: center;
+}
+
+.action-toggle {
+  box-shadow: none;
+  border: 1px solid #001488;
+
+  &.in-progress{
+    opacity: 0.5;
+  }
+  .action-toggle-item ::ng-deep {
+    .mat-button-toggle-label-content {
+      line-height: 33px;
+    }
+    .mat-button-toggle-button {
+      font-size: 15px;
+      font-weight: normal;
+    }
+  }
+  .action-toggle-label {
+    text-transform: uppercase;
+  }
+  .mat-button-toggle-checked {
+    background-color: #001488;
+    color: #fff;
+  }
+  .mat-button-toggle+.mat-button-toggle {
+    border: 0;
+  }
+}
+.select-blocks{
+  width: 40%;
+  display: flex;
+  h4{
+    width: 100%;
+    text-transform: uppercase;
+    color: $warm-grey;
+    flex-shrink: 0;
+    margin: 20px 0 10px;
+    font-size: 12px;
+    font-weight: normal;
+  }
+  .block-item{
+    margin-right:10px;
+    max-width: 30%;
+  }
+  .checkbox-label{
+    position: relative;
+    top:3px;
+    width:calc(100% - 20px);
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}

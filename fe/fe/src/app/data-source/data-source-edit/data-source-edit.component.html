@@ -1,0 +1,69 @@
+<div class="width-100 height-100" id="c_dataSourceCnt">
+  <div class="header" [ngClass]="{'header-on-error': isLoadingResults || failedGateway}">
+    <app-breadcrumbs [items]="[{label:'анализ данных', route:'../../list'}, {label: dataSourceId, route:'../../details/' + dataSourceId}]" [id]="'dataSourceEdit'"></app-breadcrumbs>
+    <h1 class="title-large" id="h_addDataSource">{{"dataSource.editDataSource.title" | translate }}</h1>
+  </div>
+  <app-data-source-form
+    [dataSource]="dataSource"
+    [formObject]="editDataSourceForm"
+    [proxies]="proxyRegions"
+    [isLoading]="isLoadingResults"
+    [isFailed]="failedGateway"
+    [formMode]="formMode"
+    (submitForm)='update($event)'
+    (submitFailed)='updateFailed($event)'
+    (setIsDirty)='setIsDirty($event)'
+    *ngIf="dataSource && editDataSourceForm && !isLoadingResults && !failedGateway"
+  >
+    <div form-content-type id="cnt_typeCnt" class="flex flex-col flex-col-4">
+      <mat-label class="label">{{'dataSource.addDataSource.type' | translate}}</mat-label>
+      <span>{{helpers.getType(f['type'].value ) | translate}}</span>
+    </div>
+
+    <div form-content-depth id="cnt_depthCnt" class="flex flex-col flex-col-4 m-l-32">
+      <mat-label class="label">{{'dataSource.addDataSource.depth' | translate}}</mat-label>
+      <span>{{ f['depth'].value}}</span>
+    </div>
+
+    <div form-content-url id="cnt_urlCnt" class="flex flex-col width-100 m-b-24" *ngIf="crawling.byUrl(currentType)">
+      <mat-label class="label">URL</mat-label>
+      <span>{{f['url'].value}}</span>
+    </div>
+
+    <div form-content-profileId id="cnt_targetCnt" class="flex flex-col col-2 m-b-24" *ngIf="crawling.byProfile(currentType)">
+      <mat-label class="label">{{'dataSource.addDataSource.targetUser' | translate}}</mat-label>
+      <span>{{f['profileId'].value}}</span>
+    </div>
+
+    <div form-content-actions class="footer">
+      <button
+        mat-button
+        type="button"
+        class="button button-text"
+        id="b_cancelBtn"
+        (click)="cancelDataSourceEdit()"
+      >
+        {{"general.cancelBtn" | translate}}
+      </button>
+      <button
+        mat-button
+        type="submit"
+        class="button button-primary"
+        id="b_saveBtn"
+        [disabled]="isLoadingResults || failedGateway"
+      >
+        {{"general.saveBtn" | translate}}
+      </button>
+    </div>
+  </app-data-source-form>
+
+  <div class="loading-spinner" *ngIf="isLoadingResults || failedGateway" id="d_loadingSpinnerCnt">
+    <mat-spinner *ngIf="isLoadingResults" id="s_spinnerCmp"></mat-spinner>
+    <div id="cnt_errorCnt" class="gateway-api-errors" *ngIf="!isLoadingResults && failedGateway">
+      {{"dataSource.gatewayUnavailable" | translate}}
+    </div>
+  </div>
+</div>
+
+
+

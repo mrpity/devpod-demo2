@@ -1,0 +1,44 @@
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'components/popup';
+
+
+:host {
+  min-height: 160px;
+}
+
+.close-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  font-size: 0;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.close-btn::before,
+.close-btn::after {
+  content: "";
+  position: absolute;
+  top: 19px;
+  left: 6px;
+  width: 28px;
+  height: 2px;
+  background-color: $marine;
+}
+
+
+.close-btn::before {
+  transform: rotate(45deg);
+}
+
+.close-btn::after {
+  transform: rotate(-45deg);
+}
+
+.close-btn::after:active,
+.close-btn::before:active{
+  background-color: red;
+}

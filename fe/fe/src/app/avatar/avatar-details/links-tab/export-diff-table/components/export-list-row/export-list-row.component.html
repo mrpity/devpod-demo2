@@ -1,0 +1,29 @@
+<div class="row"  [ngClass]="{'checked': isChecked}">
+  <div class="cell" [ngClass]="{'multilines': isMultiLines()}">
+    <mat-checkbox
+      [checked]="isChecked"
+      (change)="change.emit()"
+    ></mat-checkbox>
+    <div class="title">{{label | translate}}</div>
+  </div>
+  <div class="cell sn">
+    <span class="sn-icon" *ngIf="isPropertyExistInSN('facebook')">
+      <img  src="../assets/img/sn-export/facebook.png" alt="">
+    </span>
+    <span class="sn-icon" *ngIf="isPropertyExistInSN('odnoklassniki')">
+      <img  src="../assets/img/sn-export/odnoklassniki.png" alt="">
+    </span>
+  </div>
+  <div class="cell" [ngClass]="{'multilines': isMultiLines()}">
+    <div class="value">
+      <div class="row-list-item" *ngFor="let item of value">{{item}}</div>
+    </div>
+  </div>
+  <div class="cell ">
+    <div *ngFor="let item of warnings" class="warning">
+      <img src="../assets/img/info-icon.png" class="icon info-icon" alt="" *ngIf="!item.warning">
+      <img src="../assets/img/warning-icon.png" class="icon warning-icon" alt="" *ngIf="item.warning">
+      <span class="message">{{item.msg}}</span>
+    </div>
+  </div>
+</div>

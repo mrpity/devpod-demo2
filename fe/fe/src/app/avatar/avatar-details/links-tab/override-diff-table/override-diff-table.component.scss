@@ -1,0 +1,90 @@
+@import "helpers/varibles";
+
+.override-msg{
+  margin-top: 20px;
+}
+.override-error-msg{
+  text-transform: uppercase;
+  color: $red;
+  font-size: 14px;
+  margin: 5px 0 20px;
+  align-items: center;
+  .text {
+    margin-right: 10px;
+  }
+}
+.table{
+  display: flex;
+  width:100%;
+  flex-direction: column;
+  color: $dark-grey;
+  font-size: 14px;
+  .row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;
+    &.header{
+      text-transform: uppercase;
+    }
+    .cell{
+      display: flex;
+      width: 42%;
+      padding-left: 25px;
+      box-sizing: border-box;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+
+      &:first-child{
+        width: 16%;
+        padding-left: 5px;
+        text-transform: uppercase;
+      }
+
+      &.sn-name{
+        border-bottom: 2px solid $light-red;
+      }
+
+      &.checked{
+        background-color: rgba(255, 102, 33, 0.05);
+      }
+
+      img{
+        height: 40px;
+      }
+
+      .value {
+        margin-left: 10px;
+      }
+
+      .value-error {
+        color: $red;
+      }
+    }
+    .erroneous {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+  }
+}
+.highlight {
+  color: $red;
+  vertical-align: middle;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+.override-controls{
+  margin-top: 10px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  .button{
+    &:first-child{
+      margin-right: 10px;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+@import 'components/grid';
+@import 'components/tuning';
+@import 'components/label';
+@import 'helpers/varibles';
+
+
+:host{
+  display: flex;
+  padding: 25px 40px 5px;
+  flex: auto;
+}
+
+.svg-container {
+  background-color: $black;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 2px;
+}
+
+
+.loading-spinner {
+  width: 100%;
+  margin-top:10%;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  .gateway-api-errors {
+    width: 100%;
+    color: $dark-red;
+    text-align: center;
+  }
+}
+
+.flex-row {
+  min-width: 350px;
+}
+
+.flex-col {
+  min-width: 160px;
+}
+
+.credential-icon {
+  cursor: pointer;
+  margin-top: 15px;
+  margin-left: 20px;
+}

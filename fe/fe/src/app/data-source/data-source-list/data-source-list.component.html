@@ -1,0 +1,176 @@
+<div class="header">
+  <h3 id="t_loginSectiontTitle" class="title">{{"dataSource.dataSourceTitle" | translate}}</h3>
+  <div>
+    <button mat-button
+            class="button button-second m-r-16"
+            id="btn_import"
+            (click)="openImportPage()"
+    >
+      {{'dataSource.list.action.import' | translate}}
+    </button>
+    <button mat-button
+            id="b_addDataSource"
+            class='button button-primary button-actions'
+            (click)="openAddDialog()">{{"dataSource.list.action.add" | translate | uppercase}}
+    </button>
+  </div>
+</div>
+<app-list-filters [listQueryFilter]="listQuery"></app-list-filters>
+<div class="list loading-spinner" *ngIf="isLoadingResults || failedGateway" id="d_loadingSpinnerCnt">
+  <div id="cnt_errorCnt" class="gateway-api-errors" *ngIf="failedGateway">
+    {{"dataSource.gatewayUnavailable" | translate}}
+  </div>
+</div>
+<div class="table-container" id="t_dataSourceTableCnt" [ngClass]="{'p-b-70': selection.hasValue()}">
+  <mat-table [dataSource]="dataSourceList" id="t_tableBodyCnt">
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef class="check" id="c_checkHeaderCellCnt">
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selectionOnCurrentPage.hasValue() && isAllSelected()"
+                      id="c_headerCheckbox"
+                      class="data-source-header-checkbox"
+                      [indeterminate]="selectionOnCurrentPage.hasValue() && !isAllSelected()"
+                      [disableRipple]="true">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row; let i=index;" class="check" id="c_cellCheckboxCnt_{{i}}">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="selection.toggle(row.id); selectionOnCurrentPage.toggle(row.id);"
+                      [checked]="selection.isSelected(row.id)"
+                      id="c_headerCheckbox_{{i}}"
+                      [disableRipple]="true">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell
+        *matHeaderCellDef
+        class="id can-sort"
+        id="l_idHeaderCellIdLabel"
+        (click)="sortData('id')"
+        [ngClass]="listQuery.sortBy.field === 'id' ? 'sort' : ''"
+      >
+        <span class="hide-long-id"><span>{{"dataSource.list.columnTitle.id" | translate | uppercase}}</span></span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+        >sort</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let source; let i=index;" class="id" id="d_idCellData_{{i}}">
+        <span>{{source.id}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef id="l_statussHeaderCellLabel" class="status"><span>{{"dataSource.list.columnTitle.status" | translate | uppercase}}</span></mat-header-cell>
+      <mat-cell  *matCellDef="let source; let i=index;"  class="status" id="d_statusCellData_{{i}}">
+        <img matTooltip="{{helpers.getDataSourceStatusMessage(listStatuses[source.id]) | translate}}" src="{{getImageStatusSource(source.id)}}" alt="">
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef class="type" id="l_typeHeaderCellLabel"><span>{{"dataSource.list.columnTitle.type" | translate | uppercase}}</span></mat-header-cell>
+      <mat-cell *matCellDef="let source; let i=index;" class="type" id="d_typeCellData_{{i}}">
+        <img src="assets/img/types/{{source.type | lowercase}}.png" alt="">
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="url">
+      <mat-header-cell *matHeaderCellDef class="url" id="l_urlHeaderCellLabel"> <span>{{"dataSource.list.columnTitle.url" | translate | uppercase}}</span> </mat-header-cell>
+      <mat-cell *matCellDef="let source; let i=index;" class="url" id="d_urlCellData_{{i}}">
+        <span class="hide-long-url">{{source.url}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell
+        *matHeaderCellDef
+        class="createdAt can-sort"
+        id="l_createdHeaderCellLabel"
+        (click)="sortData('createdAt')"
+        [ngClass]="listQuery.sortBy.field === 'createdAt' ? 'sort' : ''"
+      >
+        <span class="hide-long-id"><span>{{"dataSource.list.columnTitle.created" | translate | uppercase}}</span></span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+        >sort</mat-icon>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let source; let i=index;" class="createdAt" id="d_createdCellData_{{i}}">
+        <span>{{source.createdAt | date:'HH:mm'}}</span>
+        <span>{{source.createdAt | date:'dd.MM.yyyy'}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="crawledAt">
+      <mat-header-cell
+        *matHeaderCellDef
+        class="crawledAt can-sort"
+        id="l_crawledHeaderCellLabel"
+        (click)="sortData('crawledAt')"
+        [ngClass]="listQuery.sortBy.field === 'crawledAt' ? 'sort' : ''"
+      >
+        <span class="hide-long-id"><span>{{"dataSource.list.columnTitle.crawled" | translate | uppercase}}</span></span>
+        <mat-icon
+          class="sort-icon"
+          [ngClass]="listQuery.sortBy.asc ? 'sort-asc' : 'sort-desc'"
+        >sort</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let source; let i=index;" class="crawledAt" id="d_crawledCellData_{{i}}">
+        <span>{{source.crawledAt | date:'HH:mm'}}</span>
+        <span>{{source.crawledAt | date:'dd.MM.yyyy'}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="crawledBy">
+      <mat-header-cell *matHeaderCellDef id="l_crawledByHeaderCellLabel" class="crawledBy"><span>{{"dataSource.list.columnTitle.crawledBy" | translate | uppercase}}</span></mat-header-cell>
+      <mat-cell *matCellDef="let source; let i=index;" class="crawledBy" id="d_crawledByCellData_{{i}}">
+        <span>{{source.crawledBy}}</span></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="owner">
+      <mat-header-cell *matHeaderCellDef id="l_ownerHeaderCellLabel" class="owner"><span>{{"dataSource.list.columnTitle.owner" | translate | uppercase}}</span></mat-header-cell>
+      <mat-cell *matCellDef="let source; let i=index;" class="owner" id="d_ownerCellData_{{i}}">
+        <span>{{source.createdBy}}</span></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef id="l_actionsHeaderCellLabel" class="actions"></mat-header-cell>
+      <mat-cell *matCellDef="let source; let i=index;" class="actions" id="d_actionsCellData_{{i}}">
+        <button name="delete" mat-icon-button (click)="deleteSingleStream.next(source.id)" class="delete-btn">
+          <img src="assets/img/icon-delete.png" name="delete" alt="">
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row id="r_headerRowCnt" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row id="r_rowCnt_{{i}}"
+             [ngClass]="{'selected-data-source-row': selection.isSelected(row), 'empty-rules': !row.enabled}"
+             *matRowDef="let row; let i = index;
+               columns: displayedColumns;"
+             (click)="openDetails($event, row.id)">
+    </mat-row>
+  </mat-table>
+  <div class="table-overlay" *ngIf="isLoading$ | async">
+    <div class="spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+  <mat-paginator *ngIf="listQuery as query"
+    class="custom-paginator"
+    [length]="dataSourceListLength$ | async"
+    [pageSize]="query.pageSize"
+    [pageIndex]="query.pageNumber"
+    [pageSizeOptions]="[20, 40, 60, 80, 100]"
+    (page)="paginationChange($event)"
+    id="c_paginatorCnt"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+<app-delete-snackbar *ngIf="selection.hasValue()"
+                     (action)="deleteSnackBarStream$.next(true)"
+                     [message]="helpers.getItemCountMessage(selection.selected.length)">
+</app-delete-snackbar>

@@ -1,0 +1,105 @@
+@import '../../assets/styles/helpers/varibles';
+.comment {
+  margin: 10px 0 10px 50px;
+  padding: 20px 20px 16px;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+}
+.comment-header {
+  display: flex;
+  margin-bottom: 0.5rem;
+  .text {
+    color: $black;
+    display: flex;
+    flex-direction: column;
+  }
+  a {
+    text-decoration: none;
+    color: $deep-blue;
+  }
+}
+.children-comment {
+  margin-left: 100px;
+}
+.counts {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  &:first-child {
+    margin-left: 0;
+  }
+}
+.reactions-container {
+  display: flex;
+}
+
+.tooltip {
+  border: 1px solid #aaa;
+  border-radius: 30px;
+  color: #aaa;
+  padding: 3px 7px;
+  font-size: 12px;
+  margin-left: 10px;
+  min-width: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: $light-blue-grey;
+  color: $black;
+  text-align: center;
+  border-radius: 2px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -30px;
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 20%;
+  margin-left: -5px;
+  border: 5px solid transparent;
+  border-top-color: $light-blue-grey;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
+.hide-tooltip {
+  &:hover {
+    .tooltip-text {
+      visibility: hidden;
+    }
+  }
+}
+
+.reaction {
+  text-align: left;
+}
+
+.title-container {
+  margin-bottom: 0.5rem;
+}
+
+
+.date-header {
+  margin-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.33;
+  display: flex;
+  flex-wrap: wrap;
+  span {
+    text-transform: uppercase;
+    margin-right: 5px;
+  }
+}

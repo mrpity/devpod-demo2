@@ -1,0 +1,23 @@
+<mat-form-field class="search-field">
+  <input
+    matInput
+    #searchInput
+    name="searchInput"
+    id="i_searchString"
+    type="text"
+    [placeholder]="'general.searchInput' | translate"
+    [value]="searchValue"
+    (keyup.enter)=applySearch(searchInput.value)
+  >
+  <mat-icon matSuffix class="search-icon" *ngIf="searchInput.value === ''">search</mat-icon>
+  <button
+    class="clear-search-btn"
+    mat-button
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    id="b_remove-search-string"
+    *ngIf="searchInput.value !== ''"
+    (click)="searchInput.value = ''; removeSearch('')"
+  ></button>
+</mat-form-field>

@@ -1,0 +1,67 @@
+<div class="filters">
+  <span class="title">{{'avatar.list.filters'| translate}}</span>
+  <mat-chip-list class="chip-list">
+    <div *ngIf="filter.createdAtFrom || filter.createdAtTo" class="filter">
+      <span class="filter-label created-filter-label">Создан</span>
+      <mat-chip [removable]="true" (removed)="remove('created')" (click)="addFilters('created')">
+        <span *ngIf="filter.createdAtFrom" id="s_createdAtFrom">{{filter.createdAtFrom | date:'dd.MM.yyyy'}}</span>
+        <span *ngIf="!filter.createdAtFrom">&#8734;</span>
+        <span class="separator">-</span>
+        <span *ngIf="filter.createdAtTo" id="s_createdAtTo">{{filter.createdAtTo | date:'dd.MM.yyyy'}}</span>
+        <span *ngIf="!filter.createdAtTo">&#8734;</span>
+        <mat-icon matChipRemove id="b_remove-created-filter">cancel</mat-icon>
+      </mat-chip>
+    </div>
+    <div *ngIf="filter.modifiedAtFrom || filter.modifiedAtTo" class="filter">
+      <span class="filter-label modified-filter-label">Изменен</span>
+      <mat-chip [removable]="true" (removed)="remove('modified')" (click)="addFilters('modified')">
+        <span *ngIf="filter.modifiedAtFrom" id="s_modifiedAtFrom">{{filter.modifiedAtFrom | date:'dd.MM.yyyy'}}</span>
+        <span *ngIf="!filter.modifiedAtFrom">&#8734;</span>
+        <span class="separator">-</span>
+        <span *ngIf="filter.modifiedAtTo" id="s_modifiedAtTo">{{filter.modifiedAtTo | date:'dd.MM.yyyy'}}</span>
+        <span *ngIf="!filter.modifiedAtTo">&#8734;</span>
+        <mat-icon matChipRemove id="b_remove-modified-filter">cancel</mat-icon>
+      </mat-chip>
+    </div>
+    <div *ngIf="filter.types?.length > 0" class="filter">
+      <span class="filter-label">{{'avatar.labels.type' | translate}}</span>
+      <mat-chip [removable]="true" (removed)="remove('types')" (click)="addFilters('types')">
+        <span *ngFor="let type of filter.types; let i = index" [id]="'s_currentFilter' + type.toLowerCase()">
+          <span *ngIf="i !== 0">, </span>
+          {{'avatar.' + type.toLowerCase() | translate}}
+        </span>
+        <mat-icon matChipRemove id="b_remove-type-filter">cancel</mat-icon>
+      </mat-chip>
+    </div>
+    <div *ngIf="filter.snType?.length > 0" class="filter">
+      <span class="filter-label">{{'avatar.labels.linkedSn' | translate}}</span>
+        <mat-chip [removable]="true" (removed)="remove('snType')" (click)="addFilters('snType')">
+        <span *ngFor="let sn of filter.snType; let i = index" [id]="'s_currentFilter' + sn">
+          <span *ngIf="i !== 0">, </span>
+          {{'avatar.links.' + sn | translate}}
+        </span>
+        <mat-icon matChipRemove id="b_remove-type-filter">cancel</mat-icon>
+      </mat-chip>
+    </div>
+    <button class="filters-btn add-filters-btn"
+            *ngIf="isAddBtnAvailable()"
+            (click)="addFilters('all')"
+            type="button"
+            id="b_add-filter">
+      <img src="../assets/img/avatar/add-list-filters-icon.png" alt="">
+      <span>Добавить</span>
+    </button>
+    <button class="filters-btn remove-filters-btn"
+            type="button"
+            *ngIf="isRemoveBtnAvailable()"
+            (click)="resetFilters()"
+            id="b_remove-all-filters">
+      <img src="../assets/img/avatar/remove-list-filters-icon.png" alt="">
+      <span>Сбросить</span>
+    </button>
+  </mat-chip-list>
+
+  <app-search-input (searchChange)="applySearch($event)" [searchValue]="filter?.searchInName"></app-search-input>
+</div>
+
+

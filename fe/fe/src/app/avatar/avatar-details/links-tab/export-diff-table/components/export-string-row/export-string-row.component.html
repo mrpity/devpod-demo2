@@ -1,0 +1,27 @@
+<div class="row" [ngClass]="{'checked': isChecked}">
+  <div class="cell">
+    <mat-checkbox
+      [checked]="isChecked"
+      (change)="change.emit()"
+    ></mat-checkbox>
+    <div class="title">{{label | translate}}</div>
+  </div>
+  <div class="cell sn">
+        <span class="sn-icon" *ngIf="isPropertyExistInSN('facebook')">
+      <img  src="../assets/img/sn-export/facebook.png" alt="">
+    </span>
+    <span class="sn-icon" *ngIf="isPropertyExistInSN('odnoklassniki')">
+      <img  src="../assets/img/sn-export/odnoklassniki.png" alt="">
+    </span>
+  </div>
+  <div class="cell">
+    {{value}}
+  </div>
+  <div class="cell ">
+    <div *ngFor="let item of warnings" class="warning">
+      <img src="../assets/img/info-icon.png" class="icon info" alt="" *ngIf="!item.warning">
+      <img src="../assets/img/warning-icon.png" class="icon warning" alt="" *ngIf="item.warning">
+      <span class="message">{{item.msg}}</span>
+    </div>
+  </div>
+</div>

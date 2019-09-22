@@ -1,0 +1,194 @@
+<div class="sn-link-container">
+  <div class="viev-mode flex flex-row" *ngIf="viewMode">
+    <!-- <div class="row-item sn-info"> -->
+    <div class="flex-col-5 sn-info">
+      <h4 class="sn-heading flex flex-row">
+        <div [ngClass]="[snName ,'sn-icon']"></div>
+        <h4 class="sn-name">{{'avatar.links.'+socialNetwork | translate}}</h4>
+      </h4>
+      <div class="profile-info">
+        <img class="profile-pic" *ngIf="socialNetwork !== 'GOOGLE'" [src]="'data:image/jpeg;base64, ' + userProfile['profilePicBase64'] | safe: 'url'" alt="">
+        <img class="profile-pic" *ngIf="socialNetwork === 'GOOGLE'" src="assets/img/userpic-google.png" alt="">
+        <div class="profile-name">{{getName()}}</div>
+      </div>
+    </div>
+    <div class="flex flex-col-4-5">
+      <div class="flex-col flex-col-5 login">
+        <div class="field-label">{{ 'avatar.labels.login' | translate }}</div>
+        <div class="field-value">
+          <span class="field-value_text" [title]="userProfile['login']">{{userProfile['login']}}</span>
+          <mat-icon
+            #loginTooltip="matTooltip"
+            [matTooltip]="'avatar.tooltips.loginCopied' | translate"
+            matTooltipPosition="above"
+            matTooltipClass="tooltipCustomSuccess"
+            (mouseenter)="$event.stopImmediatePropagation()"
+            (click)="copyToClipboard(userProfile['login']); loginTooltip.show();"
+            class="copy-icon"
+          >
+            file_copy_outline
+          </mat-icon>
+        </div>
+      </div>
+      <div class="flex-col flex-col-5 password">
+        <div class="field-label">{{ 'avatar.labels.password' | translate }}</div>
+        <div class="field-value">
+          <span class="field-value_text" [title]="userProfile['password']">{{userProfile['password']}}</span>
+          <mat-icon
+            #passTooltip="matTooltip"
+            [matTooltip]="'avatar.tooltips.passwordCopied' | translate"
+            matTooltipPosition="above"
+            matTooltipClass="tooltipCustomSuccess"
+            (mouseenter)="$event.stopImmediatePropagation()"
+            (click)="copyToClipboard(userProfile['password']); passTooltip.show();"
+            class="copy-icon"
+          >
+            file_copy_outline
+          </mat-icon>
+        </div>
+      </div>
+      <div class="flex-col flex-col-5 phone">
+        <div *ngIf="socialNetwork !== 'GOOGLE'">
+          <div class="field-label">{{ 'avatar.labels.phoneNumber' | translate }}</div>
+          <div class="field-value">
+            <span class="field-value_text" [title]="userProfile['phone'] || ''">{{userProfile['phone']}}</span>
+            <mat-icon
+              #phoneTooltip="matTooltip"
+              [matTooltip]="'avatar.tooltips.phoneCopied' | translate"
+              matTooltipPosition="above"
+              matTooltipClass="tooltipCustomSuccess"
+              (mouseenter)="$event.stopImmediatePropagation()"
+              (click)="copyToClipboard(userProfile['phone']); phoneTooltip.show();"
+              class="copy-icon"
+              *ngIf="userProfile['phone']"
+            >
+              file_copy_outline
+            </mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="flex-col flex-col-6 country">
+        <div class="field-label">{{ 'avatar.labels.proxyCountry' | translate }}</div>
+        <div class="field-value">
+          <span class="field-value_text" [title]="currentProxy?.country">{{currentProxy?.country}}</span>
+        </div>
+      </div>
+      <div class="flex-col flex-col-6 city">
+        <div class="field-label">{{ 'avatar.labels.proxyCity' | translate }}</div>
+        <div class="field-value">
+          <span class="field-value_text" [title]="userProfile.proxyCity || ''">{{userProfile.proxyCity}}</span>
+        </div>
+      </div>
+      <div class="flex-col flex-col-5 button-container">
+        <button mat-button type="button" class="button button-second" (click)="unlink()" id="b_unlink-{{snName}}">
+          {{ 'avatar.details.buttons.unlink' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="edit-mode" *ngIf="!viewMode">
+    <form [formGroup]="credentialsForm" (ngSubmit)="link()" class="flex flex-row">
+      <div class="flex flex-col-5">
+        <div [ngClass]="[snName ,'sn-icon']"></div>
+        <h4 class="sn-name">{{'avatar.links.'+socialNetwork | translate}}</h4>
+      </div>
+      <div class="flex flex-col-4-5">
+        <mat-form-field class="flex-col flex-col-5">
+          <input
+            matInput
+            id="i_login-{{snName}}"
+            [placeholder]="'avatar.labels.login' | translate"
+            [attr.disabled]="userProfile.isLoading ? '' : null"
+            required
+            formControlName="login">
+          <mat-error class="validation-hint">
+            <span id="msg_empty_login-{{snName}}" *ngIf="submitted && f.login.errors?.required">
+              {{"avatar.validation.links.credentials.login.required" | translate }}
+            </span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-col flex-col-5 m-l-16">
+          <input
+            matInput
+            id="i_password-{{snName}}"
+            [placeholder]="'avatar.labels.password' | translate"
+            [attr.disabled]="userProfile.isLoading ? '' : null"
+            required
+            formControlName="password">
+          <mat-error class="validation-hint">
+            <span id="msg_empty_password-{{snName}}" *ngIf="submitted && f.password.errors?.required">
+              {{"avatar.validation.links.credentials.password.required" | translate }}
+            </span>
+            <span id="msg_invalid_password-{{snName}}" *ngIf="submitted && f.password.errors?.invalid">
+              {{"avatar.validation.links.credentials.password.required" | translate }}
+            </span>
+          </mat-error>
+        </mat-form-field>
+        <div class="flex-col flex-col-5 m-l-16">
+          <mat-form-field *ngIf="socialNetwork !== 'GOOGLE'">
+            <input
+              matInput
+              id="i_phone-{{snName}}"
+              [placeholder]="'avatar.labels.phoneNumber' | translate"
+              [attr.disabled]="userProfile.isLoading ? '' : null"
+              formControlName="phone">
+            <mat-error class="validation-hint">
+              <span id="msg_empty_phone-{{snName}}" *ngIf="submitted && f.phone.errors?.required">
+                {{"avatar.validation.links.credentials.phone.required" | translate }}
+              </span>
+              <span id="msg_invalid_phone-{{snName}}" *ngIf="submitted && f.phone.errors?.pattern">
+                {{"avatar.validation.links.credentials.phone.invalid" | translate }}
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <mat-form-field id="cnt_proxyCountryCnt" class="flex-col flex-col-6 m-l-16">
+          <mat-select
+            required
+            [placeholder]="'avatar.labels.proxyCountry' | translate"
+            [disabled]="userProfile.isLoading"
+            formControlName="proxyCountryCode"
+            (selectionChange)="setProxyCityList($event)"
+            id="s_proxyCountry-{{snName}}"
+          >
+            <mat-option *ngFor="let region of proxyCountryList" [value]="region.countryCode" [attr.value]="region.countryCode">
+              {{region.country}}
+            </mat-option>
+          </mat-select>
+          <mat-error class="validation-hint">
+            <span id="msg_selectProxyCountry" *ngIf="submitted && f.proxyCountryCode.errors?.required">
+              {{"avatar.validation.links.credentials.proxyCountry.required" | translate}}
+            </span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field id="cnt_proxyCityCnt" class="flex-col flex-col-6">
+          <mat-select
+            [placeholder]="'avatar.labels.proxyCity' | translate"
+            [disabled]="userProfile.isLoading"
+            formControlName="proxyCity"
+            id="s_proxyCity-{{snName}}"
+          >
+            <mat-option [ngClass]="{'clear-option': true}">
+                {{ 'general.clearDropdown' | translate }}
+            </mat-option>
+            <mat-option *ngFor="let city of proxyCityList" [value]="city" [attr.value]="city">
+              {{city}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="button-container flex-col-5 m-l-16">
+          <button mat-button type="submit" class="button button-primary" id="b_link-{{snName}}">
+            {{ 'avatar.details.buttons.link' | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="spinner-overlay" *ngIf="userProfile.isLoading">
+    <div class="spinner">
+      <mat-spinner [diameter]="80"></mat-spinner>
+    </div>
+  </div>
+</div>

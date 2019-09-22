@@ -1,0 +1,98 @@
+@import "helpers/varibles";
+
+.row{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 50px;
+  &.header{
+    text-transform: uppercase;
+  }
+  .cell{
+    display: flex;
+    width: 35%;
+    padding: 12px 0px 12px 25px;
+    box-sizing: border-box;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    &.sn{
+      width: 15%;
+      .sn-icon {
+        img{
+          height: 30px;
+        }
+      }
+    }
+
+    &:first-child{
+      width: 15%;
+      padding-left: 5px;
+      text-transform: uppercase;
+    }
+
+    &.sn-name{
+      border-bottom: 2px solid $light-red;
+    }
+
+    &.multilines{
+      align-items: baseline;
+    }
+
+    img{
+      height: 40px;
+    }
+    .title{
+      margin-left: 10px;
+    }
+
+    .value-error {
+      color: $red;
+    }
+    .warning{
+      display: flex;
+      flex-direction: row;
+      .icon{
+        display: flex;
+        width: 20px;
+        height: 20px;
+        align-items: center;
+        justify-content: center;
+      }
+      .message{
+        display: flex;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 10px;
+        width: calc(100% - 20px);
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+  }
+  &.checked{
+    .cell{
+      background-color: rgba(255, 102, 33, 0.05);
+    }
+  }
+  .highlight {
+    color: $red;
+    vertical-align: middle;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+  .erroneous {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+  .row-list-item {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+

@@ -1,0 +1,35 @@
+@import '../globals';
+
+.mat-tooltip.tooltipCustomSuccess {
+  background: #fff;
+  color: $apple-green;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+  border: 1px solid $apple-green;
+  overflow: visible;
+  padding: 12px 10px;
+
+  &:after,
+  &:before {
+    content: '';
+    top: 100%;
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: translate(-50%);
+  }
+
+  &:after {
+    left: 50%;
+    border-color: #fff transparent transparent transparent;
+    border-width: 5px;
+  }
+
+  &:before {
+    left: 50%;
+    border-color: $apple-green transparent transparent transparent;
+    border-width: 6px;
+  }
+}

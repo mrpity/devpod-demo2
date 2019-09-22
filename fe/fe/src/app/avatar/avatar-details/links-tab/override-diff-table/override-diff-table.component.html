@@ -1,0 +1,311 @@
+<div class="override-msg">
+  {{'avatar.links.overrideMsg' | translate:{value: translate.instant('avatar.links.' + snName) } }}
+</div>
+<div class="override-error-msg flex">
+  <div class="text">{{'avatar.links.overrideErrorMsg' | translate}}</div>
+  <mat-icon class="highlight">report</mat-icon>
+</div>
+<div class="table">
+  <div class="header row">
+    <div class="cell"></div>
+    <div class="cell">{{'avatar.links.currentData'| translate}}</div>
+    <div class="cell sn-name">{{'avatar.links.'+ snName| translate}}</div>
+  </div>
+
+  <div class="row" *ngIf="diffData.profilePicBase64">
+    <div class="cell">{{'avatar.profilePic'| translate}}</div>
+    <div class="cell">
+      <span class="current" *ngIf="diffData.profilePicBase64?.current">
+        <img [src]="'data:image/jpeg;base64, ' + diffData.profilePicBase64.current | safe: 'url'" alt="">
+      </span>
+    </div>
+    <div class="cell" [ngClass]="{'checked': isChecked('profilePicBase64')}">
+      <mat-checkbox
+        [checked]="isChecked('profilePicBase64')"
+        [disabled]="diffData.profilePicBase64?.erroneous || !diffData.profilePicBase64?.imported"
+        (change)="toggleField('profilePicBase64')"
+      ></mat-checkbox>
+      <div class="value" *ngIf="diffData.profilePicBase64?.imported">
+        <img [src]="'data:image/jpeg;base64, ' + diffData.profilePicBase64.imported | safe: 'url'" alt="">
+      </div>
+      <div class="value value-error" *ngIf="diffData.profilePicBase64?.erroneous">
+        <mat-icon class="highlight">report</mat-icon>
+        <div style="overflow: hidden; max-height: 50px; text-overflow: ellipsis">
+          <div class="erroneous">{{diffData.profilePicBase64.erroneous}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-string-row
+    *ngIf="diffData.firstName"
+    [label]="'avatar.labels.firstName'"
+    [field]="diffData.firstName"
+    [isChecked]="isChecked('firstName')"
+    (change)="toggleField('firstName')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.lastName"
+    [label]="'avatar.labels.lastName'"
+    [field]="diffData.lastName"
+    [isChecked]="isChecked('lastName')"
+    (change)="toggleField('lastName')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.middleName"
+    [label]="'avatar.labels.middleName'"
+    [field]="diffData.middleName"
+    [isChecked]="isChecked('middleName')"
+    (change)="toggleField('middleName')"
+  ></app-string-row>
+
+  <div class="row" *ngIf="diffData.gender">
+    <div class="cell">{{'avatar.labels.gender'| translate}}</div>
+    <div class="cell">
+      <span class="current" *ngIf="diffData.gender?.current">
+        {{'general.gender.' + diffData.gender.current.toLowerCase() | translate}}
+      </span>
+    </div>
+    <div class="cell" [ngClass]="{'checked': isChecked('gender')}">
+      <mat-checkbox
+        [checked]="isChecked('gender')"
+        [disabled]="diffData.gender?.erroneous || !diffData.gender?.imported"
+        (change)="toggleField('gender')"
+      ></mat-checkbox>
+      <div class="value" *ngIf="diffData.gender?.imported">
+        {{'general.gender.' + diffData.gender.imported.toLowerCase() | translate}}
+      </div>
+      <div class="value value-error" *ngIf="diffData.gender?.erroneous">
+        <mat-icon class="highlight">report</mat-icon>
+        <div class="erroneous">{{diffData.gender.erroneous}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="diffData.birthDate">
+    <div class="cell">{{'avatar.labels.birthDate'| translate}}</div>
+    <div class="cell">
+      <span class="current" *ngIf="diffData.birthDate?.current">
+        {{diffData.birthDate.current | date:'dd.MM.yyyy'}}
+      </span>
+    </div>
+    <div class="cell" [ngClass]="{'checked': isChecked('birthDate')}">
+      <mat-checkbox
+        [checked]="isChecked('birthDate')"
+        [disabled]="diffData.birthDate?.erroneous || !diffData.birthDate?.imported"
+        (change)="toggleField('birthDate')"
+      ></mat-checkbox>
+      <div class="value" *ngIf="diffData.birthDate?.imported">
+        {{diffData.birthDate.imported | date:'dd.MM.yyyy'}}
+      </div>
+      <div class="value value-error" *ngIf="diffData.birthDate?.erroneous">
+        <mat-icon class="highlight">report</mat-icon>
+        <div class="erroneous">{{diffData.birthDate.erroneous}}</div>
+      </div>
+    </div>
+  </div>
+
+  <app-string-row
+    *ngIf="diffData.bio"
+    [label]="'avatar.labels.bio'"
+    [field]="diffData.bio"
+    [isChecked]="isChecked('bio')"
+    (change)="toggleField('bio')"
+  ></app-string-row>
+
+  <app-list-row
+    *ngIf="diffData.languages"
+    [label]="'avatar.labels.languages'"
+    [field]="diffData.languages"
+    [isChecked]="isChecked('languages')"
+    (change)="toggleField('languages')"
+  ></app-list-row>
+
+  <app-list-row
+    *ngIf="diffData.emails"
+    [label]="'avatar.labels.email'"
+    [field]="diffData.emails"
+    [isChecked]="isChecked('emails')"
+    (change)="toggleField('emails')"
+  ></app-list-row>
+
+  <app-list-row
+    *ngIf="diffData.phones"
+    [label]="'avatar.labels.phoneNumber'"
+    [field]="diffData.phones"
+    [isChecked]="isChecked('phones')"
+    (change)="toggleField('phones')"
+  ></app-list-row>
+
+  <app-list-row
+    *ngIf="diffData.socialLinks"
+    [label]="'avatar.labels.socialLink'"
+    [field]="diffData.socialLinks"
+    [isChecked]="isChecked('socialLinks')"
+    (change)="toggleField('socialLinks')"
+  ></app-list-row>
+
+  <app-list-row
+    *ngIf="diffData.websites"
+    [label]="'avatar.labels.website'"
+    [field]="diffData.websites"
+    [isChecked]="isChecked('websites')"
+    (change)="toggleField('websites')"
+  ></app-list-row>
+
+  <div class="row" *ngIf="diffData.maritalStatus">
+    <div class="cell">{{'avatar.labels.maritalStatus'| translate}}</div>
+    <div class="cell">
+      <span class="current" *ngIf="diffData.maritalStatus?.current">
+        {{'avatar.labels.maritalStatuses.' + diffData.maritalStatus.current | translate}}
+      </span>
+    </div>
+    <div class="cell" [ngClass]="{'checked': isChecked('maritalStatus')}">
+      <mat-checkbox
+        [checked]="isChecked('maritalStatus')"
+        [disabled]="diffData.maritalStatus?.erroneous || !diffData.maritalStatus?.imported"
+        (change)="toggleField('maritalStatus')"
+      ></mat-checkbox>
+      <div class="value" *ngIf="diffData.maritalStatus?.imported">
+        {{'avatar.labels.maritalStatuses.' + diffData.maritalStatus.imported | translate}}
+      </div>
+      <div class="value value-error" *ngIf="diffData.maritalStatus?.erroneous">
+        <mat-icon class="highlight">report</mat-icon>
+        <div class="erroneous">{{diffData.maritalStatus.erroneous}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="diffData.fromLocation">
+    <div class="cell">{{'avatar.labels.fromLocation'| translate}}</div>
+    <div class="cell">
+      <span class="current" *ngIf="diffData.fromLocation?.current">
+        {{diffData.fromLocation.current.city}}, {{diffData.fromLocation.current.country}}
+      </span>
+    </div>
+    <div class="cell" [ngClass]="{'checked': isChecked('fromLocation')}">
+      <mat-checkbox
+        [checked]="isChecked('fromLocation')"
+        [disabled]="diffData.fromLocation?.erroneous || !diffData.fromLocation?.imported"
+        (change)="toggleField('fromLocation')"
+      ></mat-checkbox>
+      <div class="value" *ngIf="diffData.fromLocation?.imported">
+        {{diffData.fromLocation.imported.city}}, {{diffData.fromLocation.imported.country}}
+      </div>
+      <div class="value value-error" *ngIf="diffData.fromLocation?.erroneous">
+        <mat-icon class="highlight">report</mat-icon>
+        <div class="erroneous">{{diffData.fromLocation.erroneous}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="diffData.livesInLocation">
+    <div class="cell">{{'avatar.labels.livesInLocation'| translate}}</div>
+    <div class="cell">
+      <span class="current" *ngIf="diffData.livesInLocation?.current">
+        {{diffData.livesInLocation.current.city}}, {{diffData.livesInLocation.current.country}}
+      </span>
+    </div>
+    <div class="cell" [ngClass]="{'checked': isChecked('livesInLocation')}">
+      <mat-checkbox
+        [checked]="isChecked('livesInLocation')"
+        [disabled]="diffData.livesInLocation?.erroneous || !diffData.livesInLocation?.imported"
+        (change)="toggleField('livesInLocation')"
+      ></mat-checkbox>
+      <div class="value" *ngIf="diffData.livesInLocation?.imported">
+        {{diffData.livesInLocation.imported.city}}, {{diffData.livesInLocation.imported.country}}
+      </div>
+      <div class="value value-error" *ngIf="diffData.livesInLocation?.erroneous">
+        <mat-icon class="highlight">report</mat-icon>
+        <div class="erroneous">{{diffData.livesInLocation.erroneous}}</div>
+      </div>
+    </div>
+  </div>
+
+  <app-string-row
+    *ngIf="diffData.religiousViews"
+    [label]="'avatar.labels.religiousViews'"
+    [field]="diffData.religiousViews"
+    [isChecked]="isChecked('religiousViews')"
+    (change)="toggleField('religiousViews')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.politicalViews"
+    [label]="'avatar.labels.politicalViews'"
+    [field]="diffData.politicalViews"
+    [isChecked]="isChecked('politicalViews')"
+    (change)="toggleField('politicalViews')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.favoriteBooks"
+    [label]="'avatar.labels.favoriteBooks'"
+    [field]="diffData.favoriteBooks"
+    [isChecked]="isChecked('favoriteBooks')"
+    (change)="toggleField('favoriteBooks')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.favoriteMovies"
+    [label]="'avatar.labels.favoriteMovies'"
+    [field]="diffData.favoriteMovies"
+    [isChecked]="isChecked('favoriteMovies')"
+    (change)="toggleField('favoriteMovies')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.favoriteMusic"
+    [label]="'avatar.labels.favoriteMusic'"
+    [field]="diffData.favoriteMusic"
+    [isChecked]="isChecked('favoriteMusic')"
+    (change)="toggleField('favoriteMusic')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.favoriteTvShows"
+    [label]="'avatar.labels.favoriteTvShows'"
+    [field]="diffData.favoriteTvShows"
+    [isChecked]="isChecked('favoriteTvShows')"
+    (change)="toggleField('favoriteTvShows')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.favoriteSports"
+    [label]="'avatar.labels.favoriteSports'"
+    [field]="diffData.favoriteSports"
+    [isChecked]="isChecked('favoriteSports')"
+    (change)="toggleField('favoriteSports')"
+  ></app-string-row>
+
+  <app-string-row
+    *ngIf="diffData.favoriteAppsAndGames"
+    [label]="'avatar.labels.favoriteAppsAndGames'"
+    [field]="diffData.favoriteAppsAndGames"
+    [isChecked]="isChecked('favoriteAppsAndGames')"
+    (change)="toggleField('favoriteAppsAndGames')"
+  ></app-string-row>
+</div>
+<div class="override-controls">
+  <button
+    mat-button
+    type="button"
+    class="button button-text"
+    id="b_cancelOverride"
+    (click)="cancelDiff()"
+  >
+    {{"general.cancelBtn" | translate}}
+  </button>
+  <button
+    mat-button
+    type="submit"
+    [disabled]="!checkedFields.length"
+    class="button button-primary"
+    id="b_confirmOverride"
+    (click)="confirmDiff()"
+  >
+    {{"general.confirmBtn" | translate}}
+  </button>
+</div>

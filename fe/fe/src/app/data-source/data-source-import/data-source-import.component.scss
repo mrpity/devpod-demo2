@@ -1,0 +1,168 @@
+@import "components/tuning";
+@import "helpers/varibles";
+@import 'components/grid';
+@import 'components/label';
+
+
+$input_left_margin: 32px;
+$width_100: 100%;
+$max_field_count: 4;
+$single: calc((#{$width_100} - 2 * #{$input_left_margin}) / #{$max_field_count});
+
+.rule-status {
+  display: flex;
+  width: 100%;
+  min-height: 45px;
+  align-items: center;
+  justify-content: space-between;
+  .toggle-section {
+    display: flex;
+    width: calc(#{$width_100} / 2 - #{$input_left_margin});
+    align-items: center;
+    mat-label {
+      margin-right: 24px;
+    }
+  }
+}
+
+mat-row {
+  .delete-btn {
+    display: none;
+  }
+  &:hover {
+    background-blend-mode: darken;
+    background-image: linear-gradient(rgba(207, 238, 237, 0.4), rgba(207, 238, 237, 0.4));
+    position: relative;
+    .delete-btn {
+      display: block;
+    }
+  }
+}
+
+.mat-cell, .mat-header-cell {
+  &.repeating {
+    padding-left: 0;
+    min-width: 90px;
+  }
+  &.active-time-period {
+    min-width: 80px;
+  }
+  &.timezone {
+    min-width: 80px;
+  }
+  &.when {
+    min-width: 50px;
+  }
+  &.endingDate {
+    margin-right: 15px;
+    min-width: 80px;
+  }
+  &.maxConnections {
+    min-width: 70px;
+  }
+  &.actions {
+    flex: 0 0 2%;
+  }
+}
+
+.mat-header-cell {
+  span {
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: 0.4px;
+    color: $dark-grey;
+  }
+}
+
+.mat-cell {
+  span {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    color: $dark-grey;
+  }
+  .delete-icon {
+    width: 12px;
+    height: 16px;
+  }
+}
+
+.footer {
+  min-height: 55px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: $white;
+  box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
+  color: $black;
+  margin: 0;
+  z-index: 1000;
+  padding: 15px 55px;
+  width: 100%;
+
+  button:first-child {
+    margin-right: 24px;
+  }
+}
+
+.loading-spinner {
+  position: absolute;
+  margin-top: 10%;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .gateway-api-errors {
+    color: $red;
+    max-width: 360px;
+    text-align: center;
+  }
+}
+
+h1, h4 {
+  margin: 0;
+}
+
+.mat-form-field {
+  min-width: 150px;
+}
+
+.one_field {
+  width: $single;
+  margin-right: 2rem;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+#file_results {
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.header {
+  padding: 10px 40px 30px;
+}
+
+.header-on-error {
+  flex: 1;
+}
+

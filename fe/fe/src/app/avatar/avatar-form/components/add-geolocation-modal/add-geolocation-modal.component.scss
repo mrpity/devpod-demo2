@@ -1,0 +1,39 @@
+@import 'helpers/varibles';
+
+.mat-dialog-content{
+  max-height: 80vh;
+}
+
+.btn-container{
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.btn-cancel{
+  color: #ff460d;
+}
+
+.btn-confirm{
+  color:#fff;
+  background-color: #ff460d;
+}
+
+.btn-confirm, .btn-cancel{
+  text-transform: uppercase;
+}
+
+input[disabled]{
+  height: 0;
+  margin: 0;
+}
+
+.validation-hint{
+  color: #FF460D;
+  text-transform: uppercase;
+}
+
+.searchCitiesSpinner {
+  position: absolute;
+  right: 0;
+}

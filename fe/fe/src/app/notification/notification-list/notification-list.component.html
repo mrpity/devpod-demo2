@@ -1,0 +1,72 @@
+<div #notificationListTag class="notification-list">
+  <div class="flex justify-content-space-between align-items-center">
+    <h2 id="t_dialogTitle" class="title" mat-dialog-title>{{'notifications.list.title' | translate}}</h2>
+    <button id="b_close" mat-icon-button (click)="close()">
+      <img id="i_close" class="mat-icon" src="assets/img/icon-close.png" alt="image">
+    </button>
+  </div>
+  <div class="notification-tabs">
+    <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_all">{{'notifications.tabs.all' | translate}}</span>
+          <span class="notification-unread-count">{{ getUnreadNotifications(notificationTypes.ALL)}}</span>
+        </ng-template>
+        <ng-template matTabContent>
+          <app-notification-list-tab
+            [notifications]="serialized.notifications[notificationTypes.ALL]"
+            [dates]="serialized.dates[notificationTypes.ALL]"
+            [isLoading]="isLoading$ | async"
+            [isLoadMore]="serialized.count[notificationTypes.ALL] < notificationsTotal[notificationTypes.ALL]"
+            (loadMore)="loadMore()"
+          ></app-notification-list-tab>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_avatar">{{'notifications.tabs.avatar' | translate}}</span>
+          <span class="notification-unread-count">{{ getUnreadNotifications(notificationTypes.AVATAR) }}</span>
+        </ng-template>
+        <ng-template matTabContent>
+          <app-notification-list-tab
+            [notifications]="serialized.notifications[notificationTypes.AVATAR]"
+            [dates]="serialized.dates[notificationTypes.AVATAR]"
+            [isLoading]="isLoading$ | async"
+            [isLoadMore]="serialized.count[notificationTypes.AVATAR] < notificationsTotal[notificationTypes.AVATAR]"
+            (loadMore)="loadMore()"
+          ></app-notification-list-tab>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_dataSource">{{'notifications.tabs.dataSource' | translate}}</span>
+          <span class="notification-unread-count">{{ getUnreadNotifications(notificationTypes.DATA_SOURCE) }}</span>
+        </ng-template>
+        <ng-template matTabContent>
+          <app-notification-list-tab
+            [notifications]="serialized.notifications[notificationTypes.DATA_SOURCE]"
+            [dates]="serialized.dates[notificationTypes.DATA_SOURCE]"
+            [isLoading]="isLoading$ | async"
+            [isLoadMore]="serialized.count[notificationTypes.DATA_SOURCE] < notificationsTotal[notificationTypes.DATA_SOURCE]"
+            (loadMore)="loadMore()"
+          ></app-notification-list-tab>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span id="tab_search">{{'notifications.tabs.search' | translate}}</span>
+          <span class="notification-unread-count">{{ getUnreadNotifications(notificationTypes.SEARCH) }}</span>
+        </ng-template>
+        <ng-template matTabContent>
+          <app-notification-list-tab
+            [notifications]="serialized.notifications[notificationTypes.SEARCH]"
+            [dates]="serialized.dates[notificationTypes.SEARCH]"
+            [isLoading]="isLoading$ | async"
+            [isLoadMore]="serialized.count[notificationTypes.SEARCH] < notificationsTotal[notificationTypes.SEARCH]"
+            (loadMore)="loadMore()"
+          ></app-notification-list-tab>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

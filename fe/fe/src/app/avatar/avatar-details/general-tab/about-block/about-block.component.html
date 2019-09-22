@@ -1,0 +1,27 @@
+<div class="about-block-item" [id]="'d_' + qa_id">
+  <h5>
+    {{data.heading | translate}}
+  </h5>
+  <div *ngIf="isEducation" class="education">
+    <p class="name">{{data.description?.name}}</p>
+    <p class="type" *ngIf="!!data.description?.type">
+      {{"avatar.addEducationModal." + data.description?.type.toLowerCase() | translate}}
+    </p>
+    <p class="city">{{data.description?.city}}</p>
+    <p *ngIf="data.description?.studiedFrom && data.description?.studiedTo" class="range">
+      {{data.description?.studiedFrom | date:'shortDate'}} - {{data.description?.studiedTo | date:'shortDate'}}
+    </p>
+    <p class="description">{{data.description?.specialization}}</p>
+    <p class="description">{{data.description?.description}}</p>
+  </div>
+  <div *ngIf="isGeolocation">
+    <p class="name">
+      <span>{{data.description?.city || ''}}</span>
+      <span *ngIf="data.description?.city && data.description?.country">, </span>
+      <span>{{data.description?.country || ''}}</span>
+    </p>
+  </div>
+  <div *ngIf="!isEducation && !isGeolocation" class="description">
+    {{data.description}}
+  </div>
+</div>

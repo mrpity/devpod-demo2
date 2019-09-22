@@ -1,0 +1,84 @@
+@import "components/tuning";
+@import "helpers/varibles";
+@import 'components/grid';
+@import 'components/label';
+
+mat-row {
+  .delete-btn {
+    display: none;
+  }
+}
+.edit-mode{
+  mat-row {
+    &:hover {
+      background-blend-mode: darken;
+      background-image: linear-gradient(rgba(207, 238, 237, 0.4), rgba(207, 238, 237, 0.4));
+      position: relative;
+      .delete-btn {
+        display: block;
+      }
+    }
+  }
+}
+.view-mode {
+  .actions{
+    display: none !important;
+  }
+}
+
+
+.mat-cell, .mat-header-cell {
+  &.repeating {
+    padding-left: 0;
+    min-width: 90px;
+  }
+  &.active-time-period {
+    min-width: 80px;
+  }
+  &.timezone {
+    min-width: 80px;
+  }
+  &.when {
+    min-width: 50px;
+  }
+  &.endingDate {
+    margin-right: 15px;
+    min-width: 80px;
+  }
+  &.maxConnections {
+    min-width: 70px;
+  }
+  &.actions {
+    flex: 0 0 2%;
+  }
+}
+
+.mat-header-cell {
+  span {
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: 0.4px;
+    color: $dark-grey;
+  }
+}
+
+.mat-cell {
+  span {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    color: $dark-grey;
+  }
+  .delete-icon {
+    width: 12px;
+    height: 16px;
+  }
+}

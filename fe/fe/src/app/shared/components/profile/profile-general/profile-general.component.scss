@@ -1,0 +1,141 @@
+@import 'helpers/mixins';
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'components/grid';
+@import 'components/label';
+
+:host {
+  flex: auto;
+}
+
+
+h3, h4, h5 {
+  color: #2d2d2d;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  line-height: 1.33;
+}
+
+h5 {
+  color: #9b9b9b;
+  text-transform: uppercase;
+  margin: 0 0 5px;
+  @include text-ellipsis;
+}
+
+h4 {
+  font-size: 1.5em;
+  padding: 25px 0 15px;
+  margin: 0;
+}
+
+h3 {
+  font-size: 0.9em;
+}
+
+.general-tab {
+  font-size: 0.9em;
+  padding: 24px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  .col {
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0 15px;
+    overflow: hidden;
+  }
+
+  .col:first-child {
+    padding-left: 0px;
+  }
+
+  .col:last-child {
+    padding-right: 0px;
+  }
+  .col-4 {
+    width: 25%;
+    &.profile-pic{
+      max-width: 300px;
+      max-height: 400px;
+      overflow: hidden;
+    }
+  }
+
+  .col-3 {
+    width: 33.3%;
+  }
+
+  .col-2 {
+    width: 50%;
+  }
+
+  .col-2-3 {
+    width: 66.6%;
+  }
+
+  .col-3-4 {
+    width: 75%;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.mat-tab-group {
+  width: 100%;
+}
+
+.about-block-items {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  justify-content: space-between;
+}
+.about-block-items::after {
+  content: "";
+  flex: auto;
+}
+
+::ng-deep .about-block-items {
+  app-profile-about-block {
+    width: calc(25% - 20px);
+    padding: 0 10px
+  }
+  app-profile-about-block:nth-child(4n+1) {
+    padding-right: 20px;
+    padding-left: 0;
+  }
+  app-profile-about-block:nth-child(4n+4) {
+    padding-right: 0;
+    padding-left: 20px;
+  }
+}
+
+.detailsSimpleInfo {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.detailsInfoItem a {
+  text-overflow: ellipsis;
+  display: block;
+  overflow: hidden;
+  margin-bottom: 7px;
+  white-space: nowrap;
+}
+
+.detailsBio {
+  line-height: 1.5em;
+}
+
+.text-ellipsis {
+  display: block;
+  @include text-ellipsis;
+}

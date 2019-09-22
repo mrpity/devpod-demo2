@@ -1,0 +1,17 @@
+<app-header [headerName]="'search.results.titles.WEB_GENERAL' | translate"
+            [breadcrumbs]="[
+                      {label:'navigation.search', route:'../../../../'},
+                      {label: routerParams?.index, route:'./'},
+                      {label: routerParams?.documentId, route:'./'}
+                    ]"
+            [breadcrumbsId]="'search_details'"
+            (emitAction)="closeDetails()">
+</app-header>
+
+<app-web-details
+  [webPageData]="resultDetails$ | async"
+  [forModule]="'SEARCH'"
+  [isLoading]="false"
+  [currentTabIndex]="currentTabIndex"
+  (changeTab)="changeTab($event)"
+></app-web-details>

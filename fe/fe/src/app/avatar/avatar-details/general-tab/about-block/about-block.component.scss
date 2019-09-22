@@ -1,0 +1,39 @@
+:host{
+  display: flex;
+  margin-top:10px;
+  width: 25%;
+}
+.about-block-item{
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 90%;
+  background-color: #f0f0f0;
+  height: 140px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+h5{
+  position: relative;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 16px;
+  color: #2d2d2d;
+}
+
+.description{
+  margin: 5px 0;
+  font-family: "Roboto Mono", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: #2d2d2d;
+  overflow: hidden;
+}
+.education{
+  p{
+    margin: 0;
+  }
+}

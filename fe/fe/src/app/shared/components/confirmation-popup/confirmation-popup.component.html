@@ -1,0 +1,13 @@
+<div class="flex justify-content-space-between align-items-center">
+  <h1 id="t_dialogTitle" class="title" mat-dialog-title>{{data.title | translate}}</h1>
+  <button id="b_closeBtn" mat-icon-button mat-dialog-close class="close-btn"></button>
+</div>
+<mat-dialog-content class="message" id="s_message">{{data.message | translate}}</mat-dialog-content>
+<mat-dialog-actions class="flex justify-content-flex-end">
+  <button mat-button mat-dialog-close class="button button-text button-dialog" id="popup-cancel-btn">{{data.cancelBtn | translate}}
+  </button>
+  <button mat-button class="button button-primary button-dialog" (click)="dialModalRef.close(data)" id="popup-confirm-btn">{{data.confirmBtn |
+    translate}}
+  </button>
+</mat-dialog-actions>
+

@@ -1,0 +1,22 @@
+<mat-form-field>
+  <mat-chip-list #chipList>
+    <mat-chip *ngFor="let item of data; let i = index">
+      {{item.text}} <mat-icon matChipRemove (click)="removeChip(i)">cancel</mat-icon>
+    </mat-chip>
+    <input
+      [matChipInputFor]="chipList"
+      [matChipInputAddOnBlur]="false"
+      [matAutocomplete]="auto"
+      [formControl]="autocompleteCtrl"
+      [placeholder]="placeholder | translate"
+      #chipInput
+      [id]="qa_id"
+      *ngIf="multiple || (!data.length && !multiple)"
+    />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="addChip($event)" class="autocomplete">
+      <mat-option *ngFor="let item of sourceFiltered | async" [value]="item" [attr.value]="item">
+        <span>{{ item.text }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-chip-list>
+</mat-form-field>

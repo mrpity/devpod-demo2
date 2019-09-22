@@ -1,0 +1,14 @@
+<app-avatar-form
+  [avatarDetails]="{}"
+  (submitForm)='create($event)'
+  (submitFailed)='createFailed($event)'
+  (setIsDirty)='setIsDirty($event)'
+  class="avatar-create-form"
+>
+  <app-breadcrumbs breadcrumbs-content [items]="[{label:'navigation.avatars', route:'../list'}]" [id]="'avatar'"></app-breadcrumbs>
+  <h3 pageTitle-content class="title-large" id="p_avatarCreatePage">{{"avatar.createAvatar" | translate }}</h3>
+  <div footer-content class="footer">
+    <button mat-button type="button" class="button button-text" id="b_cancelCreateAvatar" (click)="cancelAvatarCreate()">{{"general.cancelBtn" | translate}}</button>
+    <button mat-button type="submit" class="button button-primary" id="b_createAvatar" [disabled]="isCreateDisabled$ | async">{{"avatar.createBtn" | translate}}</button>
+  </div>
+</app-avatar-form>

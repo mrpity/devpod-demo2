@@ -1,0 +1,24 @@
+<div class="textarea-editor-area-container">
+  <textarea *ngIf="isEditMode" resize="false" class="textarea-editor-area" [formControl]="dataCtrl"></textarea>
+  <div class="textarea-editor-area" *ngIf="!isEditMode">
+    <table>
+      <tr *ngFor="let item of data; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{item}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="textarea-editor-area-footer">
+  <div class="textarea-editor-area-footer-text">Use `Enter` for add new comment</div>
+  <button mat-button class="button button-round button-icon" type="button" (click)="toggleMode()">
+    <span *ngIf="!isEditMode">
+      <mat-icon class="icon">edit</mat-icon>
+      <span>Edit</span>
+    </span>
+    <span *ngIf="isEditMode">
+      <mat-icon class="icon">visibility</mat-icon>
+      <span>Preview</span>
+    </span>
+  </button>
+</div>

@@ -1,0 +1,32 @@
+<div class="requests-container">
+  <div class="item-container button-container">
+    <button mat-button class="button button-second" (click)="this.newSearch.emit()" id="new_search">{{'search.newSearchBtn' | translate}}
+    </button>
+  </div>
+
+  <div *ngFor="let request of requestList; let i = index"
+       class="item-container item"
+       id="c_itemCnt_{{i}}"
+       (click)="clickDetailsStream$.next(request)"
+       [ngClass]="{'selected-item': isSelected(request.id), 'cursor-pointer': !isSelected(request.id)}">
+    <div class="data-container">
+      <span id="request_date_{{i}}" class="request-date">{{request.requestDate | date: 'HH:mm dd.MM.yyyy'}}</span>
+      <span id="request_query_{{i}}" class="request-query crop">{{request.query}}</span>
+      <div id="request_types_cnt_{{i}}" class="request-types">
+        <img id="request_types_icon_{{i}}" class="request-icon" src="assets/img/types/{{request.resourceType | lowercase}}.png" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<mat-paginator
+  *ngIf="requestsTotal > pageSize"
+  class="requests-paginator"
+  [length]="requestsData.requestsTotal"
+  [pageSize]="pageSize"
+  [pageIndex]="routeQueryParams?.reqPage"
+  [pageSizeOptions]="[20, 40, 60, 80, 100]"
+  (page)="paginationChange.emit($event)"
+  showFirstLastButtons>
+</mat-paginator>

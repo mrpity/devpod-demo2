@@ -1,0 +1,16 @@
+<app-analytic-requests [requestList]="analyticRequestList$ | async"
+              [routeQueryParams]="routeQueryParams$ | async"
+              [requestsData]="requestData$ | async"
+              [routeParams]="routeParams$ | async"
+              (showDetails)="showRequestDetails($event)"
+              (newSearch)="newSearch()"
+              (paginationChange)="requestsPaginationChange($event)"></app-analytic-requests>
+<div class="search_results_container">
+  <app-analytic-filters [filtersData]="filtersData$ | async"
+               (saveSearch)="saveSearch($event)"></app-analytic-filters>
+  <!-- TODO: Enable when results component will be ready -->
+  <!--<div class="error message" id="resultsFailure" *ngIf="isResultsLoadingFailure$ | async">-->
+    <!--{{'search.external.results.loadFailure' | translate}}-->
+  <!--</div>-->
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,265 @@
+@import '../globals';
+
+.required {
+  &:after {
+    content: ' *';
+    color: $red;
+  }
+}
+
+
+.red-border {
+  border: 2px solid red;
+}
+
+.m {
+  &-t {
+    &-5 {
+      margin-top: 5px;
+    }
+    &-15 {
+      margin-top: 15px;
+    }
+    &-16 {
+      margin-top: 16px;
+    }
+  }
+  &-b {
+    &-0 {
+      margin-bottom: 0px;
+    }
+    &-5 {
+      margin-bottom: 5px;
+    }
+    &-8 {
+      margin-bottom: 0.5rem;
+    }
+    &-15 {
+      margin-bottom: 15px;
+    }
+    &-16 {
+      margin-bottom: 1rem;
+    }
+    &-24 {
+      margin-bottom: 1.5rem;
+    }
+    &-32 {
+      margin-bottom: 2rem;
+    }
+    &-48 {
+      margin-bottom: 3rem;
+    }
+
+  }
+  &-l {
+    &-auto {
+        margin-left: auto;
+    }
+    &-0 {
+      margin-left: 0;
+    }
+    &-15 {
+      margin-left: 15px;
+    }
+    &-16 {
+      margin-left: 1rem;
+    }
+    &-24 {
+      margin-left: 1.5rem;
+    }
+    &-32 {
+      margin-left: 2rem;
+    }
+    &-48 {
+      margin-left: 3rem;
+    }
+    &-64 {
+      margin-left: 4rem;
+    }
+  }
+  &-r {
+    &-auto {
+      margin-right: auto;
+    }
+    &-0 {
+      margin-right: 0;
+    }
+    &-8 {
+      margin-right: 0.5rem;
+    }
+    &-15 {
+      margin-right: 15px;
+    }
+    &-16 {
+      margin-right: 1rem;
+    }
+    &-32 {
+      margin-right: 32px;
+    }
+  }
+
+}
+
+
+.p {
+  &-t {
+    &-0 {
+      padding-top:0;
+    }
+    &-10 {
+      padding-top: 10px;
+    }
+    &-16 {
+    padding-top: 16px;
+    }
+    &-24 {
+      padding-top: 24px;
+    }
+    &-32 {
+      padding-top: 32px;
+    }
+  }
+  &-l {
+    &-44 {
+    padding-left: 44px;
+    }
+  }
+  &-r {
+    &-5 {
+      padding-right: 5px;
+    }
+    &-10 {
+      padding-right: 10px;
+    }
+    &-16 {
+      padding-right: 16px;
+    }
+    &-20 {
+      padding-right: 20px;
+    }
+    &-44 {
+      padding-right: 44px;
+    }
+  }
+  &-b {
+    &-0 {
+      padding-bottom:0;
+    }
+    &-8 {
+      padding-bottom: 0.5rem;
+    }
+  }
+  &-b {
+    &-70 {
+      padding-bottom:70px;
+    }
+  }
+}
+
+.container-padding {
+  padding-right: 56px;
+  padding-left: 44px;
+}
+
+.container-margin {
+  margin-right: 56px;
+  margin-left: 44px;
+}
+
+.overflow {
+  &-auto {
+    overflow: auto;
+  }
+  &-hidden {
+    overflow: hidden;
+  }
+}
+
+
+.relative {
+  position: relative;
+}
+
+.top {
+  &-20 {
+    top: 20px;
+  }
+  &-40 {
+    top: 40px;
+  }
+  &-60 {
+    top: 60px;
+  }
+  &-70 {
+    top: 70px;
+  }
+  &-75 {
+    top: 75px;
+  }
+  &-80 {
+    top: 80px;
+  }
+}
+
+.title-large{
+  font-family: Roboto, sans-serif;
+  font-size: 36px;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 1.33;
+  color: $dark-grey;
+  margin: 0;
+}
+.title-medium{
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 1.2;
+  color: $dark-grey;
+}
+
+
+.z-index-100 {
+  z-index: 100;
+}
+
+
+.w-100 {
+  width: 100%;
+}
+
+.white-space {
+  &-nowrap {
+    white-space: nowrap;
+  }
+  &-wrap {
+    white-space: normal;
+  }
+}
+
+.word-break {
+  &-all {
+    word-break: break-all;
+  }
+  &-normal {
+    word-break: normal;
+  }
+}
+
+.box-sizing-border-box {
+  box-sizing: border-box;
+}
+
+.crop {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tab-icon {
+  width: 24px;
+  height: 24px;
+}

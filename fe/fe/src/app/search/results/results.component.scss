@@ -1,0 +1,65 @@
+@import 'helpers/varibles';
+@import 'components/tuning';
+@import 'components/grid';
+@import 'components/label';
+
+
+:host {
+  padding: 25px 50px 0 30px;
+  position: relative;
+  flex-grow: 1;
+}
+
+
+.result {
+  margin-bottom: 70px;
+}
+
+
+.table-overlay {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7);
+  top: 0;
+  left: 0;
+  width: 99%;
+  height: 100%;
+  z-index: 101;
+
+  .spinner {
+    position: fixed;
+    top: 60%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+.custom-paginator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+::ng-deep {
+  #noResults {
+    em {
+      background-color: $light-blue-grey;
+      font-style: normal;
+      border-radius: 2px;
+      border: 1px solid $light-blue-grey;
+      font-weight: 500;
+    }
+  }
+
+
+}
+
+
+.error {
+  color: $red;
+}
+
+.message {
+  font-size: 1.5rem;
+}

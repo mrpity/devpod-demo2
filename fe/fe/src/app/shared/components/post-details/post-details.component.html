@@ -1,0 +1,36 @@
+<div class="tabs-content-container" id="cnt_postTabs" *ngIf="isPostGeneralLoading || isOriginsLoading || postData || origins">
+  <mat-tab-group
+    #tabGroup
+    [selectedIndex]="currentTabIndex"
+    (selectedIndexChange)="onChangeTab($event)"
+    id="grp_postTabs"
+  >
+    <mat-tab class="post-general-tab" id="tb_generalTab">
+      <ng-template mat-tab-label>
+        <span id="tab_general_title">{{'search.results.details.post.tabs.general' | translate}}</span>
+      </ng-template>
+      <app-post-general
+        *ngIf="postData"
+        [details]="postData"
+        [isPostGeneralLoading]="isPostGeneralLoading"
+        [isResultsLoadingFailure]="isResultsLoadingFailure"
+      ></app-post-general>
+      <div id="loadingSpinner" class="table-overlay" *ngIf="!postData">
+        <div class="spinner">
+          <mat-spinner></mat-spinner>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab class="post-origins-tab" id="tb_originsTab">
+      <ng-template mat-tab-label>
+        <span id="tab_origins_title">{{'search.results.details.post.tabs.origins' | translate}}</span>
+      </ng-template>
+      <app-post-origins
+        [origins]="origins"
+        [isOriginsLoading]="isOriginsLoading"
+        [isOriginsLoadingFailure]="isOriginsLoadingFailure"
+        (openOrigin)="openOrigin.emit($event)"
+      ></app-post-origins>
+    </mat-tab>
+  </mat-tab-group>
+</div>

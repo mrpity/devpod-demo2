@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="cell">{{label | translate}}</div>
+  <div class="cell">{{field?.current}}</div>
+  <div class="cell" [ngClass]="{'checked': isChecked}">
+    <mat-checkbox
+      [checked]="isChecked"
+      [disabled]="field?.erroneous || !field?.imported"
+      (change)="change.emit()"
+    ></mat-checkbox>
+    <div class="value" *ngIf="field?.imported">
+      {{field.imported}}
+    </div>
+    <div class="value value-error" *ngIf="field?.erroneous">
+      <mat-icon class="highlight">report</mat-icon>
+      <div class="erroneous">{{field.erroneous}}</div>
+    </div>
+  </div>
+</div>
