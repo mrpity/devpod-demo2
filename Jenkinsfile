@@ -1,11 +1,12 @@
 pipeline {
   agent {
-    label "jenkins-go"
+    label "jenkins-nodejs"
   }
   environment {
     ORG = 'mrpity'
     APP_NAME = 'devpod-demo2'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
+    DOCKER_REGISTRY_ORG = 'mrpity'
   }
   stages {
     stage('CI Build and push snapshot') {
@@ -18,14 +19,13 @@ pipeline {
         HELM_RELEASE = "$PREVIEW_NAMESPACE".toLowerCase()
       }
       steps {
-        container('go') {
-          dir('/home/jenkins/go/src/github.com/mrpity/devpod-demo2') {
-            checkout scm
-            sh "make linux"
-            sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
-            sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
-          }
-          dir('/home/jenkins/go/src/github.com/mrpity/devpod-demo2/charts/preview') {
+        container('nodejs') {
+          sh "jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true"
+          sh "npm install"
+          sh "CI=true DISPLAY=:99 npm test"
+          sh "export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml"
+          sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:$PREVIEW_VERSION"
+          dir('./charts/preview') {
             sh "make preview"
             sh "jx preview --app $APP_NAME --dir ../.."
           }
@@ -37,22 +37,21 @@ pipeline {
         branch 'master'
       }
       steps {
-        container('go') {
-          dir('/home/jenkins/go/src/github.com/mrpity/devpod-demo2') {
-            checkout scm
+        container('nodejs') {
 
-            // ensure we're not on a detached head
-            sh "git checkout master"
-            sh "git config --global credential.helper store"
-            sh "jx step git credentials"
+          // ensure we're not on a detached head
+          sh "git checkout master"
+          sh "git config --global credential.helper store"
+          sh "jx step git credentials"
 
-            // so we can retrieve the version in later steps
-            sh "echo \$(jx-release-version) > VERSION"
-            sh "jx step tag --version \$(cat VERSION)"
-            sh "make build"
-            sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
-            sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
-          }
+          // so we can retrieve the version in later steps
+          sh "echo \$(jx-release-version) > VERSION"
+          sh "jx step tag --version \$(cat VERSION)"
+          sh "jx step credential -s npm-token -k file -f /builder/home/.npmrc --optional=true"
+          sh "npm install"
+          sh "CI=true DISPLAY=:99 npm test"
+          sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
+          sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
         }
       }
     }
@@ -61,9 +60,9 @@ pipeline {
         branch 'master'
       }
       steps {
-        container('go') {
-          dir('/home/jenkins/go/src/github.com/mrpity/devpod-demo2/charts/devpod-demo2') {
-            sh "jx step changelog --version v\$(cat ../../VERSION)"
+        container('nodejs') {
+          dir('./charts/devpod-demo2') {
+            sh "jx step changelog --batch-mode --version v\$(cat ../../VERSION)"
 
             // release the helm chart
             sh "jx step helm release"
@@ -74,5 +73,10 @@ pipeline {
         }
       }
     }
+  }
+  post {
+        always {
+          cleanWs()
+        }
   }
 }

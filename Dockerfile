@@ -1,4 +1,6 @@
-FROM scratch
+FROM node:9-slim
+ENV PORT 8080
 EXPOSE 8080
-ENTRYPOINT ["/devpod-demo2"]
-COPY ./bin/ /
+WORKDIR /usr/src/app
+COPY . .
+CMD ["npm", "start"]
