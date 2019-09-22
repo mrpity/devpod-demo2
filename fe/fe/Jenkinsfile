@@ -1,0 +1,31 @@
+pipeline {
+    agent {
+        label "jenkins-nodejs"
+    }
+    stages {
+
+      stage('CI Build and push snapshot') {
+        when {
+          branch 'develop'
+        }
+        steps {
+          container('nodejs') {
+            
+            // Enable cache
+            sh  """
+                   rm -rf ${WORKSPACE}/fe/fe/node_modules || true && 
+                   ln -s /home/jenkins/node_modules ${WORKSPACE}/fe/fe/node_modules
+                """
+
+            dir ('./fe') {
+              sh "npm install"
+            }
+
+          }
+        }
+    }
+
+    }
+
+}
+
