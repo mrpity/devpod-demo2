@@ -6,6 +6,7 @@ pipeline {
     ORG = 'mrpity'
     APP_NAME = 'devpod-demo2'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
+    DOCKER_REGISTRY_ORG = 'mrpity'
   }
   stages {
     stage('CI Build and push snapshot') {
